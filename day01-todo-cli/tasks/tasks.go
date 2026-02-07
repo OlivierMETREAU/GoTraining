@@ -40,6 +40,9 @@ func New() Tasks {
 }
 
 // Add a task to the task list
+// Returns a slice containing
+//   - the id of the added task if successfull, -1 if not
+//   - the error if not successfully added, nil otherwise
 func (tasks *Tasks) Add(description string) (int, error) {
 	if description == "" {
 		return -1, errors.New("Cannot add a task with an empty description.")
@@ -53,6 +56,8 @@ func (tasks *Tasks) Add(description string) (int, error) {
 	return tasks.TaskCount - 1, nil
 }
 
+// Delete a task from the task list
+// Returns an error if the 'id' is not found
 func (tasks *Tasks) Delete(id int) error {
 	_, ok := tasks.TaskList[id]
 	if !ok {
@@ -62,6 +67,8 @@ func (tasks *Tasks) Delete(id int) error {
 	return nil
 }
 
+// Check if a task id is present in the task list
+// Returns true if the task id is present, false otherwise
 func (tasks *Tasks) IsPresent(id int) bool {
 	_, ok := tasks.TaskList[id]
 	return ok
