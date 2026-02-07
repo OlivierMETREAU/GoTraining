@@ -98,3 +98,9 @@ func TestListWithExistingTasks(t *testing.T) {
 	output := tasks.List()
 	assert.Equal(t, "0 - First task - toDo\r\n1 - Second task - toDo\r\nNumber of created tasks : 2\r\n", output)
 }
+
+func TestListAnEmptyTaskList(t *testing.T) {
+	tasks := New()
+	output := tasks.List()
+	assert.Equal(t, "Number of created tasks : 0\r\n", output)
+}
