@@ -166,3 +166,16 @@ func TestSaveReturnsNoError(t *testing.T) {
 	tasks.Add("Second task.")
 	tasks.Save()
 }
+
+func TestReadFromAFile(t *testing.T) {
+	tasks := New(jsonmanager.New("taskList.json"))
+	tasks.Add("First task")
+	tasks.Progress(0)
+	tasks.Add("Second task")
+	tasks.Save()
+
+	tasksRead := New(jsonmanager.New("taskList.json"))
+	tasksRead.ReadFromFile()
+	output := tasksRead.List()
+	assert.Equal(t, "0 - First task - inProgress\r\n1 - Second task - toDo\r\nNumber of created tasks : 2\r\n", output)
+}

@@ -1,6 +1,7 @@
 package tasks
 
 import (
+	"encoding/json"
 	"errors"
 	"fmt"
 	"strings"
@@ -129,4 +130,13 @@ func (tasks *Tasks) Done(id int) error {
 // Save the tasks to a file
 func (tasks *Tasks) Save() error {
 	return tasks.manager.WriteResult(tasks)
+}
+
+// Read the tasks from a file
+func (tasks *Tasks) ReadFromFile() error {
+	b, err := tasks.manager.ReadLines()
+	if err != nil {
+		return err
+	}
+	return json.Unmarshal(b, &tasks)
 }
