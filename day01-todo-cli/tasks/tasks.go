@@ -2,6 +2,8 @@ package tasks
 
 import (
 	"errors"
+	"fmt"
+	"strings"
 )
 
 // Task state - can be Todo, InProgress or Done
@@ -22,7 +24,6 @@ var stateName = map[TaskState]string{
 // Task - include Id, Description, State
 type Task struct {
 	Description string
-	Id          int
 	State       TaskState
 }
 
@@ -49,7 +50,6 @@ func (tasks *Tasks) Add(description string) (int, error) {
 	}
 	tasks.TaskList[tasks.TaskCount] = Task{
 		Description: description,
-		Id:          tasks.TaskCount,
 		State:       StateTodo,
 	}
 	tasks.TaskCount++
@@ -72,4 +72,18 @@ func (tasks *Tasks) Delete(id int) error {
 func (tasks *Tasks) IsPresent(id int) bool {
 	_, ok := tasks.TaskList[id]
 	return ok
+}
+
+// List the tasks in the task list
+// Return a string containing the list
+func (tasks *Tasks) List() string {
+	var sb strings.Builder
+	for id := range tasks.TaskCount {
+		task, ok := tasks.TaskList[id]
+		if ok {
+			sb.WriteString(fmt.Sprintf("%d - %s - %s\r\n", id, task.Description, stateName[task.State]))
+		}
+	}
+	sb.WriteString(fmt.Sprintf("Number of created tasks : %d\r\n", tasks.TaskCount))
+	return sb.String()
 }

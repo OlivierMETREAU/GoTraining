@@ -23,7 +23,6 @@ func TestAddTaskAppendTheTaskList(t *testing.T) {
 	tasks := New()
 	expectedTaskDescription := "New task description."
 	tasks.Add(expectedTaskDescription)
-	assert.Equal(t, 0, tasks.TaskList[0].Id, "Id shall be 0 for the first added task.")
 	assert.Equal(t, StateTodo, tasks.TaskList[0].State, "State shall be toDo after task add.")
 	assert.Equal(t, expectedTaskDescription, tasks.TaskList[0].Description)
 }
@@ -57,9 +56,7 @@ func TestAddingMultipleTasks(t *testing.T) {
 	tasks.Add("First task")
 	tasks.Add("Second task")
 	assert.Equal(t, 2, tasks.TaskCount)
-	assert.Equal(t, 0, tasks.TaskList[0].Id)
 	assert.Equal(t, "First task", tasks.TaskList[0].Description)
-	assert.Equal(t, 1, tasks.TaskList[1].Id)
 	assert.Equal(t, "Second task", tasks.TaskList[1].Description)
 }
 
@@ -92,4 +89,12 @@ func TestDeleteAKnowTaskRemoveTheCorrectTask(t *testing.T) {
 	assert.Equal(t, true, tasks.IsPresent(0))
 	assert.Equal(t, false, tasks.IsPresent(1))
 	assert.Equal(t, true, tasks.IsPresent(2))
+}
+
+func TestListWithExistingTasks(t *testing.T) {
+	tasks := New()
+	tasks.Add("First task")
+	tasks.Add("Second task")
+	output := tasks.List()
+	assert.Equal(t, "0 - First task - toDo\r\n1 - Second task - toDo\r\nNumber of created tasks : 2\r\n", output)
 }
