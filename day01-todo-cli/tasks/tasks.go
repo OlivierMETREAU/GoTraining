@@ -34,3 +34,13 @@ func New() Tasks {
 		TaskList:  map[int]Task{},
 	}
 }
+
+// Add a task to the task list
+func (tasks *Tasks) Add(description string) {
+	tasks.TaskList[tasks.TaskCount] = Task{
+		Description: description,
+		Id:          tasks.TaskCount,
+		State:       StateTodo,
+	}
+	tasks.TaskCount++
+}
