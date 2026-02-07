@@ -4,6 +4,8 @@ import (
 	"errors"
 	"fmt"
 	"strings"
+
+	iomanager "example.com/day01-todo-cli/iomanager"
 )
 
 // Task state - can be Todo, InProgress or Done
@@ -23,18 +25,20 @@ var stateName = map[TaskState]string{
 
 // Task - include Id, Description, State
 type Task struct {
-	Description string
-	State       TaskState
+	Description string    `json:"description"`
+	State       TaskState `json:"state"`
 }
 
 type Tasks struct {
-	TaskCount int
-	TaskList  map[int]Task
+	manager   iomanager.IOManager
+	TaskCount int          `json:"count"`
+	TaskList  map[int]Task `json:"tasks"`
 }
 
 // Create an empty list of tasks
-func New() Tasks {
+func New(manager iomanager.IOManager) Tasks {
 	return Tasks{
+		manager:   manager,
 		TaskCount: 0,
 		TaskList:  map[int]Task{},
 	}
@@ -120,4 +124,9 @@ func (tasks *Tasks) Done(id int) error {
 		return nil
 	}
 	return errors.New(fmt.Sprintf("Transition to done is not allowed from %s state.", stateName[task.State]))
+}
+
+// Save the tasks to a file
+func (tasks *Tasks) Save() error {
+	return tasks.manager.WriteResult(tasks)
 }
