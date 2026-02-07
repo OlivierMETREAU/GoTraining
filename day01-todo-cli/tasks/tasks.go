@@ -87,3 +87,37 @@ func (tasks *Tasks) List() string {
 	sb.WriteString(fmt.Sprintf("Number of created tasks : %d\r\n", tasks.TaskCount))
 	return sb.String()
 }
+
+// Make the task in progress
+// Return an error if the task is already inProgress or Done, or is task id is not found.
+func (tasks *Tasks) Progress(id int) error {
+	task, ok := tasks.TaskList[id]
+	if !ok {
+		return errors.New("Cannot find the task Id in the task list.")
+	}
+	if task.State == StateTodo {
+		tasks.TaskList[id] = Task{
+			Description: task.Description,
+			State:       StateInProgress,
+		}
+		return nil
+	}
+	return errors.New(fmt.Sprintf("Transition to InProgress is not allowed from %s state.", stateName[task.State]))
+}
+
+// Make the task done
+// Return an error if the task is already Done, or is task id is not found.
+func (tasks *Tasks) Done(id int) error {
+	task, ok := tasks.TaskList[id]
+	if !ok {
+		return errors.New("Cannot find the task Id in the task list.")
+	}
+	if task.State != StateDone {
+		tasks.TaskList[id] = Task{
+			Description: task.Description,
+			State:       StateDone,
+		}
+		return nil
+	}
+	return errors.New(fmt.Sprintf("Transition to done is not allowed from %s state.", stateName[task.State]))
+}

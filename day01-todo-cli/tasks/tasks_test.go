@@ -104,3 +104,56 @@ func TestListAnEmptyTaskList(t *testing.T) {
 	output := tasks.List()
 	assert.Equal(t, "Number of created tasks : 0\r\n", output)
 }
+
+func TestProgressWithUnknownTaskReturnsAnError(t *testing.T) {
+	tasks := New()
+	err := tasks.Progress(0)
+	assert.NotEqual(t, nil, err)
+}
+
+func TestProgressFromTodoReturnsNoError(t *testing.T) {
+	tasks := New()
+	tasks.Add("First task.")
+	err := tasks.Progress(0)
+	assert.Equal(t, nil, err)
+	assert.Equal(t, StateInProgress, tasks.TaskList[0].State)
+}
+
+func TestProgressFromProgressReturnsAnError(t *testing.T) {
+	tasks := New()
+	tasks.Add("First task.")
+	tasks.Progress(0)
+	err := tasks.Progress(0)
+	assert.NotEqual(t, nil, err)
+}
+
+func TestProgressFromDoneReturnsAnError(t *testing.T) {
+	tasks := New()
+	tasks.Add("First task.")
+	tasks.Done(0)
+	err := tasks.Progress(0)
+	assert.NotEqual(t, nil, err)
+}
+
+func TestDoneWithUnknownTaskReturnsAnError(t *testing.T) {
+	tasks := New()
+	err := tasks.Done(0)
+	assert.NotEqual(t, nil, err)
+}
+
+func TestDoneFromTodoReturnsNoError(t *testing.T) {
+	tasks := New()
+	tasks.Add("First task.")
+	err := tasks.Done(0)
+	assert.Equal(t, nil, err)
+	assert.Equal(t, StateDone, tasks.TaskList[0].State)
+}
+
+func TestDoneFromProgressReturnsNoError(t *testing.T) {
+	tasks := New()
+	tasks.Add("First task.")
+	tasks.Progress(0)
+	err := tasks.Done(0)
+	assert.Equal(t, nil, err)
+	assert.Equal(t, StateDone, tasks.TaskList[0].State)
+}
