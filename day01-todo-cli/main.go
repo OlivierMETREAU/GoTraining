@@ -1,7 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"example.com/day01-todo-cli/cmd"
+)
 
 func main() {
-	fmt.Println("Bonjour")
+	cmd.Execute()
 }
