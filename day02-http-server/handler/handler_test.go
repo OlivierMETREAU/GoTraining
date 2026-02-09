@@ -1,6 +1,9 @@
 package handler
 
 import (
+	"io"
+	"net/http"
+	"net/http/httptest"
 	"testing"
 	"time"
 
@@ -8,15 +11,31 @@ import (
 )
 
 func TestGetDate(t *testing.T) {
-	output := GetDate()
+	req := httptest.NewRequest("GET", "http://example.com/date", nil)
+	w := httptest.NewRecorder()
+	GetDate(w, req)
 	today := time.Now().Format("2006-01-28")
-	assert.Equal(t, today, output)
+	resp := w.Result()
+	body, _ := io.ReadAll(resp.Body)
+	assert.Equal(t, http.StatusOK, resp.StatusCode)
+	assert.Equal(t, today, string(body))
 }
 
 func TestSayHello(t *testing.T) {
-	assert.Equal(t, "Hello from the day02-http-server in Go.", SayHello())
+	req := httptest.NewRequest("GET", "http://example.com/hello", nil)
+	w := httptest.NewRecorder()
+	SayHello(w, req)
+	resp := w.Result()
+	body, _ := io.ReadAll(resp.Body)
+	assert.Equal(t, http.StatusOK, resp.StatusCode)
+	assert.Equal(t, "Hello from the day02-http-server in Go.", string(body))
 }
 
 func TestGetStatus(t *testing.T) {
-	assert.Equal(t, "This is a place holder for the status.", GetStatus())
+	req := httptest.NewRequest("GET", "http://example.com/status", nil)
+	w := httptest.NewRecorder()
+	GetStatus(w, req)
+	resp := w.Result()
+	body, _ := io.ReadAll(resp.Body)
+	assert.Equal(t, "This is a place holder for the status.", string(body))
 }
