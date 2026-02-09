@@ -1,15 +1,26 @@
 package main
 
 import (
-	"log"
 	"net/http"
 
 	"example.com/day02-http-server/handler"
+	"github.com/go-chi/chi"
+	"github.com/go-chi/chi/v5/middleware"
 )
 
 func main() {
-	http.HandleFunc("/hello", handler.SayHello)
-	http.HandleFunc("/status", handler.GetStatus)
-	http.HandleFunc("/date", handler.GetDate)
-	log.Fatal(http.ListenAndServe(":8080", nil))
+	r := chi.NewRouter()
+
+	r.Use(middleware.RequestID)
+	r.Use(middleware.RealIP)
+	r.Use(middleware.Logger)
+	r.Use(middleware.Recoverer)
+
+	r.Get("/", func(w http.ResponseWriter, r *http.Request) {
+		w.Write([]byte("hi"))
+	})
+	r.Get("/hello", handler.SayHello)
+	r.Get("/status", handler.GetStatus)
+	r.Get("/date", handler.GetDate)
+	http.ListenAndServe(":8080", r)
 }
