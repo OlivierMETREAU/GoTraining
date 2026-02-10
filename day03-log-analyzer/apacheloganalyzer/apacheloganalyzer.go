@@ -1,6 +1,7 @@
 package apacheloganalyzer
 
 import (
+	"errors"
 	"regexp"
 	"strconv"
 	"time"
@@ -18,7 +19,7 @@ func New() ApacheLogAnalyzer {
 	}
 }
 
-func (ala ApacheLogAnalyzer) DecodeLine(l string) sharedtypes.AccessLine {
+func (ala ApacheLogAnalyzer) DecodeLine(l string) (sharedtypes.AccessLine, error) {
 
 	result := make(map[string]string)
 	match := ala.regex.FindStringSubmatch(l)
@@ -28,19 +29,21 @@ func (ala ApacheLogAnalyzer) DecodeLine(l string) sharedtypes.AccessLine {
 				result[name] = match[i]
 			}
 		}
+
+		d, _ := time.ParseInLocation("02/Jan/2006:15:04:05 -0700", result["datetime"], time.UTC)
+		status, _ := strconv.Atoi(result["status"])
+		size, _ := strconv.Atoi(result["size"])
+		return sharedtypes.AccessLine{
+			IP:         result["remote_host"],
+			UserID:     result["remote_user"],
+			DateTime:   d,
+			Method:     result["method"],
+			RequestUri: result["request_uri"],
+			Protocol:   result["protocol"],
+			Status:     status,
+			Size:       size,
+		}, nil
 	}
 
-	d, _ := time.ParseInLocation("02/Jan/2006:15:04:05 -0700", result["datetime"], time.UTC)
-	status, _ := strconv.Atoi(result["status"])
-	size, _ := strconv.Atoi(result["size"])
-	return sharedtypes.AccessLine{
-		IP:         result["remote_host"],
-		UserID:     result["remote_user"],
-		DateTime:   d,
-		Method:     result["method"],
-		RequestUri: result["request_uri"],
-		Protocol:   result["protocol"],
-		Status:     status,
-		Size:       size,
-	}
+	return sharedtypes.AccessLine{}, errors.New("Issue while analyzing the line.")
 }
