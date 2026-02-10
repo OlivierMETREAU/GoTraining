@@ -5,6 +5,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"strconv"
 
 	sharedtypes "example.com/day03-log-analyzer/sharedtypes"
 )
@@ -32,6 +33,7 @@ func New(ld LineDecoder, fp string) LogAnalyzer {
 			"RequestUri": {},
 			"Protocol":   {},
 			"Status":     {},
+			"Hours":      {},
 		},
 		totalSize:        0,
 		numberOfRequests: 0,
@@ -66,6 +68,7 @@ func (la *LogAnalyzer) incrementCounters(al sharedtypes.AccessLine) {
 	la.Counters["RequestUri"][al.RequestUri] += 1
 	la.Counters["Protocol"][al.Protocol] += 1
 	la.Counters["Status"][http.StatusText(al.Status)] += 1
+	la.Counters["Hours"][strconv.Itoa(al.DateTime.Hour())] += 1
 	la.totalSize += al.Size
 	la.numberOfRequests += 1
 }
