@@ -1,6 +1,8 @@
 package log
 
 import (
+	"fmt"
+	"os"
 	"testing"
 	"time"
 
@@ -18,4 +20,11 @@ func TestAccessLine(t *testing.T) {
 	assert.Equal(t, "HTTP/1.1", al.Protocol)
 	assert.Equal(t, 200, al.Status)
 	assert.Equal(t, 203023, al.Size)
+}
+
+func TestAnalyzeFile(t *testing.T) {
+	wd, _ := os.Getwd()
+	fmt.Println(wd)
+	out := AnalyzeFile("./../apache.log")
+	assert.Equal(t, 6, out["IP"]["105.235.130.196"])
 }
