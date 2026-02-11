@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"slices"
 	"testing"
 	"time"
 
@@ -13,7 +14,7 @@ func TestFilterEvenNumbers(t *testing.T) {
 	input := make(chan int)
 	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
 	defer cancel()
-	out := FilterEvenNumbers(ctx, input)
+	out := FilterEvenNumbers(ctx, input, false)
 
 	go func() {
 		defer close(input)
@@ -36,7 +37,7 @@ func TestMultiplsByThree(t *testing.T) {
 	input := make(chan int)
 	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
 	defer cancel()
-	out := MultiplyByThree(ctx, 4, input)
+	out := MultiplyByThree(ctx, 4, input, false)
 
 	go func() {
 		defer close(input)
@@ -48,6 +49,8 @@ func TestMultiplsByThree(t *testing.T) {
 	for n := range out {
 		multipliedOutput = append(multipliedOutput, n)
 	}
+	slices.Sort(expectedEvenNumbers)
+	slices.Sort(multipliedOutput)
 	assert.Equal(t, expectedEvenNumbers, multipliedOutput)
 }
 
@@ -57,7 +60,7 @@ func TestSumValues(t *testing.T) {
 	input := make(chan int)
 	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
 	defer cancel()
-	out := SumValues(ctx, input)
+	out := SumValues(ctx, input, false)
 
 	go func() {
 		defer close(input)
