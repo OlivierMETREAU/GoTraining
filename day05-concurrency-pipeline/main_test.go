@@ -1,7 +1,9 @@
 package main
 
 import (
+	"context"
 	"testing"
+	"time"
 
 	"github.com/stretchr/testify/assert"
 )
@@ -9,7 +11,9 @@ import (
 func TestFilterEvenNumbers(t *testing.T) {
 	numbers := []int{1, 2, 3, 4, 5, 6, 7, 8, 9}
 	input := make(chan int)
-	out := FilterEvenNumbers(input)
+	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
+	defer cancel()
+	out := FilterEvenNumbers(ctx, input)
 
 	go func() {
 		defer close(input)
@@ -30,7 +34,9 @@ func TestMultiplsByThree(t *testing.T) {
 	numbers := []int{1, 2, 3, 4, 5}
 	expectedEvenNumbers := []int{3, 6, 9, 12, 15}
 	input := make(chan int)
-	out := MultiplyByThree(input)
+	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
+	defer cancel()
+	out := MultiplyByThree(ctx, input)
 
 	go func() {
 		defer close(input)
@@ -49,7 +55,9 @@ func TestSumValues(t *testing.T) {
 	numbers := []int{1, 2, 3, 4, 5}
 	expectedOutput := 15
 	input := make(chan int)
-	out := SumValues(input)
+	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
+	defer cancel()
+	out := SumValues(ctx, input)
 
 	go func() {
 		defer close(input)
