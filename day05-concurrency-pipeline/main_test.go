@@ -8,8 +8,21 @@ import (
 
 func TestFilterEvenNumbers(t *testing.T) {
 	numbers := []int{1, 2, 3, 4, 5, 6, 7, 8, 9}
+	input := make(chan int)
+	filter := FilterEvenNumbers(input)
+
+	go func() {
+		defer close(input)
+		for _, n := range numbers {
+			input <- n
+		}
+	}()
+
 	expectedEvenNumbers := []int{2, 4, 6, 8}
-	evenNumbers := FilterEvenNumbers(numbers)
+	var evenNumbers []int
+	for n := range filter {
+		evenNumbers = append(evenNumbers, n)
+	}
 	assert.Equal(t, expectedEvenNumbers, evenNumbers)
 }
 
