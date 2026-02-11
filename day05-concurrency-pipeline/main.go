@@ -16,3 +16,9 @@ func FilterEvenNumbers(l []int) []int {
 	}
 	return evenNumbers
 }
+
+func MultiplyByThree(numbers []int) {
+	for i := range numbers {
+		numbers[i] *= 3
+	}
+}

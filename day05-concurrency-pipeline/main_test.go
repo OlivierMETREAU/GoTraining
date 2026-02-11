@@ -12,3 +12,10 @@ func TestFilterEvenNumbers(t *testing.T) {
 	evenNumbers := FilterEvenNumbers(numbers)
 	assert.Equal(t, expectedEvenNumbers, evenNumbers)
 }
+
+func TestMultiplsByThree(t *testing.T) {
+	numbers := []int{1, 2, 3, 4, 5}
+	expectedEvenNumbers := []int{3, 6, 9, 12, 15}
+	MultiplyByThree(numbers)
+	assert.Equal(t, expectedEvenNumbers, numbers)
+}
