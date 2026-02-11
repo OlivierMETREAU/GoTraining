@@ -22,3 +22,13 @@ func MultiplyByThree(numbers []int) {
 		numbers[i] *= 3
 	}
 }
+
+func SumValues(numbers []int) int {
+	sum := 0
+
+	for _, n := range numbers {
+		sum += n
+	}
+
+	return sum
+}

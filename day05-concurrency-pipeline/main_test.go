@@ -19,3 +19,9 @@ func TestMultiplsByThree(t *testing.T) {
 	MultiplyByThree(numbers)
 	assert.Equal(t, expectedEvenNumbers, numbers)
 }
+
+func TestSumValues(t *testing.T) {
+	numbers := []int{1, 2, 3, 4, 5}
+	sum := SumValues(numbers)
+	assert.Equal(t, 15, sum)
+}
