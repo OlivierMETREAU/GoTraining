@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"fmt"
+	"log"
 	"sync"
 	"time"
 )
@@ -13,9 +14,11 @@ func main() {
 	input := make(chan int)
 	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
 	defer cancel()
-	step1 := FilterEvenNumbers(ctx, input)
-	step2 := MultiplyByThree(ctx, 4, step1)
-	step3 := SumValues(ctx, step2)
+
+	verbose := true
+	step1 := FilterEvenNumbers(ctx, input, verbose)
+	step2 := MultiplyByThree(ctx, 4, step1, verbose)
+	step3 := SumValues(ctx, step2, verbose)
 
 	go func() {
 		defer close(input)
@@ -35,7 +38,7 @@ func main() {
 	// step3: 60
 }
 
-func FilterEvenNumbers(ctx context.Context, in <-chan int) <-chan int {
+func FilterEvenNumbers(ctx context.Context, in <-chan int, verbose bool) <-chan int {
 	out := make(chan int)
 	go func() {
 		defer close(out)
@@ -48,6 +51,9 @@ func FilterEvenNumbers(ctx context.Context, in <-chan int) <-chan int {
 					return
 				}
 				if n%2 == 0 {
+					if verbose {
+						log.Printf("filterEven: %d is even", n)
+					}
 					out <- n
 				}
 			}
@@ -56,25 +62,30 @@ func FilterEvenNumbers(ctx context.Context, in <-chan int) <-chan int {
 	return out
 }
 
-func MultiplyByThree(ctx context.Context, workers int, in <-chan int) <-chan int {
+func MultiplyByThree(ctx context.Context, workers int, in <-chan int, verbose bool) <-chan int {
 	out := make(chan int)
 	var wg sync.WaitGroup
 	wg.Add(workers)
 
-	go func() {
-		defer close(out)
-		for {
-			select {
-			case <-ctx.Done():
-				return
-			case n, ok := <-in:
-				if !ok {
+	for i := 0; i < workers; i++ {
+		go func(id int) {
+			defer wg.Done()
+			for {
+				select {
+				case <-ctx.Done():
 					return
+				case n, ok := <-in:
+					if !ok {
+						return
+					}
+					if verbose {
+						log.Printf("worker %d: multiply %d → %d", id, n, n*3)
+					}
+					out <- n * 3
 				}
-				out <- n * 3
 			}
-		}
-	}()
+		}(i)
+	}
 
 	go func() {
 		wg.Wait()
@@ -84,7 +95,7 @@ func MultiplyByThree(ctx context.Context, workers int, in <-chan int) <-chan int
 	return out
 }
 
-func SumValues(ctx context.Context, in <-chan int) <-chan int {
+func SumValues(ctx context.Context, in <-chan int, verbose bool) <-chan int {
 	out := make(chan int)
 	go func() {
 		defer close(out)
@@ -95,10 +106,16 @@ func SumValues(ctx context.Context, in <-chan int) <-chan int {
 				return
 			case n, ok := <-in:
 				if !ok {
+					if verbose {
+						log.Printf("sum: final total = %d", total)
+					}
 					out <- total
 					return
 				}
 				total += n
+				if verbose {
+					log.Printf("sum: added %d → total %d", n, total)
+				}
 			}
 		}
 	}()
