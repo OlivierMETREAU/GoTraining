@@ -19,18 +19,26 @@ func FilterEvenNumbers(in <-chan int) <-chan int {
 	return out
 }
 
-func MultiplyByThree(numbers []int) {
-	for i := range numbers {
-		numbers[i] *= 3
-	}
+func MultiplyByThree(in <-chan int) <-chan int {
+	out := make(chan int)
+	go func() {
+		defer close(out)
+		for n := range in {
+			out <- n * 3
+		}
+	}()
+	return out
 }
 
-func SumValues(numbers []int) int {
-	sum := 0
-
-	for _, n := range numbers {
-		sum += n
-	}
-
-	return sum
+func SumValues(in <-chan int) <-chan int {
+	out := make(chan int)
+	go func() {
+		defer close(out)
+		total := 0
+		for i := range in {
+			total += i
+		}
+		out <- total
+	}()
+	return out
 }
