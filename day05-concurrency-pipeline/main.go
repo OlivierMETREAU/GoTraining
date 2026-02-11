@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"fmt"
+	"sync"
 	"time"
 )
 
@@ -13,7 +14,7 @@ func main() {
 	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
 	defer cancel()
 	step1 := FilterEvenNumbers(ctx, input)
-	step2 := MultiplyByThree(ctx, step1)
+	step2 := MultiplyByThree(ctx, 4, step1)
 	step3 := SumValues(ctx, step2)
 
 	go func() {
@@ -55,8 +56,11 @@ func FilterEvenNumbers(ctx context.Context, in <-chan int) <-chan int {
 	return out
 }
 
-func MultiplyByThree(ctx context.Context, in <-chan int) <-chan int {
+func MultiplyByThree(ctx context.Context, workers int, in <-chan int) <-chan int {
 	out := make(chan int)
+	var wg sync.WaitGroup
+	wg.Add(workers)
+
 	go func() {
 		defer close(out)
 		for {
@@ -71,6 +75,12 @@ func MultiplyByThree(ctx context.Context, in <-chan int) <-chan int {
 			}
 		}
 	}()
+
+	go func() {
+		wg.Wait()
+		close(out)
+	}()
+
 	return out
 }
 

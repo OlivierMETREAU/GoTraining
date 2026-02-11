@@ -36,7 +36,7 @@ func TestMultiplsByThree(t *testing.T) {
 	input := make(chan int)
 	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
 	defer cancel()
-	out := MultiplyByThree(ctx, input)
+	out := MultiplyByThree(ctx, 4, input)
 
 	go func() {
 		defer close(input)
