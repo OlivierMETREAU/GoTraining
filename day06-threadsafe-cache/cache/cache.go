@@ -20,3 +20,8 @@ func (c *Cache) Set(key string, value any) error {
 	}
 	return errors.New("Empty string as keyvalue is not allowed.")
 }
+
+func (c *Cache) Get(key string) (any, bool) {
+	v, ok := c.data[key]
+	return v, ok
+}

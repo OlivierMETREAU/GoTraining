@@ -21,3 +21,18 @@ func TestSetWithNonEmptyString(t *testing.T) {
 	assert.Contains(t, c.data, "John")
 	assert.NotEmpty(t, c.data)
 }
+
+func TestGetWithUnknownKey(t *testing.T) {
+	c := New()
+	v, ok := c.Get("John")
+	assert.Equal(t, nil, v)
+	assert.Equal(t, false, ok)
+}
+
+func TestGetWithKnownKey(t *testing.T) {
+	c := New()
+	c.Set("John", "Doe")
+	v, ok := c.Get("John")
+	assert.Equal(t, "Doe", v)
+	assert.Equal(t, true, ok)
+}
