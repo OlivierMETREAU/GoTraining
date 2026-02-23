@@ -1,6 +1,8 @@
 package cache
 
 import (
+	"fmt"
+	"sync"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -35,4 +37,32 @@ func TestGetWithKnownKey(t *testing.T) {
 	v, ok := c.Get("John")
 	assert.Equal(t, "Doe", v)
 	assert.Equal(t, true, ok)
+}
+
+func TestCacheConcurrentAccess(t *testing.T) {
+	c := New()
+
+	var wg sync.WaitGroup
+
+	// Start 100 writers
+	for i := 0; i < 100; i++ {
+		wg.Add(1)
+		go func(i int) {
+			defer wg.Done()
+			key := fmt.Sprintf("key-%d", i)
+			c.Set(key, i)
+		}(i)
+	}
+
+	// Start 100 readers
+	for i := 0; i < 100; i++ {
+		wg.Add(1)
+		go func(i int) {
+			defer wg.Done()
+			key := fmt.Sprintf("key-%d", i)
+			c.Get(key)
+		}(i)
+	}
+
+	wg.Wait()
 }
