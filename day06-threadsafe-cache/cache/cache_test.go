@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"sync"
 	"testing"
+	"time"
 
 	"github.com/stretchr/testify/assert"
 )
@@ -65,4 +66,12 @@ func TestCacheConcurrentAccess(t *testing.T) {
 	}
 
 	wg.Wait()
+}
+
+func TestSetWithTTLWithEmptzKey(t *testing.T) {
+	c := New()
+	err := c.SetWithTTL("", 0, time.Duration(10*float64(time.Second)))
+	assert.NotEqual(t, nil, err)
+	assert.NotContains(t, c.data, "")
+	assert.Empty(t, c.data)
 }
