@@ -34,12 +34,16 @@ func TestBuildFrequencyTable(t *testing.T) {
 func TestBuildHuffmanTree(t *testing.T) {
 	freq := map[rune]int{'a': 5, 'b': 2, 'c': 1}
 	tree := BuildHuffmanTree(freq)
+	assert.Equal(t, 8, tree.Freq, "expected root freq 8, got %d", tree.Freq)
+}
 
-	if tree == nil {
-		t.Fatal("tree is nil")
-	}
+func TestGenerateCodes(t *testing.T) {
+	freq := map[rune]int{'a': 5, 'b': 2, 'c': 1}
+	tree := BuildHuffmanTree(freq)
 
-	if tree.Freq != 8 {
-		t.Errorf("expected root freq 8, got %d", tree.Freq)
-	}
+	codes := make(map[rune]string)
+	GenerateCodes(tree, "", codes)
+
+	assert.Equal(t, 3, len(codes), "expected 3 codes, got %d", len(codes))
+	assert.Equal(t, map[rune]string{'a': "1", 'b': "01", 'c': "00"}, codes)
 }

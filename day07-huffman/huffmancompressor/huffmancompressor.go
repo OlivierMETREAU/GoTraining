@@ -85,3 +85,15 @@ func BuildHuffmanTree(freq map[rune]int) *Node {
 	// When only one node remains, it is the root of the Huffman tree.
 	return heap.Pop(pq).(*Node)
 }
+
+func GenerateCodes(n *Node, prefix string, codes map[rune]string) {
+	if n == nil {
+		return
+	}
+	if n.Left == nil && n.Right == nil {
+		codes[n.R] = prefix
+		return
+	}
+	GenerateCodes(n.Left, prefix+"0", codes)
+	GenerateCodes(n.Right, prefix+"1", codes)
+}
