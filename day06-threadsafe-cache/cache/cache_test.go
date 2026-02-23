@@ -68,10 +68,28 @@ func TestCacheConcurrentAccess(t *testing.T) {
 	wg.Wait()
 }
 
-func TestSetWithTTLWithEmptzKey(t *testing.T) {
+func TestSetWithTTLWithEmptyKey(t *testing.T) {
 	c := New()
 	err := c.SetWithTTL("", 0, time.Duration(10*float64(time.Second)))
 	assert.NotEqual(t, nil, err)
 	assert.NotContains(t, c.data, "")
 	assert.Empty(t, c.data)
+}
+
+func TestGetBeforeExpiration(t *testing.T) {
+	c := New()
+	c.SetWithTTL("John", "Doe", time.Duration(float64(time.Second)))
+	time.Sleep(time.Duration(0.9 * float64(time.Second)))
+	v, ok := c.Get("John")
+	assert.Equal(t, "Doe", v)
+	assert.Equal(t, true, ok)
+}
+
+func TestGetAfterExpiration(t *testing.T) {
+	c := New()
+	c.SetWithTTL("John", "Doe", time.Duration(float64(time.Second)))
+	time.Sleep(time.Duration(1.1 * float64(time.Second)))
+	v, ok := c.Get("John")
+	assert.Equal(t, nil, v)
+	assert.Equal(t, false, ok)
 }

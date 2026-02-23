@@ -49,8 +49,21 @@ func (c *Cache) Set(key string, value any) error {
 
 func (c *Cache) Get(key string) (any, bool) {
 	c.mu.RLock() // shared read lock
-	defer c.mu.RUnlock()
+	it, ok := c.data[key]
+	c.mu.RUnlock()
 
-	v, ok := c.data[key]
-	return v.value, ok
+	if !ok {
+		return nil, false
+	}
+
+	// Check expiration
+	if !it.expiresAt.IsZero() && time.Now().After(it.expiresAt) {
+		// Expired → remove it
+		c.mu.Lock()
+		delete(c.data, key)
+		c.mu.Unlock()
+		return nil, false
+	}
+
+	return it.value, true
 }
