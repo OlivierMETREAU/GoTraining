@@ -1,17 +1,27 @@
 package huffmancompressor
 
 import (
+	"bytes"
 	"container/heap"
+	"encoding/binary"
 	"fmt"
+	"io"
 	"os"
 	"strings"
 )
 
+// Node represents a node in the Huffman tree.
 type Node struct {
 	R     rune
 	Freq  int
 	Left  *Node
 	Right *Node
+}
+
+// HuffmanCompressor implements the Compressor interface.
+type HuffmanCompressor struct {
+	tree  *Node
+	codes map[rune]string
 }
 
 func ReadFile(path string) ([]byte, error) {
@@ -147,4 +157,81 @@ func Decode(encoded string, root *Node) string {
 	}
 
 	return out.String()
+}
+
+func NewHuffmanCompressor() *HuffmanCompressor {
+	return &HuffmanCompressor{}
+}
+
+func (h *HuffmanCompressor) Compress(input []byte) ([]byte, error) {
+	// Build frequency table and tree
+	freq := BuildFrequencyTable(input)
+	h.tree = BuildHuffmanTree(freq)
+	h.codes = make(map[rune]string)
+	GenerateCodes(h.tree, "", h.codes)
+
+	// Encode input into bitstring
+	encoded := Encode(input, h.codes)
+
+	// Serialize tree
+	buf := new(bytes.Buffer)
+	serializeTree(h.tree, buf)
+
+	// Separator (optional but useful)
+	// You can remove this if you want, but it's handy for debugging.
+	buf.WriteByte(0xFF)
+
+	// Write encoded data
+	buf.WriteString(encoded)
+
+	return buf.Bytes(), nil
+}
+
+func (h *HuffmanCompressor) Decompress(input []byte) ([]byte, error) {
+	buf := bytes.NewReader(input)
+
+	// Deserialize tree
+	h.tree = deserializeTree(buf)
+
+	// Read separator (0xFF)
+	sep, _ := buf.ReadByte()
+	if sep != 0xFF {
+		return nil, fmt.Errorf("invalid compressed file format")
+	}
+
+	// Remaining bytes = encoded bitstring
+	encodedBytes, _ := io.ReadAll(buf)
+	encoded := string(encodedBytes)
+
+	// Decode using the reconstructed tree
+	decoded := Decode(encoded, h.tree)
+	return []byte(decoded), nil
+}
+
+func (h *HuffmanCompressor) Name() string {
+	return "Huffman"
+}
+
+// Leaf marker = 1, Internal node = 0
+func serializeTree(n *Node, buf *bytes.Buffer) {
+	if n.Left == nil && n.Right == nil {
+		buf.WriteByte(1) // leaf
+		binary.Write(buf, binary.LittleEndian, int32(n.R))
+		return
+	}
+	buf.WriteByte(0) // internal
+	serializeTree(n.Left, buf)
+	serializeTree(n.Right, buf)
+}
+
+func deserializeTree(buf *bytes.Reader) *Node {
+	marker, _ := buf.ReadByte()
+	if marker == 1 {
+		var r int32
+		binary.Read(buf, binary.LittleEndian, &r)
+		return &Node{R: rune(r)}
+	}
+	left := deserializeTree(buf)
+	right := deserializeTree(buf)
+	return &Node{Left: left, Right: right}
 }

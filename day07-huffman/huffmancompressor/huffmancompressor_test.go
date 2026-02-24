@@ -62,3 +62,17 @@ func TestEncodeThenDecode(t *testing.T) {
 
 	assert.Equal(t, string(data), decoded)
 }
+
+func TestHuffmanCompressor(t *testing.T) {
+	c := NewHuffmanCompressor()
+
+	input := []byte("Test string to check the huffman compressor.")
+
+	compressed, err := c.Compress(input)
+	assert.Equal(t, nil, err, "compress error")
+
+	decompressed, err := c.Decompress(compressed)
+	assert.Equal(t, nil, err, "decompress error")
+
+	assert.Equal(t, string(input), string(decompressed), "round-trip mismatch")
+}
