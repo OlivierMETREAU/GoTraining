@@ -47,3 +47,18 @@ func TestGenerateCodes(t *testing.T) {
 	assert.Equal(t, 3, len(codes), "expected 3 codes, got %d", len(codes))
 	assert.Equal(t, map[rune]string{'a': "1", 'b': "01", 'c': "00"}, codes)
 }
+
+func TestEncodeThenDecode(t *testing.T) {
+	data := []byte("hello huffman")
+
+	freq := BuildFrequencyTable(data)
+	tree := BuildHuffmanTree(freq)
+
+	codes := make(map[rune]string)
+	GenerateCodes(tree, "", codes)
+
+	encoded := Encode(data, codes)
+	decoded := Decode(encoded, tree)
+
+	assert.Equal(t, string(data), decoded)
+}

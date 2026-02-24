@@ -2,7 +2,9 @@ package huffmancompressor
 
 import (
 	"container/heap"
+	"fmt"
 	"os"
+	"strings"
 )
 
 type Node struct {
@@ -96,4 +98,53 @@ func GenerateCodes(n *Node, prefix string, codes map[rune]string) {
 	}
 	GenerateCodes(n.Left, prefix+"0", codes)
 	GenerateCodes(n.Right, prefix+"1", codes)
+}
+
+func PrintTree(n *Node, indent string, last bool) {
+	if n == nil {
+		return
+	}
+	fmt.Print(indent)
+	if last {
+		fmt.Print("└─")
+		indent += "  "
+	} else {
+		fmt.Print("├─")
+		indent += "│ "
+	}
+	if n.R == 0 {
+		fmt.Printf("(%d)\n", n.Freq)
+	} else {
+		fmt.Printf("%q (%d)\n", n.R, n.Freq)
+	}
+	PrintTree(n.Left, indent, false)
+	PrintTree(n.Right, indent, true)
+}
+
+func Encode(data []byte, codes map[rune]string) string {
+	var b strings.Builder
+	for _, r := range string(data) {
+		b.WriteString(codes[r])
+	}
+	return b.String()
+}
+
+func Decode(encoded string, root *Node) string {
+	var out strings.Builder
+	node := root
+
+	for _, bit := range encoded {
+		if bit == '0' {
+			node = node.Left
+		} else {
+			node = node.Right
+		}
+
+		if node.Left == nil && node.Right == nil {
+			out.WriteRune(node.R)
+			node = root
+		}
+	}
+
+	return out.String()
 }
