@@ -3,6 +3,7 @@ package orm
 import (
 	"fmt"
 	"reflect"
+	"strings"
 )
 
 type TestStructure struct {
@@ -41,4 +42,65 @@ func (s *TestStructure) Inspect() {
 		fmt.Println("---")
 	}
 
+}
+
+func BuildInsertQuery(model any) (string, []any, error) {
+	t := reflect.TypeOf(model)
+	v := reflect.ValueOf(model)
+
+	// Dereference pointer
+	if t.Kind() == reflect.Pointer {
+		t = t.Elem()
+		v = v.Elem()
+	}
+
+	if t.Kind() != reflect.Struct {
+		return "", nil, fmt.Errorf("BuildInsertQuery: expected struct")
+	}
+
+	table := strings.ToLower(t.Name()) + "s"
+
+	var columns []string
+	var placeholders []string
+	var args []any
+
+	for i := 0; i < t.NumField(); i++ {
+		field := t.Field(i)
+		value := v.Field(i)
+
+		// Skip unexported fields
+		if !value.CanInterface() {
+			continue
+		}
+
+		// Read struct tag
+		col := field.Tag.Get("db")
+		if col == "" {
+			col = strings.ToLower(field.Name)
+		}
+
+		// Only handle string, int, bool
+		switch value.Kind() {
+		case reflect.String, reflect.Int, reflect.Bool:
+			columns = append(columns, col)
+			placeholders = append(placeholders, "?")
+			args = append(args, value.Interface())
+		}
+	}
+
+	query := fmt.Sprintf(
+		"INSERT INTO %s (%s) VALUES (%s)",
+		table,
+		strings.Join(columns, ", "),
+		strings.Join(placeholders, ", "),
+	)
+
+	return query, args, nil
+}
+
+func SaveUserToDatabase(s TestStructure) {
+	sql, args, err := BuildInsertQuery(s)
+	fmt.Println(sql)
+	fmt.Println(args)
+	fmt.Println(err)
 }

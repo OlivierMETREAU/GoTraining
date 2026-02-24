@@ -8,3 +8,8 @@ func TestReflexion(t *testing.T) {
 	s := New("John", 42)
 	s.Inspect()
 }
+
+func TestInsert(t *testing.T) {
+	s := New("John", 42)
+	SaveUserToDatabase(s)
+}
