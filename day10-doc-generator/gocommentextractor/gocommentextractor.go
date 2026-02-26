@@ -102,52 +102,62 @@ func extractDeclarationComments(file *ast.File, fset *token.FileSet, fc *FileCom
 	ast.Inspect(file, func(n ast.Node) bool {
 		switch node := n.(type) {
 
-		// General declarations: type, const, var, import
 		case *ast.GenDecl:
-			if node.Doc == nil {
-				return true
-			}
+			extractGenDeclComment(node, fset, fc)
 
-			ctx := ""
-			switch node.Tok {
-			case token.TYPE:
-				ctx = "type"
-			case token.CONST:
-				ctx = "const"
-			case token.VAR:
-				ctx = "var"
-			case token.IMPORT:
-				ctx = "import"
-			}
-
-			start := fset.Position(node.Doc.Pos()).Line
-			end := fset.Position(node.Doc.End()).Line
-
-			fc.Comments = append(fc.Comments, CommentBlock{
-				Text:      node.Doc.Text(),
-				LineStart: start,
-				LineEnd:   end,
-				Context:   ctx,
-			})
-
-		// Function declarations
 		case *ast.FuncDecl:
-			if node.Doc == nil {
-				return true
-			}
-
-			start := fset.Position(node.Doc.Pos()).Line
-			end := fset.Position(node.Doc.End()).Line
-
-			fc.Comments = append(fc.Comments, CommentBlock{
-				Text:       node.Doc.Text(),
-				LineStart:  start,
-				LineEnd:    end,
-				Context:    "function",
-				SubContext: node.Name.Name,
-			})
+			extractFuncDeclComment(node, fset, fc)
 		}
 
 		return true
+	})
+}
+
+// extractGenDeclComment extracts comments attached to general declarations:
+// type, const, var, import.
+func extractGenDeclComment(node *ast.GenDecl, fset *token.FileSet, fc *FileComments) {
+	if node.Doc == nil {
+		return
+	}
+
+	ctx := ""
+	switch node.Tok {
+	case token.TYPE:
+		ctx = "type"
+	case token.CONST:
+		ctx = "const"
+	case token.VAR:
+		ctx = "var"
+	case token.IMPORT:
+		ctx = "import"
+	}
+
+	start := fset.Position(node.Doc.Pos()).Line
+	end := fset.Position(node.Doc.End()).Line
+
+	fc.Comments = append(fc.Comments, CommentBlock{
+		Text:      node.Doc.Text(),
+		LineStart: start,
+		LineEnd:   end,
+		Context:   ctx,
+	})
+}
+
+// extractFuncDeclComment extracts comments attached to function declarations.
+// The SubContext field is set to the function name.
+func extractFuncDeclComment(node *ast.FuncDecl, fset *token.FileSet, fc *FileComments) {
+	if node.Doc == nil {
+		return
+	}
+
+	start := fset.Position(node.Doc.Pos()).Line
+	end := fset.Position(node.Doc.End()).Line
+
+	fc.Comments = append(fc.Comments, CommentBlock{
+		Text:       node.Doc.Text(),
+		LineStart:  start,
+		LineEnd:    end,
+		Context:    "function",
+		SubContext: node.Name.Name,
 	})
 }
