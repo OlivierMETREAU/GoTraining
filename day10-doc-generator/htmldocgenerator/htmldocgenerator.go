@@ -2,8 +2,10 @@ package htmldocgenerator
 
 import (
 	"io/fs"
+	"os"
 	"path/filepath"
 	"strings"
+	"text/template"
 
 	"example.com/day10-doc-generator/gocommentextractor"
 )
@@ -12,6 +14,18 @@ import (
 // - Recursively walk the project
 // - Spawn goroutines to extract comments using the previous package
 // - Generate HTML pages (per file, per package, or a global index)
+
+type htmlFile struct {
+	ID       string
+	Path     string
+	RelPath  string
+	Package  string
+	Comments []gocommentextractor.CommentBlock
+}
+
+type htmlData struct {
+	Files []htmlFile
+}
 
 // FindGoFiles recursively scans a directory and returns all .go files
 // except *_test.go files.
@@ -98,4 +112,32 @@ func runWorkers(files []string, workerCount int) ([]gocommentextractor.FileComme
 	}
 
 	return output, nil
+}
+
+func GenerateHTML(outputPath string, files []gocommentextractor.FileComments, root string) error {
+	data := htmlData{Files: make([]htmlFile, 0, len(files))}
+
+	for i, fc := range files {
+		rel, _ := filepath.Rel(root, fc.FilePath)
+		id := "file_" + strings.ReplaceAll(rel, string(os.PathSeparator), "_")
+
+		data.Files = append(data.Files, htmlFile{
+			ID:       id,
+			Path:     fc.FilePath,
+			RelPath:  rel,
+			Package:  fc.Package,
+			Comments: fc.Comments,
+		})
+
+		_ = i
+	}
+
+	f, err := os.Create(outputPath)
+	if err != nil {
+		return err
+	}
+	defer f.Close()
+
+	tmpl := template.Must(template.New("doc").Parse(htmlTemplate))
+	return tmpl.Execute(f, data)
 }

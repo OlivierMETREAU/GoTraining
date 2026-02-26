@@ -29,10 +29,14 @@ func main() {
 		log.Fatalf("Error extracting project info: %v", err)
 	}
 
-	// Print results for now (later you’ll generate HTML)
-	for _, r := range results {
-		printFileSummary(r)
+	if err := htmldocgenerator.GenerateHTML("docs.html", results, input); err != nil {
+		log.Fatalf("HTML generation failed: %v", err)
 	}
+
+	// Print results for now (later you’ll generate HTML)
+	// for _, r := range results {
+	// 	printFileSummary(r)
+	// }
 }
 
 func printFileSummary(fc gocommentextractor.FileComments) {
