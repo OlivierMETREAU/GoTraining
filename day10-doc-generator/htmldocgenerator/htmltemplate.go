@@ -47,7 +47,9 @@ const htmlTemplate = `
 
       {{range $blocks}}
       <div class="comment-block">
-        <div class="comment-context">{{$ctx}}</div>
+        <div class="comment-context">
+          {{$ctx}}{{if .SubContext}} — {{.SubContext}}{{end}}
+        </div>
         <div class="comment-text">{{.Text}}</div>
         <div class="comment-lines">Lines {{.LineStart}}–{{.LineEnd}}</div>
       </div>

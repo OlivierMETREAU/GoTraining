@@ -13,10 +13,11 @@ import (
 
 // CommentBlock structure containing the linStart, lineEnd, text and context of each comment block
 type CommentBlock struct {
-	LineStart int
-	LineEnd   int
-	Text      string
-	Context   string // "package", "type", "func", "var", "inline"
+	Text       string
+	LineStart  int
+	LineEnd    int
+	Context    string // "package", "type", "function", "var", "const", ...
+	SubContext string // e.g. "Open", "NewDB", "Run", ...
 }
 
 // FileComments strcuture containing the filePth, the package name and the slice of comments
@@ -97,17 +98,17 @@ func extractDeclarationComments(file *ast.File, fset *token.FileSet, fc *FileCom
 				return true
 			}
 
-			ctx := "func " + node.Name.Name
-
 			start := fset.Position(node.Doc.Pos()).Line
 			end := fset.Position(node.Doc.End()).Line
 
 			fc.Comments = append(fc.Comments, CommentBlock{
-				Text:      node.Doc.Text(),
-				LineStart: start,
-				LineEnd:   end,
-				Context:   ctx,
+				Text:       node.Doc.Text(),
+				LineStart:  start,
+				LineEnd:    end,
+				Context:    "function",
+				SubContext: node.Name.Name,
 			})
+
 		}
 
 		return true

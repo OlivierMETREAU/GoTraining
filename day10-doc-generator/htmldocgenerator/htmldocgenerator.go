@@ -144,30 +144,28 @@ func GenerateHTML(outputPath string, files []gocommentextractor.FileComments, ro
 
 func groupByContext(comments []gocommentextractor.CommentBlock) map[string][]gocommentextractor.CommentBlock {
 	grouped := make(map[string][]gocommentextractor.CommentBlock)
-
 	for _, c := range comments {
 		grouped[c.Context] = append(grouped[c.Context], c)
 	}
-
 	return grouped
 }
 
-func prepareHTMLData(files []gocommentextractor.FileComments, root string) htmlData {
-	data := htmlData{Files: make([]htmlFile, 0, len(files))}
+// func prepareHTMLData(files []gocommentextractor.FileComments, root string) htmlData {
+// 	data := htmlData{Files: make([]htmlFile, 0, len(files))}
 
-	for _, fc := range files {
-		rel, _ := filepath.Rel(root, fc.FilePath)
-		id := "file_" + strings.ReplaceAll(rel, string(os.PathSeparator), "_")
+// 	for _, fc := range files {
+// 		rel, _ := filepath.Rel(root, fc.FilePath)
+// 		id := "file_" + strings.ReplaceAll(rel, string(os.PathSeparator), "_")
 
-		grouped := groupByContext(fc.Comments)
+// 		grouped := groupByContext(fc.Comments)
 
-		data.Files = append(data.Files, htmlFile{
-			ID:          id,
-			RelPath:     rel,
-			Package:     fc.Package,
-			GroupedDocs: grouped,
-		})
-	}
+// 		data.Files = append(data.Files, htmlFile{
+// 			ID:          id,
+// 			RelPath:     rel,
+// 			Package:     fc.Package,
+// 			GroupedDocs: grouped,
+// 		})
+// 	}
 
-	return data
-}
+// 	return data
+// }
