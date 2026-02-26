@@ -31,17 +31,6 @@
   <h3>Files</h3>
   
     <div class="file-item" 
-         data-target="file_bolt_arm64.go" 
-         data-name="bolt_arm64.go"
-         data-content="maxMapSize represents the largest mmap size supported by Bolt.
- maxAllocSize is the size used when creating array pointers.
- Are unaligned load/stores broken on this arch?
- ">
-      <div>bolt_arm64.go</div>
-      <div class="file-path">bolt</div>
-    </div>
-  
-    <div class="file-item" 
          data-target="file_bolt_arm.go" 
          data-name="bolt_arm.go"
          data-content="maxMapSize represents the largest mmap size supported by Bolt.
@@ -49,17 +38,6 @@
  Are unaligned load/stores broken on this arch?
  ">
       <div>bolt_arm.go</div>
-      <div class="file-path">bolt</div>
-    </div>
-  
-    <div class="file-item" 
-         data-target="file_bolt_386.go" 
-         data-name="bolt_386.go"
-         data-content="maxMapSize represents the largest mmap size supported by Bolt.
- maxAllocSize is the size used when creating array pointers.
- Are unaligned load/stores broken on this arch?
- ">
-      <div>bolt_386.go</div>
       <div class="file-path">bolt</div>
     </div>
   
@@ -75,12 +53,45 @@
     </div>
   
     <div class="file-item" 
+         data-target="file_bolt_386.go" 
+         data-name="bolt_386.go"
+         data-content="maxMapSize represents the largest mmap size supported by Bolt.
+ maxAllocSize is the size used when creating array pointers.
+ Are unaligned load/stores broken on this arch?
+ ">
+      <div>bolt_386.go</div>
+      <div class="file-path">bolt</div>
+    </div>
+  
+    <div class="file-item" 
+         data-target="file_bolt_arm64.go" 
+         data-name="bolt_arm64.go"
+         data-content="maxMapSize represents the largest mmap size supported by Bolt.
+ maxAllocSize is the size used when creating array pointers.
+ Are unaligned load/stores broken on this arch?
+ ">
+      <div>bolt_arm64.go</div>
+      <div class="file-path">bolt</div>
+    </div>
+  
+    <div class="file-item" 
          data-target="file_bolt_ppc.go" 
          data-name="bolt_ppc.go"
          data-content="maxMapSize represents the largest mmap size supported by Bolt.
  maxAllocSize is the size used when creating array pointers.
  ">
       <div>bolt_ppc.go</div>
+      <div class="file-path">bolt</div>
+    </div>
+  
+    <div class="file-item" 
+         data-target="file_bolt_ppc64.go" 
+         data-name="bolt_ppc64.go"
+         data-content="maxMapSize represents the largest mmap size supported by Bolt.
+ maxAllocSize is the size used when creating array pointers.
+ Are unaligned load/stores broken on this arch?
+ ">
+      <div>bolt_ppc64.go</div>
       <div class="file-path">bolt</div>
     </div>
   
@@ -98,17 +109,6 @@
          data-name="bolt_openbsd.go"
          data-content="">
       <div>bolt_openbsd.go</div>
-      <div class="file-path">bolt</div>
-    </div>
-  
-    <div class="file-item" 
-         data-target="file_bolt_ppc64.go" 
-         data-name="bolt_ppc64.go"
-         data-content="maxMapSize represents the largest mmap size supported by Bolt.
- maxAllocSize is the size used when creating array pointers.
- Are unaligned load/stores broken on this arch?
- ">
-      <div>bolt_ppc64.go</div>
       <div class="file-path">bolt</div>
     </div>
   
@@ -285,6 +285,98 @@ point to different data or can point to invalid memory which will cause a panic.
     </div>
   
     <div class="file-item" 
+         data-target="file_bucket.go" 
+         data-name="bucket.go"
+         data-content="DefaultFillPercent is the percentage that split pages are filled.
+This value can be changed by setting Bucket.FillPercent.
+ newBucket returns a new bucket associated with a transaction.
+ Tx returns the tx of the bucket.
+ Root returns the root of the bucket.
+ Writable returns whether the bucket is writable.
+ Cursor creates a cursor associated with the bucket.
+The cursor is only valid as long as the transaction is open.
+Do not use a cursor after the transaction is closed.
+ Bucket retrieves a nested bucket by name.
+Returns nil if the bucket does not exist.
+The bucket instance is only valid for the lifetime of the transaction.
+ Helper method that re-interprets a sub-bucket value
+from a parent into a Bucket
+ CreateBucket creates a new bucket at the given key and returns the new bucket.
+Returns an error if the key already exists, if the bucket name is blank, or if the bucket name is too long.
+The bucket instance is only valid for the lifetime of the transaction.
+ CreateBucketIfNotExists creates a new bucket if it doesn't already exist and returns a reference to it.
+Returns an error if the bucket name is blank, or if the bucket name is too long.
+The bucket instance is only valid for the lifetime of the transaction.
+ DeleteBucket deletes a bucket at the given key.
+Returns an error if the bucket does not exists, or if the key represents a non-bucket value.
+ Get retrieves the value for a key in the bucket.
+Returns a nil value if the key does not exist or if the key is a nested bucket.
+The returned value is only valid for the life of the transaction.
+ Put sets the value for a key in the bucket.
+If the key exist then its previous value will be overwritten.
+Supplied value must remain valid for the life of the transaction.
+Returns an error if the bucket was created from a read-only transaction, if the key is blank, if the key is too large, or if the value is too large.
+ Delete removes a key from the bucket.
+If the key does not exist then nothing is done and a nil error is returned.
+Returns an error if the bucket was created from a read-only transaction.
+ Sequence returns the current integer for the bucket without incrementing it.
+ SetSequence updates the sequence number for the bucket.
+ NextSequence returns an autoincrementing integer for the bucket.
+ ForEach executes a function for each key/value pair in a bucket.
+If the provided function returns an error then the iteration is stopped and
+the error is returned to the caller. The provided function must not modify
+the bucket; this will result in undefined behavior.
+ Stat returns stats on a bucket.
+ forEachPage iterates over every page in a bucket, including inline pages.
+ forEachPageNode iterates over every page (or node) in a bucket.
+This also includes inline pages.
+ spill writes all the nodes for this bucket to dirty pages.
+ inlineable returns true if a bucket is small enough to be written inline
+and if it contains no subbuckets. Otherwise returns false.
+ Returns the maximum total size of a bucket to make it a candidate for inlining.
+ write allocates and writes a bucket to a byte slice.
+ rebalance attempts to balance all nodes.
+ node creates a node from a page and associates it with a given parent.
+ free recursively frees all pages in the bucket.
+ dereference removes all references to the old mmap.
+ pageNode returns the in-memory node, if it exists.
+Otherwise returns the underlying page.
+ cloneBytes returns a copy of a given slice.
+ Bucket represents a collection of key/value pairs inside the database.
+ bucket represents the on-file representation of a bucket.
+This is stored as the "value" of a bucket key. If the bucket is small enough,
+then its root page can be stored inline in the "value", after the bucket
+header. In the case of inline buckets, the "root" will be 0.
+ BucketStats records statistics about resources used by a bucket.
+ Otherwise create a bucket and cache it.
+ Create empty, inline bucket.
+ If the child bucket is small enough and it has no child buckets then
+write it inline into the parent bucket's page. Otherwise spill it
+like a normal bucket and make the parent value a pointer to the page.
+ Update parent node.
+ Bucket is not inlineable if it contains subbuckets or if it goes beyond
+our threshold for inline bucket size.
+ Allocate the appropriate size.
+ Write a bucket header.
+ Convert byte slice to a fake page and write the root node.
+ Use the inline page if this is an inline bucket.
+ ">
+      <div>bucket.go</div>
+      <div class="file-path">bolt</div>
+    </div>
+  
+    <div class="file-item" 
+         data-target="file_errors.go" 
+         data-name="errors.go"
+         data-content="These errors can be returned when opening or calling methods on a DB.
+ These errors can occur when beginning or committing a Tx.
+ These errors can occur when putting or deleting a value or a bucket.
+ ">
+      <div>errors.go</div>
+      <div class="file-path">bolt</div>
+    </div>
+  
+    <div class="file-item" 
          data-target="file_db.go" 
          data-name="db.go"
          data-content="The largest step that can be taken when remapping the mmap.
@@ -401,98 +493,6 @@ No timeout is used which will cause Bolt to wait indefinitely for a lock.
     </div>
   
     <div class="file-item" 
-         data-target="file_errors.go" 
-         data-name="errors.go"
-         data-content="These errors can be returned when opening or calling methods on a DB.
- These errors can occur when beginning or committing a Tx.
- These errors can occur when putting or deleting a value or a bucket.
- ">
-      <div>errors.go</div>
-      <div class="file-path">bolt</div>
-    </div>
-  
-    <div class="file-item" 
-         data-target="file_bucket.go" 
-         data-name="bucket.go"
-         data-content="DefaultFillPercent is the percentage that split pages are filled.
-This value can be changed by setting Bucket.FillPercent.
- newBucket returns a new bucket associated with a transaction.
- Tx returns the tx of the bucket.
- Root returns the root of the bucket.
- Writable returns whether the bucket is writable.
- Cursor creates a cursor associated with the bucket.
-The cursor is only valid as long as the transaction is open.
-Do not use a cursor after the transaction is closed.
- Bucket retrieves a nested bucket by name.
-Returns nil if the bucket does not exist.
-The bucket instance is only valid for the lifetime of the transaction.
- Helper method that re-interprets a sub-bucket value
-from a parent into a Bucket
- CreateBucket creates a new bucket at the given key and returns the new bucket.
-Returns an error if the key already exists, if the bucket name is blank, or if the bucket name is too long.
-The bucket instance is only valid for the lifetime of the transaction.
- CreateBucketIfNotExists creates a new bucket if it doesn't already exist and returns a reference to it.
-Returns an error if the bucket name is blank, or if the bucket name is too long.
-The bucket instance is only valid for the lifetime of the transaction.
- DeleteBucket deletes a bucket at the given key.
-Returns an error if the bucket does not exists, or if the key represents a non-bucket value.
- Get retrieves the value for a key in the bucket.
-Returns a nil value if the key does not exist or if the key is a nested bucket.
-The returned value is only valid for the life of the transaction.
- Put sets the value for a key in the bucket.
-If the key exist then its previous value will be overwritten.
-Supplied value must remain valid for the life of the transaction.
-Returns an error if the bucket was created from a read-only transaction, if the key is blank, if the key is too large, or if the value is too large.
- Delete removes a key from the bucket.
-If the key does not exist then nothing is done and a nil error is returned.
-Returns an error if the bucket was created from a read-only transaction.
- Sequence returns the current integer for the bucket without incrementing it.
- SetSequence updates the sequence number for the bucket.
- NextSequence returns an autoincrementing integer for the bucket.
- ForEach executes a function for each key/value pair in a bucket.
-If the provided function returns an error then the iteration is stopped and
-the error is returned to the caller. The provided function must not modify
-the bucket; this will result in undefined behavior.
- Stat returns stats on a bucket.
- forEachPage iterates over every page in a bucket, including inline pages.
- forEachPageNode iterates over every page (or node) in a bucket.
-This also includes inline pages.
- spill writes all the nodes for this bucket to dirty pages.
- inlineable returns true if a bucket is small enough to be written inline
-and if it contains no subbuckets. Otherwise returns false.
- Returns the maximum total size of a bucket to make it a candidate for inlining.
- write allocates and writes a bucket to a byte slice.
- rebalance attempts to balance all nodes.
- node creates a node from a page and associates it with a given parent.
- free recursively frees all pages in the bucket.
- dereference removes all references to the old mmap.
- pageNode returns the in-memory node, if it exists.
-Otherwise returns the underlying page.
- cloneBytes returns a copy of a given slice.
- Bucket represents a collection of key/value pairs inside the database.
- bucket represents the on-file representation of a bucket.
-This is stored as the "value" of a bucket key. If the bucket is small enough,
-then its root page can be stored inline in the "value", after the bucket
-header. In the case of inline buckets, the "root" will be 0.
- BucketStats records statistics about resources used by a bucket.
- Otherwise create a bucket and cache it.
- Create empty, inline bucket.
- If the child bucket is small enough and it has no child buckets then
-write it inline into the parent bucket's page. Otherwise spill it
-like a normal bucket and make the parent value a pointer to the page.
- Update parent node.
- Bucket is not inlineable if it contains subbuckets or if it goes beyond
-our threshold for inline bucket size.
- Allocate the appropriate size.
- Write a bucket header.
- Convert byte slice to a fake page and write the root node.
- Use the inline page if this is an inline bucket.
- ">
-      <div>bucket.go</div>
-      <div class="file-path">bolt</div>
-    </div>
-  
-    <div class="file-item" 
          data-target="file_freelist.go" 
          data-name="freelist.go"
          data-content="newFreelist returns an empty, initialized freelist.
@@ -547,102 +547,6 @@ If dst is too small, it panics.
  ">
       <div>page.go</div>
       <div class="file-path">bolt</div>
-    </div>
-  
-    <div class="file-item" 
-         data-target="file_cmd_bolt_main.go" 
-         data-name="cmd\bolt\main.go"
-         data-content="PageHeaderSize represents the size of the bolt.page header.
- DO NOT EDIT. Copied from the "bolt" package.
- DO NOT EDIT. Copied from the "bolt" package.
- DO NOT EDIT. Copied from the "bolt" package.
- NewMain returns a new instance of Main connect to the standard input/output.
- Run executes the program.
- Usage returns the help message.
- NewCheckCommand returns a CheckCommand.
- Run executes the command.
- Usage returns the help message.
- NewInfoCommand returns a InfoCommand.
- Run executes the command.
- Usage returns the help message.
- newDumpCommand returns a DumpCommand.
- Run executes the command.
- PrintPage prints a given page as hexadecimal.
- Usage returns the help message.
- newPageCommand returns a PageCommand.
- Run executes the command.
- PrintMeta prints the data from the meta page.
- PrintLeaf prints the data for a leaf page.
- PrintBranch prints the data for a leaf page.
- PrintFreelist prints the data for a freelist page.
- PrintPage prints a given page as hexadecimal.
- Usage returns the help message.
- NewPagesCommand returns a PagesCommand.
- Run executes the command.
- Usage returns the help message.
- NewStatsCommand returns a StatsCommand.
- Run executes the command.
- Usage returns the help message.
- NewBenchCommand returns a BenchCommand using the
- Run executes the "bench" command.
- ParseFlags parses the command line flags.
- Writes to the database.
- Reads from the database.
- Starts all profiles set on the options.
- Stops all profiles.
- Returns the duration for a single write operation.
- Returns average number of write operations that can be performed per second.
- Returns the duration for a single read operation.
- Returns average number of read operations that can be performed per second.
- isPrintable returns true if the string is valid unicode and contains only printable runes.
- ReadPage reads page info & full page data from a path.
-This is not transactionally safe.
- ReadPageSize reads page size a path.
-This is not transactionally safe.
- atois parses a slice of strings into integers.
- DO NOT EDIT. Copied from the "bolt" package.
- DO NOT EDIT. Copied from the "bolt" package.
- DO NOT EDIT. Copied from the "bolt" package.
- DO NOT EDIT. Copied from the "bolt" package.
- DO NOT EDIT. Copied from the "bolt" package.
- DO NOT EDIT. Copied from the "bolt" package.
- newCompactCommand returns a CompactCommand.
- Run executes the command.
- walk walks recursively the bolt database db, calling walkFn for each key it finds.
- Usage returns the help message.
- Main represents the main program execution.
- CheckCommand represents the "check" command execution.
- InfoCommand represents the "info" command execution.
- DumpCommand represents the "dump" command execution.
- PageCommand represents the "page" command execution.
- PagesCommand represents the "pages" command execution.
- StatsCommand represents the "stats" command execution.
- BenchCommand represents the "bench" command execution.
- BenchOptions represents the set of options that can be passed to "bolt bench".
- BenchResults represents the performance results of the benchmark.
- DO NOT EDIT. Copied from the "bolt" package.
- DO NOT EDIT. Copied from the "bolt" package.
- DO NOT EDIT. Copied from the "bolt" package.
- DO NOT EDIT. Copied from the "bolt" package.
- DO NOT EDIT. Copied from the "bolt" package.
- DO NOT EDIT. Copied from the "bolt" package.
- DO NOT EDIT. Copied from the "bolt" package.
- CompactCommand represents the "compact" command execution.
- walkFunc is the type of the function called for keys (buckets and "normal"
-values) discovered by Walk. keys is the list of keys to descend to the bucket
-owning the discovered key/value pair k/v.
- Write out to writer in 16-byte lines.
- Format key as string.
- Format value as string.
- Format key as string.
- Write out to writer in 16-byte lines.
- Only display count and overflow if this is a non-free page.
- Write to the database.
- File handlers for the various profiles.
- commit regularly, or we'll run out of memory for large datasets if using one transaction.
- ">
-      <div>cmd\bolt\main.go</div>
-      <div class="file-path">main</div>
     </div>
   
     <div class="file-item" 
@@ -771,59 +675,105 @@ quickly grow.
       <div class="file-path">bolt</div>
     </div>
   
+    <div class="file-item" 
+         data-target="file_cmd_bolt_main.go" 
+         data-name="cmd\bolt\main.go"
+         data-content="PageHeaderSize represents the size of the bolt.page header.
+ DO NOT EDIT. Copied from the "bolt" package.
+ DO NOT EDIT. Copied from the "bolt" package.
+ DO NOT EDIT. Copied from the "bolt" package.
+ NewMain returns a new instance of Main connect to the standard input/output.
+ Run executes the program.
+ Usage returns the help message.
+ NewCheckCommand returns a CheckCommand.
+ Run executes the command.
+ Usage returns the help message.
+ NewInfoCommand returns a InfoCommand.
+ Run executes the command.
+ Usage returns the help message.
+ newDumpCommand returns a DumpCommand.
+ Run executes the command.
+ PrintPage prints a given page as hexadecimal.
+ Usage returns the help message.
+ newPageCommand returns a PageCommand.
+ Run executes the command.
+ PrintMeta prints the data from the meta page.
+ PrintLeaf prints the data for a leaf page.
+ PrintBranch prints the data for a leaf page.
+ PrintFreelist prints the data for a freelist page.
+ PrintPage prints a given page as hexadecimal.
+ Usage returns the help message.
+ NewPagesCommand returns a PagesCommand.
+ Run executes the command.
+ Usage returns the help message.
+ NewStatsCommand returns a StatsCommand.
+ Run executes the command.
+ Usage returns the help message.
+ NewBenchCommand returns a BenchCommand using the
+ Run executes the "bench" command.
+ ParseFlags parses the command line flags.
+ Writes to the database.
+ Reads from the database.
+ Starts all profiles set on the options.
+ Stops all profiles.
+ Returns the duration for a single write operation.
+ Returns average number of write operations that can be performed per second.
+ Returns the duration for a single read operation.
+ Returns average number of read operations that can be performed per second.
+ isPrintable returns true if the string is valid unicode and contains only printable runes.
+ ReadPage reads page info & full page data from a path.
+This is not transactionally safe.
+ ReadPageSize reads page size a path.
+This is not transactionally safe.
+ atois parses a slice of strings into integers.
+ DO NOT EDIT. Copied from the "bolt" package.
+ DO NOT EDIT. Copied from the "bolt" package.
+ DO NOT EDIT. Copied from the "bolt" package.
+ DO NOT EDIT. Copied from the "bolt" package.
+ DO NOT EDIT. Copied from the "bolt" package.
+ DO NOT EDIT. Copied from the "bolt" package.
+ newCompactCommand returns a CompactCommand.
+ Run executes the command.
+ walk walks recursively the bolt database db, calling walkFn for each key it finds.
+ Usage returns the help message.
+ Main represents the main program execution.
+ CheckCommand represents the "check" command execution.
+ InfoCommand represents the "info" command execution.
+ DumpCommand represents the "dump" command execution.
+ PageCommand represents the "page" command execution.
+ PagesCommand represents the "pages" command execution.
+ StatsCommand represents the "stats" command execution.
+ BenchCommand represents the "bench" command execution.
+ BenchOptions represents the set of options that can be passed to "bolt bench".
+ BenchResults represents the performance results of the benchmark.
+ DO NOT EDIT. Copied from the "bolt" package.
+ DO NOT EDIT. Copied from the "bolt" package.
+ DO NOT EDIT. Copied from the "bolt" package.
+ DO NOT EDIT. Copied from the "bolt" package.
+ DO NOT EDIT. Copied from the "bolt" package.
+ DO NOT EDIT. Copied from the "bolt" package.
+ DO NOT EDIT. Copied from the "bolt" package.
+ CompactCommand represents the "compact" command execution.
+ walkFunc is the type of the function called for keys (buckets and "normal"
+values) discovered by Walk. keys is the list of keys to descend to the bucket
+owning the discovered key/value pair k/v.
+ Write out to writer in 16-byte lines.
+ Format key as string.
+ Format value as string.
+ Format key as string.
+ Write out to writer in 16-byte lines.
+ Only display count and overflow if this is a non-free page.
+ Write to the database.
+ File handlers for the various profiles.
+ commit regularly, or we'll run out of memory for large datasets if using one transaction.
+ ">
+      <div>cmd\bolt\main.go</div>
+      <div class="file-path">main</div>
+    </div>
+  
 </div>
 
 <div id="content">
-  
-  <div class="file-doc" id="file_bolt_arm64.go" style="display:none;">
-    <div class="package-name">package bolt</div>
-    <div class="file-path">bolt_arm64.go</div>
-    <hr>
-
-    
-      <div class="context-group" data-context="const">
-        <h3>const</h3>
-
-        
-        <div class="comment-block" data-text="maxMapSize represents the largest mmap size supported by Bolt.
-">
-          <div class="comment-context">
-            const
-          </div>
-          <div class="comment-text">maxMapSize represents the largest mmap size supported by Bolt.
-</div>
-          <div class="comment-lines">Lines 5–5</div>
-        </div>
-        
-        <div class="comment-block" data-text="maxAllocSize is the size used when creating array pointers.
-">
-          <div class="comment-context">
-            const
-          </div>
-          <div class="comment-text">maxAllocSize is the size used when creating array pointers.
-</div>
-          <div class="comment-lines">Lines 8–8</div>
-        </div>
-        
-      </div>
-    
-      <div class="context-group" data-context="var">
-        <h3>var</h3>
-
-        
-        <div class="comment-block" data-text="Are unaligned load/stores broken on this arch?
-">
-          <div class="comment-context">
-            var
-          </div>
-          <div class="comment-text">Are unaligned load/stores broken on this arch?
-</div>
-          <div class="comment-lines">Lines 11–11</div>
-        </div>
-        
-      </div>
-    
-  </div>
   
   <div class="file-doc" id="file_bolt_arm.go" style="display:none;">
     <div class="package-name">package bolt</div>
@@ -869,56 +819,6 @@ quickly grow.
           <div class="comment-text">Are unaligned load/stores broken on this arch?
 </div>
           <div class="comment-lines">Lines 11–11</div>
-        </div>
-        
-      </div>
-    
-  </div>
-  
-  <div class="file-doc" id="file_bolt_386.go" style="display:none;">
-    <div class="package-name">package bolt</div>
-    <div class="file-path">bolt_386.go</div>
-    <hr>
-
-    
-      <div class="context-group" data-context="const">
-        <h3>const</h3>
-
-        
-        <div class="comment-block" data-text="maxMapSize represents the largest mmap size supported by Bolt.
-">
-          <div class="comment-context">
-            const
-          </div>
-          <div class="comment-text">maxMapSize represents the largest mmap size supported by Bolt.
-</div>
-          <div class="comment-lines">Lines 3–3</div>
-        </div>
-        
-        <div class="comment-block" data-text="maxAllocSize is the size used when creating array pointers.
-">
-          <div class="comment-context">
-            const
-          </div>
-          <div class="comment-text">maxAllocSize is the size used when creating array pointers.
-</div>
-          <div class="comment-lines">Lines 6–6</div>
-        </div>
-        
-      </div>
-    
-      <div class="context-group" data-context="var">
-        <h3>var</h3>
-
-        
-        <div class="comment-block" data-text="Are unaligned load/stores broken on this arch?
-">
-          <div class="comment-context">
-            var
-          </div>
-          <div class="comment-text">Are unaligned load/stores broken on this arch?
-</div>
-          <div class="comment-lines">Lines 9–9</div>
         </div>
         
       </div>
@@ -975,6 +875,106 @@ quickly grow.
     
   </div>
   
+  <div class="file-doc" id="file_bolt_386.go" style="display:none;">
+    <div class="package-name">package bolt</div>
+    <div class="file-path">bolt_386.go</div>
+    <hr>
+
+    
+      <div class="context-group" data-context="const">
+        <h3>const</h3>
+
+        
+        <div class="comment-block" data-text="maxMapSize represents the largest mmap size supported by Bolt.
+">
+          <div class="comment-context">
+            const
+          </div>
+          <div class="comment-text">maxMapSize represents the largest mmap size supported by Bolt.
+</div>
+          <div class="comment-lines">Lines 3–3</div>
+        </div>
+        
+        <div class="comment-block" data-text="maxAllocSize is the size used when creating array pointers.
+">
+          <div class="comment-context">
+            const
+          </div>
+          <div class="comment-text">maxAllocSize is the size used when creating array pointers.
+</div>
+          <div class="comment-lines">Lines 6–6</div>
+        </div>
+        
+      </div>
+    
+      <div class="context-group" data-context="var">
+        <h3>var</h3>
+
+        
+        <div class="comment-block" data-text="Are unaligned load/stores broken on this arch?
+">
+          <div class="comment-context">
+            var
+          </div>
+          <div class="comment-text">Are unaligned load/stores broken on this arch?
+</div>
+          <div class="comment-lines">Lines 9–9</div>
+        </div>
+        
+      </div>
+    
+  </div>
+  
+  <div class="file-doc" id="file_bolt_arm64.go" style="display:none;">
+    <div class="package-name">package bolt</div>
+    <div class="file-path">bolt_arm64.go</div>
+    <hr>
+
+    
+      <div class="context-group" data-context="const">
+        <h3>const</h3>
+
+        
+        <div class="comment-block" data-text="maxMapSize represents the largest mmap size supported by Bolt.
+">
+          <div class="comment-context">
+            const
+          </div>
+          <div class="comment-text">maxMapSize represents the largest mmap size supported by Bolt.
+</div>
+          <div class="comment-lines">Lines 5–5</div>
+        </div>
+        
+        <div class="comment-block" data-text="maxAllocSize is the size used when creating array pointers.
+">
+          <div class="comment-context">
+            const
+          </div>
+          <div class="comment-text">maxAllocSize is the size used when creating array pointers.
+</div>
+          <div class="comment-lines">Lines 8–8</div>
+        </div>
+        
+      </div>
+    
+      <div class="context-group" data-context="var">
+        <h3>var</h3>
+
+        
+        <div class="comment-block" data-text="Are unaligned load/stores broken on this arch?
+">
+          <div class="comment-context">
+            var
+          </div>
+          <div class="comment-text">Are unaligned load/stores broken on this arch?
+</div>
+          <div class="comment-lines">Lines 11–11</div>
+        </div>
+        
+      </div>
+    
+  </div>
+  
   <div class="file-doc" id="file_bolt_ppc.go" style="display:none;">
     <div class="package-name">package bolt</div>
     <div class="file-path">bolt_ppc.go</div>
@@ -1006,38 +1006,6 @@ quickly grow.
         </div>
         
       </div>
-    
-  </div>
-  
-  <div class="file-doc" id="file_bolt_linux.go" style="display:none;">
-    <div class="package-name">package bolt</div>
-    <div class="file-path">bolt_linux.go</div>
-    <hr>
-
-    
-      <div class="context-group" data-context="function">
-        <h3>function</h3>
-
-        
-        <div class="comment-block" data-text="fdatasync flushes written data to a file descriptor.
-">
-          <div class="comment-context">
-            function — fdatasync
-          </div>
-          <div class="comment-text">fdatasync flushes written data to a file descriptor.
-</div>
-          <div class="comment-lines">Lines 7–7</div>
-        </div>
-        
-      </div>
-    
-  </div>
-  
-  <div class="file-doc" id="file_bolt_openbsd.go" style="display:none;">
-    <div class="package-name">package bolt</div>
-    <div class="file-path">bolt_openbsd.go</div>
-    <hr>
-
     
   </div>
   
@@ -1088,6 +1056,38 @@ quickly grow.
         </div>
         
       </div>
+    
+  </div>
+  
+  <div class="file-doc" id="file_bolt_linux.go" style="display:none;">
+    <div class="package-name">package bolt</div>
+    <div class="file-path">bolt_linux.go</div>
+    <hr>
+
+    
+      <div class="context-group" data-context="function">
+        <h3>function</h3>
+
+        
+        <div class="comment-block" data-text="fdatasync flushes written data to a file descriptor.
+">
+          <div class="comment-context">
+            function — fdatasync
+          </div>
+          <div class="comment-text">fdatasync flushes written data to a file descriptor.
+</div>
+          <div class="comment-lines">Lines 7–7</div>
+        </div>
+        
+      </div>
+    
+  </div>
+  
+  <div class="file-doc" id="file_bolt_openbsd.go" style="display:none;">
+    <div class="package-name">package bolt</div>
+    <div class="file-path">bolt_openbsd.go</div>
+    <hr>
+
     
   </div>
   
@@ -1825,6 +1825,572 @@ point to different data or can point to invalid memory which will cause a panic.
     
   </div>
   
+  <div class="file-doc" id="file_bucket.go" style="display:none;">
+    <div class="package-name">package bolt</div>
+    <div class="file-path">bucket.go</div>
+    <hr>
+
+    
+      <div class="context-group" data-context="const">
+        <h3>const</h3>
+
+        
+        <div class="comment-block" data-text="DefaultFillPercent is the percentage that split pages are filled.
+This value can be changed by setting Bucket.FillPercent.
+">
+          <div class="comment-context">
+            const
+          </div>
+          <div class="comment-text">DefaultFillPercent is the percentage that split pages are filled.
+This value can be changed by setting Bucket.FillPercent.
+</div>
+          <div class="comment-lines">Lines 31–32</div>
+        </div>
+        
+      </div>
+    
+      <div class="context-group" data-context="function">
+        <h3>function</h3>
+
+        
+        <div class="comment-block" data-text="newBucket returns a new bucket associated with a transaction.
+">
+          <div class="comment-context">
+            function — newBucket
+          </div>
+          <div class="comment-text">newBucket returns a new bucket associated with a transaction.
+</div>
+          <div class="comment-lines">Lines 61–61</div>
+        </div>
+        
+        <div class="comment-block" data-text="Tx returns the tx of the bucket.
+">
+          <div class="comment-context">
+            function — Tx
+          </div>
+          <div class="comment-text">Tx returns the tx of the bucket.
+</div>
+          <div class="comment-lines">Lines 71–71</div>
+        </div>
+        
+        <div class="comment-block" data-text="Root returns the root of the bucket.
+">
+          <div class="comment-context">
+            function — Root
+          </div>
+          <div class="comment-text">Root returns the root of the bucket.
+</div>
+          <div class="comment-lines">Lines 76–76</div>
+        </div>
+        
+        <div class="comment-block" data-text="Writable returns whether the bucket is writable.
+">
+          <div class="comment-context">
+            function — Writable
+          </div>
+          <div class="comment-text">Writable returns whether the bucket is writable.
+</div>
+          <div class="comment-lines">Lines 81–81</div>
+        </div>
+        
+        <div class="comment-block" data-text="Cursor creates a cursor associated with the bucket.
+The cursor is only valid as long as the transaction is open.
+Do not use a cursor after the transaction is closed.
+">
+          <div class="comment-context">
+            function — Cursor
+          </div>
+          <div class="comment-text">Cursor creates a cursor associated with the bucket.
+The cursor is only valid as long as the transaction is open.
+Do not use a cursor after the transaction is closed.
+</div>
+          <div class="comment-lines">Lines 86–88</div>
+        </div>
+        
+        <div class="comment-block" data-text="Bucket retrieves a nested bucket by name.
+Returns nil if the bucket does not exist.
+The bucket instance is only valid for the lifetime of the transaction.
+">
+          <div class="comment-context">
+            function — Bucket
+          </div>
+          <div class="comment-text">Bucket retrieves a nested bucket by name.
+Returns nil if the bucket does not exist.
+The bucket instance is only valid for the lifetime of the transaction.
+</div>
+          <div class="comment-lines">Lines 100–102</div>
+        </div>
+        
+        <div class="comment-block" data-text="Helper method that re-interprets a sub-bucket value
+from a parent into a Bucket
+">
+          <div class="comment-context">
+            function — openBucket
+          </div>
+          <div class="comment-text">Helper method that re-interprets a sub-bucket value
+from a parent into a Bucket
+</div>
+          <div class="comment-lines">Lines 128–129</div>
+        </div>
+        
+        <div class="comment-block" data-text="CreateBucket creates a new bucket at the given key and returns the new bucket.
+Returns an error if the key already exists, if the bucket name is blank, or if the bucket name is too long.
+The bucket instance is only valid for the lifetime of the transaction.
+">
+          <div class="comment-context">
+            function — CreateBucket
+          </div>
+          <div class="comment-text">CreateBucket creates a new bucket at the given key and returns the new bucket.
+Returns an error if the key already exists, if the bucket name is blank, or if the bucket name is too long.
+The bucket instance is only valid for the lifetime of the transaction.
+</div>
+          <div class="comment-lines">Lines 158–160</div>
+        </div>
+        
+        <div class="comment-block" data-text="CreateBucketIfNotExists creates a new bucket if it doesn't already exist and returns a reference to it.
+Returns an error if the bucket name is blank, or if the bucket name is too long.
+The bucket instance is only valid for the lifetime of the transaction.
+">
+          <div class="comment-context">
+            function — CreateBucketIfNotExists
+          </div>
+          <div class="comment-text">CreateBucketIfNotExists creates a new bucket if it doesn't already exist and returns a reference to it.
+Returns an error if the bucket name is blank, or if the bucket name is too long.
+The bucket instance is only valid for the lifetime of the transaction.
+</div>
+          <div class="comment-lines">Lines 202–204</div>
+        </div>
+        
+        <div class="comment-block" data-text="DeleteBucket deletes a bucket at the given key.
+Returns an error if the bucket does not exists, or if the key represents a non-bucket value.
+">
+          <div class="comment-context">
+            function — DeleteBucket
+          </div>
+          <div class="comment-text">DeleteBucket deletes a bucket at the given key.
+Returns an error if the bucket does not exists, or if the key represents a non-bucket value.
+</div>
+          <div class="comment-lines">Lines 215–216</div>
+        </div>
+        
+        <div class="comment-block" data-text="Get retrieves the value for a key in the bucket.
+Returns a nil value if the key does not exist or if the key is a nested bucket.
+The returned value is only valid for the life of the transaction.
+">
+          <div class="comment-context">
+            function — Get
+          </div>
+          <div class="comment-text">Get retrieves the value for a key in the bucket.
+Returns a nil value if the key does not exist or if the key is a nested bucket.
+The returned value is only valid for the life of the transaction.
+</div>
+          <div class="comment-lines">Lines 263–265</div>
+        </div>
+        
+        <div class="comment-block" data-text="Put sets the value for a key in the bucket.
+If the key exist then its previous value will be overwritten.
+Supplied value must remain valid for the life of the transaction.
+Returns an error if the bucket was created from a read-only transaction, if the key is blank, if the key is too large, or if the value is too large.
+">
+          <div class="comment-context">
+            function — Put
+          </div>
+          <div class="comment-text">Put sets the value for a key in the bucket.
+If the key exist then its previous value will be overwritten.
+Supplied value must remain valid for the life of the transaction.
+Returns an error if the bucket was created from a read-only transaction, if the key is blank, if the key is too large, or if the value is too large.
+</div>
+          <div class="comment-lines">Lines 281–284</div>
+        </div>
+        
+        <div class="comment-block" data-text="Delete removes a key from the bucket.
+If the key does not exist then nothing is done and a nil error is returned.
+Returns an error if the bucket was created from a read-only transaction.
+">
+          <div class="comment-context">
+            function — Delete
+          </div>
+          <div class="comment-text">Delete removes a key from the bucket.
+If the key does not exist then nothing is done and a nil error is returned.
+Returns an error if the bucket was created from a read-only transaction.
+</div>
+          <div class="comment-lines">Lines 314–316</div>
+        </div>
+        
+        <div class="comment-block" data-text="Sequence returns the current integer for the bucket without incrementing it.
+">
+          <div class="comment-context">
+            function — Sequence
+          </div>
+          <div class="comment-text">Sequence returns the current integer for the bucket without incrementing it.
+</div>
+          <div class="comment-lines">Lines 339–339</div>
+        </div>
+        
+        <div class="comment-block" data-text="SetSequence updates the sequence number for the bucket.
+">
+          <div class="comment-context">
+            function — SetSequence
+          </div>
+          <div class="comment-text">SetSequence updates the sequence number for the bucket.
+</div>
+          <div class="comment-lines">Lines 342–342</div>
+        </div>
+        
+        <div class="comment-block" data-text="NextSequence returns an autoincrementing integer for the bucket.
+">
+          <div class="comment-context">
+            function — NextSequence
+          </div>
+          <div class="comment-text">NextSequence returns an autoincrementing integer for the bucket.
+</div>
+          <div class="comment-lines">Lines 361–361</div>
+        </div>
+        
+        <div class="comment-block" data-text="ForEach executes a function for each key/value pair in a bucket.
+If the provided function returns an error then the iteration is stopped and
+the error is returned to the caller. The provided function must not modify
+the bucket; this will result in undefined behavior.
+">
+          <div class="comment-context">
+            function — ForEach
+          </div>
+          <div class="comment-text">ForEach executes a function for each key/value pair in a bucket.
+If the provided function returns an error then the iteration is stopped and
+the error is returned to the caller. The provided function must not modify
+the bucket; this will result in undefined behavior.
+</div>
+          <div class="comment-lines">Lines 380–383</div>
+        </div>
+        
+        <div class="comment-block" data-text="Stat returns stats on a bucket.
+">
+          <div class="comment-context">
+            function — Stats
+          </div>
+          <div class="comment-text">Stat returns stats on a bucket.
+</div>
+          <div class="comment-lines">Lines 397–397</div>
+        </div>
+        
+        <div class="comment-block" data-text="forEachPage iterates over every page in a bucket, including inline pages.
+">
+          <div class="comment-context">
+            function — forEachPage
+          </div>
+          <div class="comment-text">forEachPage iterates over every page in a bucket, including inline pages.
+</div>
+          <div class="comment-lines">Lines 479–479</div>
+        </div>
+        
+        <div class="comment-block" data-text="forEachPageNode iterates over every page (or node) in a bucket.
+This also includes inline pages.
+">
+          <div class="comment-context">
+            function — forEachPageNode
+          </div>
+          <div class="comment-text">forEachPageNode iterates over every page (or node) in a bucket.
+This also includes inline pages.
+</div>
+          <div class="comment-lines">Lines 491–492</div>
+        </div>
+        
+        <div class="comment-block" data-text="spill writes all the nodes for this bucket to dirty pages.
+">
+          <div class="comment-context">
+            function — spill
+          </div>
+          <div class="comment-text">spill writes all the nodes for this bucket to dirty pages.
+</div>
+          <div class="comment-lines">Lines 525–525</div>
+        </div>
+        
+        <div class="comment-block" data-text="inlineable returns true if a bucket is small enough to be written inline
+and if it contains no subbuckets. Otherwise returns false.
+">
+          <div class="comment-context">
+            function — inlineable
+          </div>
+          <div class="comment-text">inlineable returns true if a bucket is small enough to be written inline
+and if it contains no subbuckets. Otherwise returns false.
+</div>
+          <div class="comment-lines">Lines 584–585</div>
+        </div>
+        
+        <div class="comment-block" data-text="Returns the maximum total size of a bucket to make it a candidate for inlining.
+">
+          <div class="comment-context">
+            function — maxInlineBucketSize
+          </div>
+          <div class="comment-text">Returns the maximum total size of a bucket to make it a candidate for inlining.
+</div>
+          <div class="comment-lines">Lines 610–610</div>
+        </div>
+        
+        <div class="comment-block" data-text="write allocates and writes a bucket to a byte slice.
+">
+          <div class="comment-context">
+            function — write
+          </div>
+          <div class="comment-text">write allocates and writes a bucket to a byte slice.
+</div>
+          <div class="comment-lines">Lines 615–615</div>
+        </div>
+        
+        <div class="comment-block" data-text="rebalance attempts to balance all nodes.
+">
+          <div class="comment-context">
+            function — rebalance
+          </div>
+          <div class="comment-text">rebalance attempts to balance all nodes.
+</div>
+          <div class="comment-lines">Lines 632–632</div>
+        </div>
+        
+        <div class="comment-block" data-text="node creates a node from a page and associates it with a given parent.
+">
+          <div class="comment-context">
+            function — node
+          </div>
+          <div class="comment-text">node creates a node from a page and associates it with a given parent.
+</div>
+          <div class="comment-lines">Lines 642–642</div>
+        </div>
+        
+        <div class="comment-block" data-text="free recursively frees all pages in the bucket.
+">
+          <div class="comment-context">
+            function — free
+          </div>
+          <div class="comment-text">free recursively frees all pages in the bucket.
+</div>
+          <div class="comment-lines">Lines 675–675</div>
+        </div>
+        
+        <div class="comment-block" data-text="dereference removes all references to the old mmap.
+">
+          <div class="comment-context">
+            function — dereference
+          </div>
+          <div class="comment-text">dereference removes all references to the old mmap.
+</div>
+          <div class="comment-lines">Lines 692–692</div>
+        </div>
+        
+        <div class="comment-block" data-text="pageNode returns the in-memory node, if it exists.
+Otherwise returns the underlying page.
+">
+          <div class="comment-context">
+            function — pageNode
+          </div>
+          <div class="comment-text">pageNode returns the in-memory node, if it exists.
+Otherwise returns the underlying page.
+</div>
+          <div class="comment-lines">Lines 703–704</div>
+        </div>
+        
+        <div class="comment-block" data-text="cloneBytes returns a copy of a given slice.
+">
+          <div class="comment-context">
+            function — cloneBytes
+          </div>
+          <div class="comment-text">cloneBytes returns a copy of a given slice.
+</div>
+          <div class="comment-lines">Lines 772–772</div>
+        </div>
+        
+      </div>
+    
+      <div class="context-group" data-context="type">
+        <h3>type</h3>
+
+        
+        <div class="comment-block" data-text="Bucket represents a collection of key/value pairs inside the database.
+">
+          <div class="comment-context">
+            type
+          </div>
+          <div class="comment-text">Bucket represents a collection of key/value pairs inside the database.
+</div>
+          <div class="comment-lines">Lines 35–35</div>
+        </div>
+        
+        <div class="comment-block" data-text="bucket represents the on-file representation of a bucket.
+This is stored as the "value" of a bucket key. If the bucket is small enough,
+then its root page can be stored inline in the "value", after the bucket
+header. In the case of inline buckets, the "root" will be 0.
+">
+          <div class="comment-context">
+            type
+          </div>
+          <div class="comment-text">bucket represents the on-file representation of a bucket.
+This is stored as the "value" of a bucket key. If the bucket is small enough,
+then its root page can be stored inline in the "value", after the bucket
+header. In the case of inline buckets, the "root" will be 0.
+</div>
+          <div class="comment-lines">Lines 52–55</div>
+        </div>
+        
+        <div class="comment-block" data-text="BucketStats records statistics about resources used by a bucket.
+">
+          <div class="comment-context">
+            type
+          </div>
+          <div class="comment-text">BucketStats records statistics about resources used by a bucket.
+</div>
+          <div class="comment-lines">Lines 729–729</div>
+        </div>
+        
+      </div>
+    
+      <div class="context-group" data-context="var">
+        <h3>var</h3>
+
+        
+        <div class="comment-block" data-text="Otherwise create a bucket and cache it.
+">
+          <div class="comment-context">
+            var
+          </div>
+          <div class="comment-text">Otherwise create a bucket and cache it.
+</div>
+          <div class="comment-lines">Lines 119–119</div>
+        </div>
+        
+        <div class="comment-block" data-text="Create empty, inline bucket.
+">
+          <div class="comment-context">
+            var
+          </div>
+          <div class="comment-text">Create empty, inline bucket.
+</div>
+          <div class="comment-lines">Lines 182–182</div>
+        </div>
+        
+        <div class="comment-block" data-text="If the child bucket is small enough and it has no child buckets then
+write it inline into the parent bucket's page. Otherwise spill it
+like a normal bucket and make the parent value a pointer to the page.
+">
+          <div class="comment-context">
+            var
+          </div>
+          <div class="comment-text">If the child bucket is small enough and it has no child buckets then
+write it inline into the parent bucket's page. Otherwise spill it
+like a normal bucket and make the parent value a pointer to the page.
+</div>
+          <div class="comment-lines">Lines 529–531</div>
+        </div>
+        
+        <div class="comment-block" data-text="Update parent node.
+">
+          <div class="comment-context">
+            var
+          </div>
+          <div class="comment-text">Update parent node.
+</div>
+          <div class="comment-lines">Lines 552–552</div>
+        </div>
+        
+        <div class="comment-block" data-text="Bucket is not inlineable if it contains subbuckets or if it goes beyond
+our threshold for inline bucket size.
+">
+          <div class="comment-context">
+            var
+          </div>
+          <div class="comment-text">Bucket is not inlineable if it contains subbuckets or if it goes beyond
+our threshold for inline bucket size.
+</div>
+          <div class="comment-lines">Lines 594–595</div>
+        </div>
+        
+        <div class="comment-block" data-text="Allocate the appropriate size.
+">
+          <div class="comment-context">
+            var
+          </div>
+          <div class="comment-text">Allocate the appropriate size.
+</div>
+          <div class="comment-lines">Lines 617–617</div>
+        </div>
+        
+        <div class="comment-block" data-text="Write a bucket header.
+">
+          <div class="comment-context">
+            var
+          </div>
+          <div class="comment-text">Write a bucket header.
+</div>
+          <div class="comment-lines">Lines 621–621</div>
+        </div>
+        
+        <div class="comment-block" data-text="Convert byte slice to a fake page and write the root node.
+">
+          <div class="comment-context">
+            var
+          </div>
+          <div class="comment-text">Convert byte slice to a fake page and write the root node.
+</div>
+          <div class="comment-lines">Lines 625–625</div>
+        </div>
+        
+        <div class="comment-block" data-text="Use the inline page if this is an inline bucket.
+">
+          <div class="comment-context">
+            var
+          </div>
+          <div class="comment-text">Use the inline page if this is an inline bucket.
+</div>
+          <div class="comment-lines">Lines 659–659</div>
+        </div>
+        
+      </div>
+    
+  </div>
+  
+  <div class="file-doc" id="file_errors.go" style="display:none;">
+    <div class="package-name">package bolt</div>
+    <div class="file-path">errors.go</div>
+    <hr>
+
+    
+      <div class="context-group" data-context="var">
+        <h3>var</h3>
+
+        
+        <div class="comment-block" data-text="These errors can be returned when opening or calling methods on a DB.
+">
+          <div class="comment-context">
+            var
+          </div>
+          <div class="comment-text">These errors can be returned when opening or calling methods on a DB.
+</div>
+          <div class="comment-lines">Lines 5–5</div>
+        </div>
+        
+        <div class="comment-block" data-text="These errors can occur when beginning or committing a Tx.
+">
+          <div class="comment-context">
+            var
+          </div>
+          <div class="comment-text">These errors can occur when beginning or committing a Tx.
+</div>
+          <div class="comment-lines">Lines 31–31</div>
+        </div>
+        
+        <div class="comment-block" data-text="These errors can occur when putting or deleting a value or a bucket.
+">
+          <div class="comment-context">
+            var
+          </div>
+          <div class="comment-text">These errors can occur when putting or deleting a value or a bucket.
+</div>
+          <div class="comment-lines">Lines 46–46</div>
+        </div>
+        
+      </div>
+    
+  </div>
+  
   <div class="file-doc" id="file_db.go" style="display:none;">
     <div class="package-name">package bolt</div>
     <div class="file-path">db.go</div>
@@ -2433,572 +2999,6 @@ No timeout is used which will cause Bolt to wait indefinitely for a lock.
     
   </div>
   
-  <div class="file-doc" id="file_errors.go" style="display:none;">
-    <div class="package-name">package bolt</div>
-    <div class="file-path">errors.go</div>
-    <hr>
-
-    
-      <div class="context-group" data-context="var">
-        <h3>var</h3>
-
-        
-        <div class="comment-block" data-text="These errors can be returned when opening or calling methods on a DB.
-">
-          <div class="comment-context">
-            var
-          </div>
-          <div class="comment-text">These errors can be returned when opening or calling methods on a DB.
-</div>
-          <div class="comment-lines">Lines 5–5</div>
-        </div>
-        
-        <div class="comment-block" data-text="These errors can occur when beginning or committing a Tx.
-">
-          <div class="comment-context">
-            var
-          </div>
-          <div class="comment-text">These errors can occur when beginning or committing a Tx.
-</div>
-          <div class="comment-lines">Lines 31–31</div>
-        </div>
-        
-        <div class="comment-block" data-text="These errors can occur when putting or deleting a value or a bucket.
-">
-          <div class="comment-context">
-            var
-          </div>
-          <div class="comment-text">These errors can occur when putting or deleting a value or a bucket.
-</div>
-          <div class="comment-lines">Lines 46–46</div>
-        </div>
-        
-      </div>
-    
-  </div>
-  
-  <div class="file-doc" id="file_bucket.go" style="display:none;">
-    <div class="package-name">package bolt</div>
-    <div class="file-path">bucket.go</div>
-    <hr>
-
-    
-      <div class="context-group" data-context="const">
-        <h3>const</h3>
-
-        
-        <div class="comment-block" data-text="DefaultFillPercent is the percentage that split pages are filled.
-This value can be changed by setting Bucket.FillPercent.
-">
-          <div class="comment-context">
-            const
-          </div>
-          <div class="comment-text">DefaultFillPercent is the percentage that split pages are filled.
-This value can be changed by setting Bucket.FillPercent.
-</div>
-          <div class="comment-lines">Lines 31–32</div>
-        </div>
-        
-      </div>
-    
-      <div class="context-group" data-context="function">
-        <h3>function</h3>
-
-        
-        <div class="comment-block" data-text="newBucket returns a new bucket associated with a transaction.
-">
-          <div class="comment-context">
-            function — newBucket
-          </div>
-          <div class="comment-text">newBucket returns a new bucket associated with a transaction.
-</div>
-          <div class="comment-lines">Lines 61–61</div>
-        </div>
-        
-        <div class="comment-block" data-text="Tx returns the tx of the bucket.
-">
-          <div class="comment-context">
-            function — Tx
-          </div>
-          <div class="comment-text">Tx returns the tx of the bucket.
-</div>
-          <div class="comment-lines">Lines 71–71</div>
-        </div>
-        
-        <div class="comment-block" data-text="Root returns the root of the bucket.
-">
-          <div class="comment-context">
-            function — Root
-          </div>
-          <div class="comment-text">Root returns the root of the bucket.
-</div>
-          <div class="comment-lines">Lines 76–76</div>
-        </div>
-        
-        <div class="comment-block" data-text="Writable returns whether the bucket is writable.
-">
-          <div class="comment-context">
-            function — Writable
-          </div>
-          <div class="comment-text">Writable returns whether the bucket is writable.
-</div>
-          <div class="comment-lines">Lines 81–81</div>
-        </div>
-        
-        <div class="comment-block" data-text="Cursor creates a cursor associated with the bucket.
-The cursor is only valid as long as the transaction is open.
-Do not use a cursor after the transaction is closed.
-">
-          <div class="comment-context">
-            function — Cursor
-          </div>
-          <div class="comment-text">Cursor creates a cursor associated with the bucket.
-The cursor is only valid as long as the transaction is open.
-Do not use a cursor after the transaction is closed.
-</div>
-          <div class="comment-lines">Lines 86–88</div>
-        </div>
-        
-        <div class="comment-block" data-text="Bucket retrieves a nested bucket by name.
-Returns nil if the bucket does not exist.
-The bucket instance is only valid for the lifetime of the transaction.
-">
-          <div class="comment-context">
-            function — Bucket
-          </div>
-          <div class="comment-text">Bucket retrieves a nested bucket by name.
-Returns nil if the bucket does not exist.
-The bucket instance is only valid for the lifetime of the transaction.
-</div>
-          <div class="comment-lines">Lines 100–102</div>
-        </div>
-        
-        <div class="comment-block" data-text="Helper method that re-interprets a sub-bucket value
-from a parent into a Bucket
-">
-          <div class="comment-context">
-            function — openBucket
-          </div>
-          <div class="comment-text">Helper method that re-interprets a sub-bucket value
-from a parent into a Bucket
-</div>
-          <div class="comment-lines">Lines 128–129</div>
-        </div>
-        
-        <div class="comment-block" data-text="CreateBucket creates a new bucket at the given key and returns the new bucket.
-Returns an error if the key already exists, if the bucket name is blank, or if the bucket name is too long.
-The bucket instance is only valid for the lifetime of the transaction.
-">
-          <div class="comment-context">
-            function — CreateBucket
-          </div>
-          <div class="comment-text">CreateBucket creates a new bucket at the given key and returns the new bucket.
-Returns an error if the key already exists, if the bucket name is blank, or if the bucket name is too long.
-The bucket instance is only valid for the lifetime of the transaction.
-</div>
-          <div class="comment-lines">Lines 158–160</div>
-        </div>
-        
-        <div class="comment-block" data-text="CreateBucketIfNotExists creates a new bucket if it doesn't already exist and returns a reference to it.
-Returns an error if the bucket name is blank, or if the bucket name is too long.
-The bucket instance is only valid for the lifetime of the transaction.
-">
-          <div class="comment-context">
-            function — CreateBucketIfNotExists
-          </div>
-          <div class="comment-text">CreateBucketIfNotExists creates a new bucket if it doesn't already exist and returns a reference to it.
-Returns an error if the bucket name is blank, or if the bucket name is too long.
-The bucket instance is only valid for the lifetime of the transaction.
-</div>
-          <div class="comment-lines">Lines 202–204</div>
-        </div>
-        
-        <div class="comment-block" data-text="DeleteBucket deletes a bucket at the given key.
-Returns an error if the bucket does not exists, or if the key represents a non-bucket value.
-">
-          <div class="comment-context">
-            function — DeleteBucket
-          </div>
-          <div class="comment-text">DeleteBucket deletes a bucket at the given key.
-Returns an error if the bucket does not exists, or if the key represents a non-bucket value.
-</div>
-          <div class="comment-lines">Lines 215–216</div>
-        </div>
-        
-        <div class="comment-block" data-text="Get retrieves the value for a key in the bucket.
-Returns a nil value if the key does not exist or if the key is a nested bucket.
-The returned value is only valid for the life of the transaction.
-">
-          <div class="comment-context">
-            function — Get
-          </div>
-          <div class="comment-text">Get retrieves the value for a key in the bucket.
-Returns a nil value if the key does not exist or if the key is a nested bucket.
-The returned value is only valid for the life of the transaction.
-</div>
-          <div class="comment-lines">Lines 263–265</div>
-        </div>
-        
-        <div class="comment-block" data-text="Put sets the value for a key in the bucket.
-If the key exist then its previous value will be overwritten.
-Supplied value must remain valid for the life of the transaction.
-Returns an error if the bucket was created from a read-only transaction, if the key is blank, if the key is too large, or if the value is too large.
-">
-          <div class="comment-context">
-            function — Put
-          </div>
-          <div class="comment-text">Put sets the value for a key in the bucket.
-If the key exist then its previous value will be overwritten.
-Supplied value must remain valid for the life of the transaction.
-Returns an error if the bucket was created from a read-only transaction, if the key is blank, if the key is too large, or if the value is too large.
-</div>
-          <div class="comment-lines">Lines 281–284</div>
-        </div>
-        
-        <div class="comment-block" data-text="Delete removes a key from the bucket.
-If the key does not exist then nothing is done and a nil error is returned.
-Returns an error if the bucket was created from a read-only transaction.
-">
-          <div class="comment-context">
-            function — Delete
-          </div>
-          <div class="comment-text">Delete removes a key from the bucket.
-If the key does not exist then nothing is done and a nil error is returned.
-Returns an error if the bucket was created from a read-only transaction.
-</div>
-          <div class="comment-lines">Lines 314–316</div>
-        </div>
-        
-        <div class="comment-block" data-text="Sequence returns the current integer for the bucket without incrementing it.
-">
-          <div class="comment-context">
-            function — Sequence
-          </div>
-          <div class="comment-text">Sequence returns the current integer for the bucket without incrementing it.
-</div>
-          <div class="comment-lines">Lines 339–339</div>
-        </div>
-        
-        <div class="comment-block" data-text="SetSequence updates the sequence number for the bucket.
-">
-          <div class="comment-context">
-            function — SetSequence
-          </div>
-          <div class="comment-text">SetSequence updates the sequence number for the bucket.
-</div>
-          <div class="comment-lines">Lines 342–342</div>
-        </div>
-        
-        <div class="comment-block" data-text="NextSequence returns an autoincrementing integer for the bucket.
-">
-          <div class="comment-context">
-            function — NextSequence
-          </div>
-          <div class="comment-text">NextSequence returns an autoincrementing integer for the bucket.
-</div>
-          <div class="comment-lines">Lines 361–361</div>
-        </div>
-        
-        <div class="comment-block" data-text="ForEach executes a function for each key/value pair in a bucket.
-If the provided function returns an error then the iteration is stopped and
-the error is returned to the caller. The provided function must not modify
-the bucket; this will result in undefined behavior.
-">
-          <div class="comment-context">
-            function — ForEach
-          </div>
-          <div class="comment-text">ForEach executes a function for each key/value pair in a bucket.
-If the provided function returns an error then the iteration is stopped and
-the error is returned to the caller. The provided function must not modify
-the bucket; this will result in undefined behavior.
-</div>
-          <div class="comment-lines">Lines 380–383</div>
-        </div>
-        
-        <div class="comment-block" data-text="Stat returns stats on a bucket.
-">
-          <div class="comment-context">
-            function — Stats
-          </div>
-          <div class="comment-text">Stat returns stats on a bucket.
-</div>
-          <div class="comment-lines">Lines 397–397</div>
-        </div>
-        
-        <div class="comment-block" data-text="forEachPage iterates over every page in a bucket, including inline pages.
-">
-          <div class="comment-context">
-            function — forEachPage
-          </div>
-          <div class="comment-text">forEachPage iterates over every page in a bucket, including inline pages.
-</div>
-          <div class="comment-lines">Lines 479–479</div>
-        </div>
-        
-        <div class="comment-block" data-text="forEachPageNode iterates over every page (or node) in a bucket.
-This also includes inline pages.
-">
-          <div class="comment-context">
-            function — forEachPageNode
-          </div>
-          <div class="comment-text">forEachPageNode iterates over every page (or node) in a bucket.
-This also includes inline pages.
-</div>
-          <div class="comment-lines">Lines 491–492</div>
-        </div>
-        
-        <div class="comment-block" data-text="spill writes all the nodes for this bucket to dirty pages.
-">
-          <div class="comment-context">
-            function — spill
-          </div>
-          <div class="comment-text">spill writes all the nodes for this bucket to dirty pages.
-</div>
-          <div class="comment-lines">Lines 525–525</div>
-        </div>
-        
-        <div class="comment-block" data-text="inlineable returns true if a bucket is small enough to be written inline
-and if it contains no subbuckets. Otherwise returns false.
-">
-          <div class="comment-context">
-            function — inlineable
-          </div>
-          <div class="comment-text">inlineable returns true if a bucket is small enough to be written inline
-and if it contains no subbuckets. Otherwise returns false.
-</div>
-          <div class="comment-lines">Lines 584–585</div>
-        </div>
-        
-        <div class="comment-block" data-text="Returns the maximum total size of a bucket to make it a candidate for inlining.
-">
-          <div class="comment-context">
-            function — maxInlineBucketSize
-          </div>
-          <div class="comment-text">Returns the maximum total size of a bucket to make it a candidate for inlining.
-</div>
-          <div class="comment-lines">Lines 610–610</div>
-        </div>
-        
-        <div class="comment-block" data-text="write allocates and writes a bucket to a byte slice.
-">
-          <div class="comment-context">
-            function — write
-          </div>
-          <div class="comment-text">write allocates and writes a bucket to a byte slice.
-</div>
-          <div class="comment-lines">Lines 615–615</div>
-        </div>
-        
-        <div class="comment-block" data-text="rebalance attempts to balance all nodes.
-">
-          <div class="comment-context">
-            function — rebalance
-          </div>
-          <div class="comment-text">rebalance attempts to balance all nodes.
-</div>
-          <div class="comment-lines">Lines 632–632</div>
-        </div>
-        
-        <div class="comment-block" data-text="node creates a node from a page and associates it with a given parent.
-">
-          <div class="comment-context">
-            function — node
-          </div>
-          <div class="comment-text">node creates a node from a page and associates it with a given parent.
-</div>
-          <div class="comment-lines">Lines 642–642</div>
-        </div>
-        
-        <div class="comment-block" data-text="free recursively frees all pages in the bucket.
-">
-          <div class="comment-context">
-            function — free
-          </div>
-          <div class="comment-text">free recursively frees all pages in the bucket.
-</div>
-          <div class="comment-lines">Lines 675–675</div>
-        </div>
-        
-        <div class="comment-block" data-text="dereference removes all references to the old mmap.
-">
-          <div class="comment-context">
-            function — dereference
-          </div>
-          <div class="comment-text">dereference removes all references to the old mmap.
-</div>
-          <div class="comment-lines">Lines 692–692</div>
-        </div>
-        
-        <div class="comment-block" data-text="pageNode returns the in-memory node, if it exists.
-Otherwise returns the underlying page.
-">
-          <div class="comment-context">
-            function — pageNode
-          </div>
-          <div class="comment-text">pageNode returns the in-memory node, if it exists.
-Otherwise returns the underlying page.
-</div>
-          <div class="comment-lines">Lines 703–704</div>
-        </div>
-        
-        <div class="comment-block" data-text="cloneBytes returns a copy of a given slice.
-">
-          <div class="comment-context">
-            function — cloneBytes
-          </div>
-          <div class="comment-text">cloneBytes returns a copy of a given slice.
-</div>
-          <div class="comment-lines">Lines 772–772</div>
-        </div>
-        
-      </div>
-    
-      <div class="context-group" data-context="type">
-        <h3>type</h3>
-
-        
-        <div class="comment-block" data-text="Bucket represents a collection of key/value pairs inside the database.
-">
-          <div class="comment-context">
-            type
-          </div>
-          <div class="comment-text">Bucket represents a collection of key/value pairs inside the database.
-</div>
-          <div class="comment-lines">Lines 35–35</div>
-        </div>
-        
-        <div class="comment-block" data-text="bucket represents the on-file representation of a bucket.
-This is stored as the "value" of a bucket key. If the bucket is small enough,
-then its root page can be stored inline in the "value", after the bucket
-header. In the case of inline buckets, the "root" will be 0.
-">
-          <div class="comment-context">
-            type
-          </div>
-          <div class="comment-text">bucket represents the on-file representation of a bucket.
-This is stored as the "value" of a bucket key. If the bucket is small enough,
-then its root page can be stored inline in the "value", after the bucket
-header. In the case of inline buckets, the "root" will be 0.
-</div>
-          <div class="comment-lines">Lines 52–55</div>
-        </div>
-        
-        <div class="comment-block" data-text="BucketStats records statistics about resources used by a bucket.
-">
-          <div class="comment-context">
-            type
-          </div>
-          <div class="comment-text">BucketStats records statistics about resources used by a bucket.
-</div>
-          <div class="comment-lines">Lines 729–729</div>
-        </div>
-        
-      </div>
-    
-      <div class="context-group" data-context="var">
-        <h3>var</h3>
-
-        
-        <div class="comment-block" data-text="Otherwise create a bucket and cache it.
-">
-          <div class="comment-context">
-            var
-          </div>
-          <div class="comment-text">Otherwise create a bucket and cache it.
-</div>
-          <div class="comment-lines">Lines 119–119</div>
-        </div>
-        
-        <div class="comment-block" data-text="Create empty, inline bucket.
-">
-          <div class="comment-context">
-            var
-          </div>
-          <div class="comment-text">Create empty, inline bucket.
-</div>
-          <div class="comment-lines">Lines 182–182</div>
-        </div>
-        
-        <div class="comment-block" data-text="If the child bucket is small enough and it has no child buckets then
-write it inline into the parent bucket's page. Otherwise spill it
-like a normal bucket and make the parent value a pointer to the page.
-">
-          <div class="comment-context">
-            var
-          </div>
-          <div class="comment-text">If the child bucket is small enough and it has no child buckets then
-write it inline into the parent bucket's page. Otherwise spill it
-like a normal bucket and make the parent value a pointer to the page.
-</div>
-          <div class="comment-lines">Lines 529–531</div>
-        </div>
-        
-        <div class="comment-block" data-text="Update parent node.
-">
-          <div class="comment-context">
-            var
-          </div>
-          <div class="comment-text">Update parent node.
-</div>
-          <div class="comment-lines">Lines 552–552</div>
-        </div>
-        
-        <div class="comment-block" data-text="Bucket is not inlineable if it contains subbuckets or if it goes beyond
-our threshold for inline bucket size.
-">
-          <div class="comment-context">
-            var
-          </div>
-          <div class="comment-text">Bucket is not inlineable if it contains subbuckets or if it goes beyond
-our threshold for inline bucket size.
-</div>
-          <div class="comment-lines">Lines 594–595</div>
-        </div>
-        
-        <div class="comment-block" data-text="Allocate the appropriate size.
-">
-          <div class="comment-context">
-            var
-          </div>
-          <div class="comment-text">Allocate the appropriate size.
-</div>
-          <div class="comment-lines">Lines 617–617</div>
-        </div>
-        
-        <div class="comment-block" data-text="Write a bucket header.
-">
-          <div class="comment-context">
-            var
-          </div>
-          <div class="comment-text">Write a bucket header.
-</div>
-          <div class="comment-lines">Lines 621–621</div>
-        </div>
-        
-        <div class="comment-block" data-text="Convert byte slice to a fake page and write the root node.
-">
-          <div class="comment-context">
-            var
-          </div>
-          <div class="comment-text">Convert byte slice to a fake page and write the root node.
-</div>
-          <div class="comment-lines">Lines 625–625</div>
-        </div>
-        
-        <div class="comment-block" data-text="Use the inline page if this is an inline bucket.
-">
-          <div class="comment-context">
-            var
-          </div>
-          <div class="comment-text">Use the inline page if this is an inline bucket.
-</div>
-          <div class="comment-lines">Lines 659–659</div>
-        </div>
-        
-      </div>
-    
-  </div>
-  
   <div class="file-doc" id="file_freelist.go" style="display:none;">
     <div class="package-name">package bolt</div>
     <div class="file-path">freelist.go</div>
@@ -3385,6 +3385,750 @@ If dst is too small, it panics.
           <div class="comment-text">PageInfo represents human readable information about a page.
 </div>
           <div class="comment-lines">Lines 129–129</div>
+        </div>
+        
+      </div>
+    
+  </div>
+  
+  <div class="file-doc" id="file_node.go" style="display:none;">
+    <div class="package-name">package bolt</div>
+    <div class="file-path">node.go</div>
+    <hr>
+
+    
+      <div class="context-group" data-context="function">
+        <h3>function</h3>
+
+        
+        <div class="comment-block" data-text="root returns the top-level node this node is attached to.
+">
+          <div class="comment-context">
+            function — root
+          </div>
+          <div class="comment-text">root returns the top-level node this node is attached to.
+</div>
+          <div class="comment-lines">Lines 23–23</div>
+        </div>
+        
+        <div class="comment-block" data-text="minKeys returns the minimum number of inodes this node should have.
+">
+          <div class="comment-context">
+            function — minKeys
+          </div>
+          <div class="comment-text">minKeys returns the minimum number of inodes this node should have.
+</div>
+          <div class="comment-lines">Lines 31–31</div>
+        </div>
+        
+        <div class="comment-block" data-text="size returns the size of the node after serialization.
+">
+          <div class="comment-context">
+            function — size
+          </div>
+          <div class="comment-text">size returns the size of the node after serialization.
+</div>
+          <div class="comment-lines">Lines 39–39</div>
+        </div>
+        
+        <div class="comment-block" data-text="sizeLessThan returns true if the node is less than a given size.
+This is an optimization to avoid calculating a large node when we only need
+to know if it fits inside a certain page size.
+">
+          <div class="comment-context">
+            function — sizeLessThan
+          </div>
+          <div class="comment-text">sizeLessThan returns true if the node is less than a given size.
+This is an optimization to avoid calculating a large node when we only need
+to know if it fits inside a certain page size.
+</div>
+          <div class="comment-lines">Lines 49–51</div>
+        </div>
+        
+        <div class="comment-block" data-text="pageElementSize returns the size of each page element based on the type of node.
+">
+          <div class="comment-context">
+            function — pageElementSize
+          </div>
+          <div class="comment-text">pageElementSize returns the size of each page element based on the type of node.
+</div>
+          <div class="comment-lines">Lines 64–64</div>
+        </div>
+        
+        <div class="comment-block" data-text="childAt returns the child node at a given index.
+">
+          <div class="comment-context">
+            function — childAt
+          </div>
+          <div class="comment-text">childAt returns the child node at a given index.
+</div>
+          <div class="comment-lines">Lines 72–72</div>
+        </div>
+        
+        <div class="comment-block" data-text="childIndex returns the index of a given child node.
+">
+          <div class="comment-context">
+            function — childIndex
+          </div>
+          <div class="comment-text">childIndex returns the index of a given child node.
+</div>
+          <div class="comment-lines">Lines 80–80</div>
+        </div>
+        
+        <div class="comment-block" data-text="numChildren returns the number of children.
+">
+          <div class="comment-context">
+            function — numChildren
+          </div>
+          <div class="comment-text">numChildren returns the number of children.
+</div>
+          <div class="comment-lines">Lines 86–86</div>
+        </div>
+        
+        <div class="comment-block" data-text="nextSibling returns the next node with the same parent.
+">
+          <div class="comment-context">
+            function — nextSibling
+          </div>
+          <div class="comment-text">nextSibling returns the next node with the same parent.
+</div>
+          <div class="comment-lines">Lines 91–91</div>
+        </div>
+        
+        <div class="comment-block" data-text="prevSibling returns the previous node with the same parent.
+">
+          <div class="comment-context">
+            function — prevSibling
+          </div>
+          <div class="comment-text">prevSibling returns the previous node with the same parent.
+</div>
+          <div class="comment-lines">Lines 103–103</div>
+        </div>
+        
+        <div class="comment-block" data-text="put inserts a key/value.
+">
+          <div class="comment-context">
+            function — put
+          </div>
+          <div class="comment-text">put inserts a key/value.
+</div>
+          <div class="comment-lines">Lines 115–115</div>
+        </div>
+        
+        <div class="comment-block" data-text="del removes a key from the node.
+">
+          <div class="comment-context">
+            function — del
+          </div>
+          <div class="comment-text">del removes a key from the node.
+</div>
+          <div class="comment-lines">Lines 143–143</div>
+        </div>
+        
+        <div class="comment-block" data-text="read initializes the node from a page.
+">
+          <div class="comment-context">
+            function — read
+          </div>
+          <div class="comment-text">read initializes the node from a page.
+</div>
+          <div class="comment-lines">Lines 160–160</div>
+        </div>
+        
+        <div class="comment-block" data-text="write writes the items onto one or more pages.
+">
+          <div class="comment-context">
+            function — write
+          </div>
+          <div class="comment-text">write writes the items onto one or more pages.
+</div>
+          <div class="comment-lines">Lines 190–190</div>
+        </div>
+        
+        <div class="comment-block" data-text="split breaks up a node into multiple smaller nodes, if appropriate.
+This should only be called from the spill() function.
+">
+          <div class="comment-context">
+            function — split
+          </div>
+          <div class="comment-text">split breaks up a node into multiple smaller nodes, if appropriate.
+This should only be called from the spill() function.
+</div>
+          <div class="comment-lines">Lines 248–249</div>
+        </div>
+        
+        <div class="comment-block" data-text="splitTwo breaks up a node into two smaller nodes, if appropriate.
+This should only be called from the split() function.
+">
+          <div class="comment-context">
+            function — splitTwo
+          </div>
+          <div class="comment-text">splitTwo breaks up a node into two smaller nodes, if appropriate.
+This should only be called from the split() function.
+</div>
+          <div class="comment-lines">Lines 271–272</div>
+        </div>
+        
+        <div class="comment-block" data-text="splitIndex finds the position where a page will fill a given threshold.
+It returns the index as well as the size of the first page.
+This is only be called from split().
+">
+          <div class="comment-context">
+            function — splitIndex
+          </div>
+          <div class="comment-text">splitIndex finds the position where a page will fill a given threshold.
+It returns the index as well as the size of the first page.
+This is only be called from split().
+</div>
+          <div class="comment-lines">Lines 312–314</div>
+        </div>
+        
+        <div class="comment-block" data-text="spill writes the nodes to dirty pages and splits nodes as it goes.
+Returns an error if dirty pages cannot be allocated.
+">
+          <div class="comment-context">
+            function — spill
+          </div>
+          <div class="comment-text">spill writes the nodes to dirty pages and splits nodes as it goes.
+Returns an error if dirty pages cannot be allocated.
+</div>
+          <div class="comment-lines">Lines 337–338</div>
+        </div>
+        
+        <div class="comment-block" data-text="rebalance attempts to combine the node with sibling nodes if the node fill
+size is below a threshold or if there are not enough keys.
+">
+          <div class="comment-context">
+            function — rebalance
+          </div>
+          <div class="comment-text">rebalance attempts to combine the node with sibling nodes if the node fill
+size is below a threshold or if there are not enough keys.
+</div>
+          <div class="comment-lines">Lines 407–408</div>
+        </div>
+        
+        <div class="comment-block" data-text="removes a node from the list of in-memory children.
+This does not affect the inodes.
+">
+          <div class="comment-context">
+            function — removeChild
+          </div>
+          <div class="comment-text">removes a node from the list of in-memory children.
+This does not affect the inodes.
+</div>
+          <div class="comment-lines">Lines 510–511</div>
+        </div>
+        
+        <div class="comment-block" data-text="dereference causes the node to copy all its inode key/value references to heap memory.
+This is required when the mmap is reallocated so inodes are not pointing to stale data.
+">
+          <div class="comment-context">
+            function — dereference
+          </div>
+          <div class="comment-text">dereference causes the node to copy all its inode key/value references to heap memory.
+This is required when the mmap is reallocated so inodes are not pointing to stale data.
+</div>
+          <div class="comment-lines">Lines 521–522</div>
+        </div>
+        
+        <div class="comment-block" data-text="free adds the node's underlying page to the freelist.
+">
+          <div class="comment-context">
+            function — free
+          </div>
+          <div class="comment-text">free adds the node's underlying page to the freelist.
+</div>
+          <div class="comment-lines">Lines 553–553</div>
+        </div>
+        
+      </div>
+    
+      <div class="context-group" data-context="type">
+        <h3>type</h3>
+
+        
+        <div class="comment-block" data-text="node represents an in-memory, deserialized page.
+">
+          <div class="comment-context">
+            type
+          </div>
+          <div class="comment-text">node represents an in-memory, deserialized page.
+</div>
+          <div class="comment-lines">Lines 10–10</div>
+        </div>
+        
+        <div class="comment-block" data-text="inode represents an internal node inside of a node.
+It can be used to point to elements in a page or point
+to an element which hasn't been added to a page yet.
+">
+          <div class="comment-context">
+            type
+          </div>
+          <div class="comment-text">inode represents an internal node inside of a node.
+It can be used to point to elements in a page or point
+to an element which hasn't been added to a page yet.
+</div>
+          <div class="comment-lines">Lines 594–596</div>
+        </div>
+        
+      </div>
+    
+      <div class="context-group" data-context="var">
+        <h3>var</h3>
+
+        
+        <div class="comment-block" data-text="Determine the threshold before starting a new node.
+">
+          <div class="comment-context">
+            var
+          </div>
+          <div class="comment-text">Determine the threshold before starting a new node.
+</div>
+          <div class="comment-lines">Lines 280–280</div>
+        </div>
+        
+        <div class="comment-block" data-text="Split nodes into appropriate sizes. The first node will always be n.
+">
+          <div class="comment-context">
+            var
+          </div>
+          <div class="comment-text">Split nodes into appropriate sizes. The first node will always be n.
+</div>
+          <div class="comment-lines">Lines 358–358</div>
+        </div>
+        
+        <div class="comment-block" data-text="Ignore if node is above threshold (25%) and has enough keys.
+">
+          <div class="comment-context">
+            var
+          </div>
+          <div class="comment-text">Ignore if node is above threshold (25%) and has enough keys.
+</div>
+          <div class="comment-lines">Lines 418–418</div>
+        </div>
+        
+        <div class="comment-block" data-text="Destination node is right sibling if idx == 0, otherwise left sibling.
+">
+          <div class="comment-context">
+            var
+          </div>
+          <div class="comment-text">Destination node is right sibling if idx == 0, otherwise left sibling.
+</div>
+          <div class="comment-lines">Lines 462–462</div>
+        </div>
+        
+      </div>
+    
+  </div>
+  
+  <div class="file-doc" id="file_tx.go" style="display:none;">
+    <div class="package-name">package bolt</div>
+    <div class="file-path">tx.go</div>
+    <hr>
+
+    
+      <div class="context-group" data-context="function">
+        <h3>function</h3>
+
+        
+        <div class="comment-block" data-text="init initializes the transaction.
+">
+          <div class="comment-context">
+            function — init
+          </div>
+          <div class="comment-text">init initializes the transaction.
+</div>
+          <div class="comment-lines">Lines 43–43</div>
+        </div>
+        
+        <div class="comment-block" data-text="ID returns the transaction id.
+">
+          <div class="comment-context">
+            function — ID
+          </div>
+          <div class="comment-text">ID returns the transaction id.
+</div>
+          <div class="comment-lines">Lines 64–64</div>
+        </div>
+        
+        <div class="comment-block" data-text="DB returns a reference to the database that created the transaction.
+">
+          <div class="comment-context">
+            function — DB
+          </div>
+          <div class="comment-text">DB returns a reference to the database that created the transaction.
+</div>
+          <div class="comment-lines">Lines 69–69</div>
+        </div>
+        
+        <div class="comment-block" data-text="Size returns current database size in bytes as seen by this transaction.
+">
+          <div class="comment-context">
+            function — Size
+          </div>
+          <div class="comment-text">Size returns current database size in bytes as seen by this transaction.
+</div>
+          <div class="comment-lines">Lines 74–74</div>
+        </div>
+        
+        <div class="comment-block" data-text="Writable returns whether the transaction can perform write operations.
+">
+          <div class="comment-context">
+            function — Writable
+          </div>
+          <div class="comment-text">Writable returns whether the transaction can perform write operations.
+</div>
+          <div class="comment-lines">Lines 79–79</div>
+        </div>
+        
+        <div class="comment-block" data-text="Cursor creates a cursor associated with the root bucket.
+All items in the cursor will return a nil value because all root bucket keys point to buckets.
+The cursor is only valid as long as the transaction is open.
+Do not use a cursor after the transaction is closed.
+">
+          <div class="comment-context">
+            function — Cursor
+          </div>
+          <div class="comment-text">Cursor creates a cursor associated with the root bucket.
+All items in the cursor will return a nil value because all root bucket keys point to buckets.
+The cursor is only valid as long as the transaction is open.
+Do not use a cursor after the transaction is closed.
+</div>
+          <div class="comment-lines">Lines 84–87</div>
+        </div>
+        
+        <div class="comment-block" data-text="Stats retrieves a copy of the current transaction statistics.
+">
+          <div class="comment-context">
+            function — Stats
+          </div>
+          <div class="comment-text">Stats retrieves a copy of the current transaction statistics.
+</div>
+          <div class="comment-lines">Lines 92–92</div>
+        </div>
+        
+        <div class="comment-block" data-text="Bucket retrieves a bucket by name.
+Returns nil if the bucket does not exist.
+The bucket instance is only valid for the lifetime of the transaction.
+">
+          <div class="comment-context">
+            function — Bucket
+          </div>
+          <div class="comment-text">Bucket retrieves a bucket by name.
+Returns nil if the bucket does not exist.
+The bucket instance is only valid for the lifetime of the transaction.
+</div>
+          <div class="comment-lines">Lines 97–99</div>
+        </div>
+        
+        <div class="comment-block" data-text="CreateBucket creates a new bucket.
+Returns an error if the bucket already exists, if the bucket name is blank, or if the bucket name is too long.
+The bucket instance is only valid for the lifetime of the transaction.
+">
+          <div class="comment-context">
+            function — CreateBucket
+          </div>
+          <div class="comment-text">CreateBucket creates a new bucket.
+Returns an error if the bucket already exists, if the bucket name is blank, or if the bucket name is too long.
+The bucket instance is only valid for the lifetime of the transaction.
+</div>
+          <div class="comment-lines">Lines 104–106</div>
+        </div>
+        
+        <div class="comment-block" data-text="CreateBucketIfNotExists creates a new bucket if it doesn't already exist.
+Returns an error if the bucket name is blank, or if the bucket name is too long.
+The bucket instance is only valid for the lifetime of the transaction.
+">
+          <div class="comment-context">
+            function — CreateBucketIfNotExists
+          </div>
+          <div class="comment-text">CreateBucketIfNotExists creates a new bucket if it doesn't already exist.
+Returns an error if the bucket name is blank, or if the bucket name is too long.
+The bucket instance is only valid for the lifetime of the transaction.
+</div>
+          <div class="comment-lines">Lines 111–113</div>
+        </div>
+        
+        <div class="comment-block" data-text="DeleteBucket deletes a bucket.
+Returns an error if the bucket cannot be found or if the key represents a non-bucket value.
+">
+          <div class="comment-context">
+            function — DeleteBucket
+          </div>
+          <div class="comment-text">DeleteBucket deletes a bucket.
+Returns an error if the bucket cannot be found or if the key represents a non-bucket value.
+</div>
+          <div class="comment-lines">Lines 118–119</div>
+        </div>
+        
+        <div class="comment-block" data-text="ForEach executes a function for each bucket in the root.
+If the provided function returns an error then the iteration is stopped and
+the error is returned to the caller.
+">
+          <div class="comment-context">
+            function — ForEach
+          </div>
+          <div class="comment-text">ForEach executes a function for each bucket in the root.
+If the provided function returns an error then the iteration is stopped and
+the error is returned to the caller.
+</div>
+          <div class="comment-lines">Lines 124–126</div>
+        </div>
+        
+        <div class="comment-block" data-text="OnCommit adds a handler function to be executed after the transaction successfully commits.
+">
+          <div class="comment-context">
+            function — OnCommit
+          </div>
+          <div class="comment-text">OnCommit adds a handler function to be executed after the transaction successfully commits.
+</div>
+          <div class="comment-lines">Lines 136–136</div>
+        </div>
+        
+        <div class="comment-block" data-text="Commit writes all changes to disk and updates the meta page.
+Returns an error if a disk write error occurs, or if Commit is
+called on a read-only transaction.
+">
+          <div class="comment-context">
+            function — Commit
+          </div>
+          <div class="comment-text">Commit writes all changes to disk and updates the meta page.
+Returns an error if a disk write error occurs, or if Commit is
+called on a read-only transaction.
+</div>
+          <div class="comment-lines">Lines 141–143</div>
+        </div>
+        
+        <div class="comment-block" data-text="Rollback closes the transaction and ignores all previous updates. Read-only
+transactions must be rolled back and not committed.
+">
+          <div class="comment-context">
+            function — Rollback
+          </div>
+          <div class="comment-text">Rollback closes the transaction and ignores all previous updates. Read-only
+transactions must be rolled back and not committed.
+</div>
+          <div class="comment-lines">Lines 238–239</div>
+        </div>
+        
+        <div class="comment-block" data-text="Copy writes the entire database to a writer.
+This function exists for backwards compatibility.
+
+Deprecated; Use WriteTo() instead.
+">
+          <div class="comment-context">
+            function — Copy
+          </div>
+          <div class="comment-text">Copy writes the entire database to a writer.
+This function exists for backwards compatibility.
+
+Deprecated; Use WriteTo() instead.
+</div>
+          <div class="comment-lines">Lines 293–296</div>
+        </div>
+        
+        <div class="comment-block" data-text="WriteTo writes the entire database to a writer.
+If err == nil then exactly tx.Size() bytes will be written into the writer.
+">
+          <div class="comment-context">
+            function — WriteTo
+          </div>
+          <div class="comment-text">WriteTo writes the entire database to a writer.
+If err == nil then exactly tx.Size() bytes will be written into the writer.
+</div>
+          <div class="comment-lines">Lines 302–303</div>
+        </div>
+        
+        <div class="comment-block" data-text="CopyFile copies the entire database to file at the given path.
+A reader transaction is maintained during the copy so it is safe to continue
+using the database while a copy is in progress.
+">
+          <div class="comment-context">
+            function — CopyFile
+          </div>
+          <div class="comment-text">CopyFile copies the entire database to file at the given path.
+A reader transaction is maintained during the copy so it is safe to continue
+using the database while a copy is in progress.
+</div>
+          <div class="comment-lines">Lines 352–354</div>
+        </div>
+        
+        <div class="comment-block" data-text="Check performs several consistency checks on the database for this transaction.
+An error is returned if any inconsistency is found.
+
+It can be safely run concurrently on a writable transaction. However, this
+incurs a high cost for large databases and databases with a lot of subbuckets
+because of caching. This overhead can be removed if running on a read-only
+transaction, however, it is not safe to execute other writer transactions at
+the same time.
+">
+          <div class="comment-context">
+            function — Check
+          </div>
+          <div class="comment-text">Check performs several consistency checks on the database for this transaction.
+An error is returned if any inconsistency is found.
+
+It can be safely run concurrently on a writable transaction. However, this
+incurs a high cost for large databases and databases with a lot of subbuckets
+because of caching. This overhead can be removed if running on a read-only
+transaction, however, it is not safe to execute other writer transactions at
+the same time.
+</div>
+          <div class="comment-lines">Lines 369–376</div>
+        </div>
+        
+        <div class="comment-block" data-text="allocate returns a contiguous block of memory starting at a given page.
+">
+          <div class="comment-context">
+            function — allocate
+          </div>
+          <div class="comment-text">allocate returns a contiguous block of memory starting at a given page.
+</div>
+          <div class="comment-lines">Lines 456–456</div>
+        </div>
+        
+        <div class="comment-block" data-text="write writes any dirty pages to disk.
+">
+          <div class="comment-context">
+            function — write
+          </div>
+          <div class="comment-text">write writes any dirty pages to disk.
+</div>
+          <div class="comment-lines">Lines 473–473</div>
+        </div>
+        
+        <div class="comment-block" data-text="writeMeta writes the meta to the disk.
+">
+          <div class="comment-context">
+            function — writeMeta
+          </div>
+          <div class="comment-text">writeMeta writes the meta to the disk.
+</div>
+          <div class="comment-lines">Lines 546–546</div>
+        </div>
+        
+        <div class="comment-block" data-text="page returns a reference to the page with a given id.
+If page has been written to then a temporary buffered page is returned.
+">
+          <div class="comment-context">
+            function — page
+          </div>
+          <div class="comment-text">page returns a reference to the page with a given id.
+If page has been written to then a temporary buffered page is returned.
+</div>
+          <div class="comment-lines">Lines 569–570</div>
+        </div>
+        
+        <div class="comment-block" data-text="forEachPage iterates over every page within a given page and executes a function.
+">
+          <div class="comment-context">
+            function — forEachPage
+          </div>
+          <div class="comment-text">forEachPage iterates over every page within a given page and executes a function.
+</div>
+          <div class="comment-lines">Lines 583–583</div>
+        </div>
+        
+        <div class="comment-block" data-text="Page returns page information for a given page number.
+This is only safe for concurrent use when used by a writable transaction.
+">
+          <div class="comment-context">
+            function — Page
+          </div>
+          <div class="comment-text">Page returns page information for a given page number.
+This is only safe for concurrent use when used by a writable transaction.
+</div>
+          <div class="comment-lines">Lines 599–600</div>
+        </div>
+        
+        <div class="comment-block" data-text="Sub calculates and returns the difference between two sets of transaction stats.
+This is useful when obtaining stats at two different points and time and
+you need the performance counters that occurred within that time span.
+">
+          <div class="comment-context">
+            function — Sub
+          </div>
+          <div class="comment-text">Sub calculates and returns the difference between two sets of transaction stats.
+This is useful when obtaining stats at two different points and time and
+you need the performance counters that occurred within that time span.
+</div>
+          <div class="comment-lines">Lines 668–670</div>
+        </div>
+        
+      </div>
+    
+      <div class="context-group" data-context="type">
+        <h3>type</h3>
+
+        
+        <div class="comment-block" data-text="txid represents the internal transaction identifier.
+">
+          <div class="comment-context">
+            type
+          </div>
+          <div class="comment-text">txid represents the internal transaction identifier.
+</div>
+          <div class="comment-lines">Lines 13–13</div>
+        </div>
+        
+        <div class="comment-block" data-text="Tx represents a read-only or read/write transaction on the database.
+Read-only transactions can be used for retrieving values for keys and creating cursors.
+Read/write transactions can create and remove buckets and create and remove keys.
+
+IMPORTANT: You must commit or rollback transactions when you are done with
+them. Pages can not be reclaimed by the writer until no more transactions
+are using them. A long running read transaction can cause the database to
+quickly grow.
+">
+          <div class="comment-context">
+            type
+          </div>
+          <div class="comment-text">Tx represents a read-only or read/write transaction on the database.
+Read-only transactions can be used for retrieving values for keys and creating cursors.
+Read/write transactions can create and remove buckets and create and remove keys.
+
+IMPORTANT: You must commit or rollback transactions when you are done with
+them. Pages can not be reclaimed by the writer until no more transactions
+are using them. A long running read transaction can cause the database to
+quickly grow.
+</div>
+          <div class="comment-lines">Lines 16–23</div>
+        </div>
+        
+        <div class="comment-block" data-text="TxStats represents statistics about the actions performed by the transaction.
+">
+          <div class="comment-context">
+            type
+          </div>
+          <div class="comment-text">TxStats represents statistics about the actions performed by the transaction.
+</div>
+          <div class="comment-lines">Lines 626–626</div>
+        </div>
+        
+      </div>
+    
+      <div class="context-group" data-context="var">
+        <h3>var</h3>
+
+        
+        <div class="comment-block" data-text="Rebalance nodes which have had deletions.
+">
+          <div class="comment-context">
+            var
+          </div>
+          <div class="comment-text">Rebalance nodes which have had deletions.
+</div>
+          <div class="comment-lines">Lines 154–154</div>
+        </div>
+        
+        <div class="comment-block" data-text="Grab freelist stats.
+">
+          <div class="comment-context">
+            var
+          </div>
+          <div class="comment-text">Grab freelist stats.
+</div>
+          <div class="comment-lines">Lines 265–265</div>
         </div>
         
       </div>
@@ -4265,750 +5009,6 @@ owning the discovered key/value pair k/v.
           <div class="comment-text">commit regularly, or we'll run out of memory for large datasets if using one transaction.
 </div>
           <div class="comment-lines">Lines 1620–1620</div>
-        </div>
-        
-      </div>
-    
-  </div>
-  
-  <div class="file-doc" id="file_node.go" style="display:none;">
-    <div class="package-name">package bolt</div>
-    <div class="file-path">node.go</div>
-    <hr>
-
-    
-      <div class="context-group" data-context="function">
-        <h3>function</h3>
-
-        
-        <div class="comment-block" data-text="root returns the top-level node this node is attached to.
-">
-          <div class="comment-context">
-            function — root
-          </div>
-          <div class="comment-text">root returns the top-level node this node is attached to.
-</div>
-          <div class="comment-lines">Lines 23–23</div>
-        </div>
-        
-        <div class="comment-block" data-text="minKeys returns the minimum number of inodes this node should have.
-">
-          <div class="comment-context">
-            function — minKeys
-          </div>
-          <div class="comment-text">minKeys returns the minimum number of inodes this node should have.
-</div>
-          <div class="comment-lines">Lines 31–31</div>
-        </div>
-        
-        <div class="comment-block" data-text="size returns the size of the node after serialization.
-">
-          <div class="comment-context">
-            function — size
-          </div>
-          <div class="comment-text">size returns the size of the node after serialization.
-</div>
-          <div class="comment-lines">Lines 39–39</div>
-        </div>
-        
-        <div class="comment-block" data-text="sizeLessThan returns true if the node is less than a given size.
-This is an optimization to avoid calculating a large node when we only need
-to know if it fits inside a certain page size.
-">
-          <div class="comment-context">
-            function — sizeLessThan
-          </div>
-          <div class="comment-text">sizeLessThan returns true if the node is less than a given size.
-This is an optimization to avoid calculating a large node when we only need
-to know if it fits inside a certain page size.
-</div>
-          <div class="comment-lines">Lines 49–51</div>
-        </div>
-        
-        <div class="comment-block" data-text="pageElementSize returns the size of each page element based on the type of node.
-">
-          <div class="comment-context">
-            function — pageElementSize
-          </div>
-          <div class="comment-text">pageElementSize returns the size of each page element based on the type of node.
-</div>
-          <div class="comment-lines">Lines 64–64</div>
-        </div>
-        
-        <div class="comment-block" data-text="childAt returns the child node at a given index.
-">
-          <div class="comment-context">
-            function — childAt
-          </div>
-          <div class="comment-text">childAt returns the child node at a given index.
-</div>
-          <div class="comment-lines">Lines 72–72</div>
-        </div>
-        
-        <div class="comment-block" data-text="childIndex returns the index of a given child node.
-">
-          <div class="comment-context">
-            function — childIndex
-          </div>
-          <div class="comment-text">childIndex returns the index of a given child node.
-</div>
-          <div class="comment-lines">Lines 80–80</div>
-        </div>
-        
-        <div class="comment-block" data-text="numChildren returns the number of children.
-">
-          <div class="comment-context">
-            function — numChildren
-          </div>
-          <div class="comment-text">numChildren returns the number of children.
-</div>
-          <div class="comment-lines">Lines 86–86</div>
-        </div>
-        
-        <div class="comment-block" data-text="nextSibling returns the next node with the same parent.
-">
-          <div class="comment-context">
-            function — nextSibling
-          </div>
-          <div class="comment-text">nextSibling returns the next node with the same parent.
-</div>
-          <div class="comment-lines">Lines 91–91</div>
-        </div>
-        
-        <div class="comment-block" data-text="prevSibling returns the previous node with the same parent.
-">
-          <div class="comment-context">
-            function — prevSibling
-          </div>
-          <div class="comment-text">prevSibling returns the previous node with the same parent.
-</div>
-          <div class="comment-lines">Lines 103–103</div>
-        </div>
-        
-        <div class="comment-block" data-text="put inserts a key/value.
-">
-          <div class="comment-context">
-            function — put
-          </div>
-          <div class="comment-text">put inserts a key/value.
-</div>
-          <div class="comment-lines">Lines 115–115</div>
-        </div>
-        
-        <div class="comment-block" data-text="del removes a key from the node.
-">
-          <div class="comment-context">
-            function — del
-          </div>
-          <div class="comment-text">del removes a key from the node.
-</div>
-          <div class="comment-lines">Lines 143–143</div>
-        </div>
-        
-        <div class="comment-block" data-text="read initializes the node from a page.
-">
-          <div class="comment-context">
-            function — read
-          </div>
-          <div class="comment-text">read initializes the node from a page.
-</div>
-          <div class="comment-lines">Lines 160–160</div>
-        </div>
-        
-        <div class="comment-block" data-text="write writes the items onto one or more pages.
-">
-          <div class="comment-context">
-            function — write
-          </div>
-          <div class="comment-text">write writes the items onto one or more pages.
-</div>
-          <div class="comment-lines">Lines 190–190</div>
-        </div>
-        
-        <div class="comment-block" data-text="split breaks up a node into multiple smaller nodes, if appropriate.
-This should only be called from the spill() function.
-">
-          <div class="comment-context">
-            function — split
-          </div>
-          <div class="comment-text">split breaks up a node into multiple smaller nodes, if appropriate.
-This should only be called from the spill() function.
-</div>
-          <div class="comment-lines">Lines 248–249</div>
-        </div>
-        
-        <div class="comment-block" data-text="splitTwo breaks up a node into two smaller nodes, if appropriate.
-This should only be called from the split() function.
-">
-          <div class="comment-context">
-            function — splitTwo
-          </div>
-          <div class="comment-text">splitTwo breaks up a node into two smaller nodes, if appropriate.
-This should only be called from the split() function.
-</div>
-          <div class="comment-lines">Lines 271–272</div>
-        </div>
-        
-        <div class="comment-block" data-text="splitIndex finds the position where a page will fill a given threshold.
-It returns the index as well as the size of the first page.
-This is only be called from split().
-">
-          <div class="comment-context">
-            function — splitIndex
-          </div>
-          <div class="comment-text">splitIndex finds the position where a page will fill a given threshold.
-It returns the index as well as the size of the first page.
-This is only be called from split().
-</div>
-          <div class="comment-lines">Lines 312–314</div>
-        </div>
-        
-        <div class="comment-block" data-text="spill writes the nodes to dirty pages and splits nodes as it goes.
-Returns an error if dirty pages cannot be allocated.
-">
-          <div class="comment-context">
-            function — spill
-          </div>
-          <div class="comment-text">spill writes the nodes to dirty pages and splits nodes as it goes.
-Returns an error if dirty pages cannot be allocated.
-</div>
-          <div class="comment-lines">Lines 337–338</div>
-        </div>
-        
-        <div class="comment-block" data-text="rebalance attempts to combine the node with sibling nodes if the node fill
-size is below a threshold or if there are not enough keys.
-">
-          <div class="comment-context">
-            function — rebalance
-          </div>
-          <div class="comment-text">rebalance attempts to combine the node with sibling nodes if the node fill
-size is below a threshold or if there are not enough keys.
-</div>
-          <div class="comment-lines">Lines 407–408</div>
-        </div>
-        
-        <div class="comment-block" data-text="removes a node from the list of in-memory children.
-This does not affect the inodes.
-">
-          <div class="comment-context">
-            function — removeChild
-          </div>
-          <div class="comment-text">removes a node from the list of in-memory children.
-This does not affect the inodes.
-</div>
-          <div class="comment-lines">Lines 510–511</div>
-        </div>
-        
-        <div class="comment-block" data-text="dereference causes the node to copy all its inode key/value references to heap memory.
-This is required when the mmap is reallocated so inodes are not pointing to stale data.
-">
-          <div class="comment-context">
-            function — dereference
-          </div>
-          <div class="comment-text">dereference causes the node to copy all its inode key/value references to heap memory.
-This is required when the mmap is reallocated so inodes are not pointing to stale data.
-</div>
-          <div class="comment-lines">Lines 521–522</div>
-        </div>
-        
-        <div class="comment-block" data-text="free adds the node's underlying page to the freelist.
-">
-          <div class="comment-context">
-            function — free
-          </div>
-          <div class="comment-text">free adds the node's underlying page to the freelist.
-</div>
-          <div class="comment-lines">Lines 553–553</div>
-        </div>
-        
-      </div>
-    
-      <div class="context-group" data-context="type">
-        <h3>type</h3>
-
-        
-        <div class="comment-block" data-text="node represents an in-memory, deserialized page.
-">
-          <div class="comment-context">
-            type
-          </div>
-          <div class="comment-text">node represents an in-memory, deserialized page.
-</div>
-          <div class="comment-lines">Lines 10–10</div>
-        </div>
-        
-        <div class="comment-block" data-text="inode represents an internal node inside of a node.
-It can be used to point to elements in a page or point
-to an element which hasn't been added to a page yet.
-">
-          <div class="comment-context">
-            type
-          </div>
-          <div class="comment-text">inode represents an internal node inside of a node.
-It can be used to point to elements in a page or point
-to an element which hasn't been added to a page yet.
-</div>
-          <div class="comment-lines">Lines 594–596</div>
-        </div>
-        
-      </div>
-    
-      <div class="context-group" data-context="var">
-        <h3>var</h3>
-
-        
-        <div class="comment-block" data-text="Determine the threshold before starting a new node.
-">
-          <div class="comment-context">
-            var
-          </div>
-          <div class="comment-text">Determine the threshold before starting a new node.
-</div>
-          <div class="comment-lines">Lines 280–280</div>
-        </div>
-        
-        <div class="comment-block" data-text="Split nodes into appropriate sizes. The first node will always be n.
-">
-          <div class="comment-context">
-            var
-          </div>
-          <div class="comment-text">Split nodes into appropriate sizes. The first node will always be n.
-</div>
-          <div class="comment-lines">Lines 358–358</div>
-        </div>
-        
-        <div class="comment-block" data-text="Ignore if node is above threshold (25%) and has enough keys.
-">
-          <div class="comment-context">
-            var
-          </div>
-          <div class="comment-text">Ignore if node is above threshold (25%) and has enough keys.
-</div>
-          <div class="comment-lines">Lines 418–418</div>
-        </div>
-        
-        <div class="comment-block" data-text="Destination node is right sibling if idx == 0, otherwise left sibling.
-">
-          <div class="comment-context">
-            var
-          </div>
-          <div class="comment-text">Destination node is right sibling if idx == 0, otherwise left sibling.
-</div>
-          <div class="comment-lines">Lines 462–462</div>
-        </div>
-        
-      </div>
-    
-  </div>
-  
-  <div class="file-doc" id="file_tx.go" style="display:none;">
-    <div class="package-name">package bolt</div>
-    <div class="file-path">tx.go</div>
-    <hr>
-
-    
-      <div class="context-group" data-context="function">
-        <h3>function</h3>
-
-        
-        <div class="comment-block" data-text="init initializes the transaction.
-">
-          <div class="comment-context">
-            function — init
-          </div>
-          <div class="comment-text">init initializes the transaction.
-</div>
-          <div class="comment-lines">Lines 43–43</div>
-        </div>
-        
-        <div class="comment-block" data-text="ID returns the transaction id.
-">
-          <div class="comment-context">
-            function — ID
-          </div>
-          <div class="comment-text">ID returns the transaction id.
-</div>
-          <div class="comment-lines">Lines 64–64</div>
-        </div>
-        
-        <div class="comment-block" data-text="DB returns a reference to the database that created the transaction.
-">
-          <div class="comment-context">
-            function — DB
-          </div>
-          <div class="comment-text">DB returns a reference to the database that created the transaction.
-</div>
-          <div class="comment-lines">Lines 69–69</div>
-        </div>
-        
-        <div class="comment-block" data-text="Size returns current database size in bytes as seen by this transaction.
-">
-          <div class="comment-context">
-            function — Size
-          </div>
-          <div class="comment-text">Size returns current database size in bytes as seen by this transaction.
-</div>
-          <div class="comment-lines">Lines 74–74</div>
-        </div>
-        
-        <div class="comment-block" data-text="Writable returns whether the transaction can perform write operations.
-">
-          <div class="comment-context">
-            function — Writable
-          </div>
-          <div class="comment-text">Writable returns whether the transaction can perform write operations.
-</div>
-          <div class="comment-lines">Lines 79–79</div>
-        </div>
-        
-        <div class="comment-block" data-text="Cursor creates a cursor associated with the root bucket.
-All items in the cursor will return a nil value because all root bucket keys point to buckets.
-The cursor is only valid as long as the transaction is open.
-Do not use a cursor after the transaction is closed.
-">
-          <div class="comment-context">
-            function — Cursor
-          </div>
-          <div class="comment-text">Cursor creates a cursor associated with the root bucket.
-All items in the cursor will return a nil value because all root bucket keys point to buckets.
-The cursor is only valid as long as the transaction is open.
-Do not use a cursor after the transaction is closed.
-</div>
-          <div class="comment-lines">Lines 84–87</div>
-        </div>
-        
-        <div class="comment-block" data-text="Stats retrieves a copy of the current transaction statistics.
-">
-          <div class="comment-context">
-            function — Stats
-          </div>
-          <div class="comment-text">Stats retrieves a copy of the current transaction statistics.
-</div>
-          <div class="comment-lines">Lines 92–92</div>
-        </div>
-        
-        <div class="comment-block" data-text="Bucket retrieves a bucket by name.
-Returns nil if the bucket does not exist.
-The bucket instance is only valid for the lifetime of the transaction.
-">
-          <div class="comment-context">
-            function — Bucket
-          </div>
-          <div class="comment-text">Bucket retrieves a bucket by name.
-Returns nil if the bucket does not exist.
-The bucket instance is only valid for the lifetime of the transaction.
-</div>
-          <div class="comment-lines">Lines 97–99</div>
-        </div>
-        
-        <div class="comment-block" data-text="CreateBucket creates a new bucket.
-Returns an error if the bucket already exists, if the bucket name is blank, or if the bucket name is too long.
-The bucket instance is only valid for the lifetime of the transaction.
-">
-          <div class="comment-context">
-            function — CreateBucket
-          </div>
-          <div class="comment-text">CreateBucket creates a new bucket.
-Returns an error if the bucket already exists, if the bucket name is blank, or if the bucket name is too long.
-The bucket instance is only valid for the lifetime of the transaction.
-</div>
-          <div class="comment-lines">Lines 104–106</div>
-        </div>
-        
-        <div class="comment-block" data-text="CreateBucketIfNotExists creates a new bucket if it doesn't already exist.
-Returns an error if the bucket name is blank, or if the bucket name is too long.
-The bucket instance is only valid for the lifetime of the transaction.
-">
-          <div class="comment-context">
-            function — CreateBucketIfNotExists
-          </div>
-          <div class="comment-text">CreateBucketIfNotExists creates a new bucket if it doesn't already exist.
-Returns an error if the bucket name is blank, or if the bucket name is too long.
-The bucket instance is only valid for the lifetime of the transaction.
-</div>
-          <div class="comment-lines">Lines 111–113</div>
-        </div>
-        
-        <div class="comment-block" data-text="DeleteBucket deletes a bucket.
-Returns an error if the bucket cannot be found or if the key represents a non-bucket value.
-">
-          <div class="comment-context">
-            function — DeleteBucket
-          </div>
-          <div class="comment-text">DeleteBucket deletes a bucket.
-Returns an error if the bucket cannot be found or if the key represents a non-bucket value.
-</div>
-          <div class="comment-lines">Lines 118–119</div>
-        </div>
-        
-        <div class="comment-block" data-text="ForEach executes a function for each bucket in the root.
-If the provided function returns an error then the iteration is stopped and
-the error is returned to the caller.
-">
-          <div class="comment-context">
-            function — ForEach
-          </div>
-          <div class="comment-text">ForEach executes a function for each bucket in the root.
-If the provided function returns an error then the iteration is stopped and
-the error is returned to the caller.
-</div>
-          <div class="comment-lines">Lines 124–126</div>
-        </div>
-        
-        <div class="comment-block" data-text="OnCommit adds a handler function to be executed after the transaction successfully commits.
-">
-          <div class="comment-context">
-            function — OnCommit
-          </div>
-          <div class="comment-text">OnCommit adds a handler function to be executed after the transaction successfully commits.
-</div>
-          <div class="comment-lines">Lines 136–136</div>
-        </div>
-        
-        <div class="comment-block" data-text="Commit writes all changes to disk and updates the meta page.
-Returns an error if a disk write error occurs, or if Commit is
-called on a read-only transaction.
-">
-          <div class="comment-context">
-            function — Commit
-          </div>
-          <div class="comment-text">Commit writes all changes to disk and updates the meta page.
-Returns an error if a disk write error occurs, or if Commit is
-called on a read-only transaction.
-</div>
-          <div class="comment-lines">Lines 141–143</div>
-        </div>
-        
-        <div class="comment-block" data-text="Rollback closes the transaction and ignores all previous updates. Read-only
-transactions must be rolled back and not committed.
-">
-          <div class="comment-context">
-            function — Rollback
-          </div>
-          <div class="comment-text">Rollback closes the transaction and ignores all previous updates. Read-only
-transactions must be rolled back and not committed.
-</div>
-          <div class="comment-lines">Lines 238–239</div>
-        </div>
-        
-        <div class="comment-block" data-text="Copy writes the entire database to a writer.
-This function exists for backwards compatibility.
-
-Deprecated; Use WriteTo() instead.
-">
-          <div class="comment-context">
-            function — Copy
-          </div>
-          <div class="comment-text">Copy writes the entire database to a writer.
-This function exists for backwards compatibility.
-
-Deprecated; Use WriteTo() instead.
-</div>
-          <div class="comment-lines">Lines 293–296</div>
-        </div>
-        
-        <div class="comment-block" data-text="WriteTo writes the entire database to a writer.
-If err == nil then exactly tx.Size() bytes will be written into the writer.
-">
-          <div class="comment-context">
-            function — WriteTo
-          </div>
-          <div class="comment-text">WriteTo writes the entire database to a writer.
-If err == nil then exactly tx.Size() bytes will be written into the writer.
-</div>
-          <div class="comment-lines">Lines 302–303</div>
-        </div>
-        
-        <div class="comment-block" data-text="CopyFile copies the entire database to file at the given path.
-A reader transaction is maintained during the copy so it is safe to continue
-using the database while a copy is in progress.
-">
-          <div class="comment-context">
-            function — CopyFile
-          </div>
-          <div class="comment-text">CopyFile copies the entire database to file at the given path.
-A reader transaction is maintained during the copy so it is safe to continue
-using the database while a copy is in progress.
-</div>
-          <div class="comment-lines">Lines 352–354</div>
-        </div>
-        
-        <div class="comment-block" data-text="Check performs several consistency checks on the database for this transaction.
-An error is returned if any inconsistency is found.
-
-It can be safely run concurrently on a writable transaction. However, this
-incurs a high cost for large databases and databases with a lot of subbuckets
-because of caching. This overhead can be removed if running on a read-only
-transaction, however, it is not safe to execute other writer transactions at
-the same time.
-">
-          <div class="comment-context">
-            function — Check
-          </div>
-          <div class="comment-text">Check performs several consistency checks on the database for this transaction.
-An error is returned if any inconsistency is found.
-
-It can be safely run concurrently on a writable transaction. However, this
-incurs a high cost for large databases and databases with a lot of subbuckets
-because of caching. This overhead can be removed if running on a read-only
-transaction, however, it is not safe to execute other writer transactions at
-the same time.
-</div>
-          <div class="comment-lines">Lines 369–376</div>
-        </div>
-        
-        <div class="comment-block" data-text="allocate returns a contiguous block of memory starting at a given page.
-">
-          <div class="comment-context">
-            function — allocate
-          </div>
-          <div class="comment-text">allocate returns a contiguous block of memory starting at a given page.
-</div>
-          <div class="comment-lines">Lines 456–456</div>
-        </div>
-        
-        <div class="comment-block" data-text="write writes any dirty pages to disk.
-">
-          <div class="comment-context">
-            function — write
-          </div>
-          <div class="comment-text">write writes any dirty pages to disk.
-</div>
-          <div class="comment-lines">Lines 473–473</div>
-        </div>
-        
-        <div class="comment-block" data-text="writeMeta writes the meta to the disk.
-">
-          <div class="comment-context">
-            function — writeMeta
-          </div>
-          <div class="comment-text">writeMeta writes the meta to the disk.
-</div>
-          <div class="comment-lines">Lines 546–546</div>
-        </div>
-        
-        <div class="comment-block" data-text="page returns a reference to the page with a given id.
-If page has been written to then a temporary buffered page is returned.
-">
-          <div class="comment-context">
-            function — page
-          </div>
-          <div class="comment-text">page returns a reference to the page with a given id.
-If page has been written to then a temporary buffered page is returned.
-</div>
-          <div class="comment-lines">Lines 569–570</div>
-        </div>
-        
-        <div class="comment-block" data-text="forEachPage iterates over every page within a given page and executes a function.
-">
-          <div class="comment-context">
-            function — forEachPage
-          </div>
-          <div class="comment-text">forEachPage iterates over every page within a given page and executes a function.
-</div>
-          <div class="comment-lines">Lines 583–583</div>
-        </div>
-        
-        <div class="comment-block" data-text="Page returns page information for a given page number.
-This is only safe for concurrent use when used by a writable transaction.
-">
-          <div class="comment-context">
-            function — Page
-          </div>
-          <div class="comment-text">Page returns page information for a given page number.
-This is only safe for concurrent use when used by a writable transaction.
-</div>
-          <div class="comment-lines">Lines 599–600</div>
-        </div>
-        
-        <div class="comment-block" data-text="Sub calculates and returns the difference between two sets of transaction stats.
-This is useful when obtaining stats at two different points and time and
-you need the performance counters that occurred within that time span.
-">
-          <div class="comment-context">
-            function — Sub
-          </div>
-          <div class="comment-text">Sub calculates and returns the difference between two sets of transaction stats.
-This is useful when obtaining stats at two different points and time and
-you need the performance counters that occurred within that time span.
-</div>
-          <div class="comment-lines">Lines 668–670</div>
-        </div>
-        
-      </div>
-    
-      <div class="context-group" data-context="type">
-        <h3>type</h3>
-
-        
-        <div class="comment-block" data-text="txid represents the internal transaction identifier.
-">
-          <div class="comment-context">
-            type
-          </div>
-          <div class="comment-text">txid represents the internal transaction identifier.
-</div>
-          <div class="comment-lines">Lines 13–13</div>
-        </div>
-        
-        <div class="comment-block" data-text="Tx represents a read-only or read/write transaction on the database.
-Read-only transactions can be used for retrieving values for keys and creating cursors.
-Read/write transactions can create and remove buckets and create and remove keys.
-
-IMPORTANT: You must commit or rollback transactions when you are done with
-them. Pages can not be reclaimed by the writer until no more transactions
-are using them. A long running read transaction can cause the database to
-quickly grow.
-">
-          <div class="comment-context">
-            type
-          </div>
-          <div class="comment-text">Tx represents a read-only or read/write transaction on the database.
-Read-only transactions can be used for retrieving values for keys and creating cursors.
-Read/write transactions can create and remove buckets and create and remove keys.
-
-IMPORTANT: You must commit or rollback transactions when you are done with
-them. Pages can not be reclaimed by the writer until no more transactions
-are using them. A long running read transaction can cause the database to
-quickly grow.
-</div>
-          <div class="comment-lines">Lines 16–23</div>
-        </div>
-        
-        <div class="comment-block" data-text="TxStats represents statistics about the actions performed by the transaction.
-">
-          <div class="comment-context">
-            type
-          </div>
-          <div class="comment-text">TxStats represents statistics about the actions performed by the transaction.
-</div>
-          <div class="comment-lines">Lines 626–626</div>
-        </div>
-        
-      </div>
-    
-      <div class="context-group" data-context="var">
-        <h3>var</h3>
-
-        
-        <div class="comment-block" data-text="Rebalance nodes which have had deletions.
-">
-          <div class="comment-context">
-            var
-          </div>
-          <div class="comment-text">Rebalance nodes which have had deletions.
-</div>
-          <div class="comment-lines">Lines 154–154</div>
-        </div>
-        
-        <div class="comment-block" data-text="Grab freelist stats.
-">
-          <div class="comment-context">
-            var
-          </div>
-          <div class="comment-text">Grab freelist stats.
-</div>
-          <div class="comment-lines">Lines 265–265</div>
         </div>
         
       </div>

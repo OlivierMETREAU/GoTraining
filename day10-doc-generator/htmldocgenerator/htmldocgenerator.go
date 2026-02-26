@@ -12,11 +12,25 @@ import (
 	"example.com/day10-doc-generator/gocommentextractor"
 )
 
-// Responsibility:
-// - Recursively walk the project
-// - Spawn goroutines to extract comments using the previous package
-// - Generate HTML pages (per file, per package, or a global index)
+//
+// ============================================================
+//  Package htmldocgenerator
+//  ------------------------
+//  Responsibilities:
+//  - Recursively scan a Go project
+//  - Extract comments using gocommentextractor (via worker pool)
+//  - Prepare structured documentation data
+//  - Generate HTML output or serve it through an HTTP server
+// ============================================================
+//
 
+//
+// =========================
+//  Internal types
+// =========================
+//
+
+// htmlFile represents a Go source file prepared for HTML rendering.
 type htmlFile struct {
 	ID          string
 	RelPath     string
@@ -24,14 +38,22 @@ type htmlFile struct {
 	GroupedDocs map[string][]gocommentextractor.CommentBlock
 }
 
+// htmlData is the top-level structure passed to the HTML template.
 type htmlData struct {
 	Files []htmlFile
 }
 
+// GroupedComments is a convenience alias for readability.
 type GroupedComments map[string][]gocommentextractor.CommentBlock
 
-// FindGoFiles recursively scans a directory and returns all .go files
-// except *_test.go files.
+//
+// =========================
+//  Go file discovery
+// =========================
+//
+
+// FindGoFiles recursively scans a directory and returns all .go files,
+// excluding *_test.go files.
 func FindGoFiles(root string) ([]string, error) {
 	var files []string
 
@@ -40,22 +62,16 @@ func FindGoFiles(root string) ([]string, error) {
 			return err
 		}
 
-		// Skip directories
 		if d.IsDir() {
 			return nil
 		}
-
-		// Only .go files
 		if !strings.HasSuffix(path, ".go") {
 			return nil
 		}
-
-		// Exclude test files
 		if strings.HasSuffix(path, "_test.go") {
 			return nil
 		}
 
-		// This is a valid go source code file to be analyzed
 		files = append(files, path)
 		return nil
 	})
@@ -67,28 +83,33 @@ func FindGoFiles(root string) ([]string, error) {
 	return files, nil
 }
 
+//
+// =========================
+//  Comment extraction (worker pool)
+// =========================
+//
+
 // ExtractProjectInfo scans a folder, finds all Go files, and extracts
-// package names using a worker pool calling gocommentextractor.
+// comments concurrently using a worker pool.
 func ExtractProjectInfo(root string, workerCount int) ([]gocommentextractor.FileComments, error) {
 	files, err := FindGoFiles(root)
 	if err != nil {
 		return nil, err
 	}
-
 	return runWorkers(files, workerCount)
 }
 
+// runWorkers processes files concurrently and returns extracted comments.
 func runWorkers(files []string, workerCount int) ([]gocommentextractor.FileComments, error) {
 	jobs := make(chan string)
 	results := make(chan gocommentextractor.FileComments)
 
-	// Start workers
+	// Start worker goroutines
 	for i := 0; i < workerCount; i++ {
 		go func() {
 			for path := range jobs {
 				fc, err := gocommentextractor.GetCommentFromGoFile(path)
 				if err != nil {
-					// Return an error inside the struct so the pipeline keeps flowing
 					results <- gocommentextractor.FileComments{
 						FilePath: path,
 						Err:      err,
@@ -117,33 +138,14 @@ func runWorkers(files []string, workerCount int) ([]gocommentextractor.FileComme
 	return output, nil
 }
 
-func GenerateHTML(outputPath string, files []gocommentextractor.FileComments, root string) error {
-	data := htmlData{Files: make([]htmlFile, 0, len(files))}
+//
+// =========================
+//  HTML data preparation
+// =========================
+//
 
-	for _, fc := range files {
-		rel, _ := filepath.Rel(root, fc.FilePath)
-		id := "file_" + strings.ReplaceAll(rel, string(os.PathSeparator), "_")
-
-		grouped := groupByContext(fc.Comments)
-
-		data.Files = append(data.Files, htmlFile{
-			ID:          id,
-			RelPath:     rel,
-			Package:     fc.Package,
-			GroupedDocs: grouped,
-		})
-	}
-
-	f, err := os.Create(outputPath)
-	if err != nil {
-		return err
-	}
-	defer f.Close()
-
-	tmpl := template.Must(template.New("doc").Parse(htmlTemplate))
-	return tmpl.Execute(f, data)
-}
-
+// groupByContext groups extracted comments by their semantic context
+// (package, type, function, var, const, etc.).
 func groupByContext(comments []gocommentextractor.CommentBlock) map[string][]gocommentextractor.CommentBlock {
 	grouped := make(map[string][]gocommentextractor.CommentBlock)
 	for _, c := range comments {
@@ -152,17 +154,8 @@ func groupByContext(comments []gocommentextractor.CommentBlock) map[string][]goc
 	return grouped
 }
 
-func ServeHTML(w http.ResponseWriter, files []gocommentextractor.FileComments, root string) {
-	data := prepareHTMLData(files, root)
-	tmpl := template.Must(template.New("doc").Parse(htmlTemplate))
-	_ = tmpl.Execute(w, data)
-}
-
-func ServeJSON(w http.ResponseWriter, files []gocommentextractor.FileComments) {
-	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(files)
-}
-
+// prepareHTMLData transforms raw FileComments into the structure
+// expected by the HTML template.
 func prepareHTMLData(files []gocommentextractor.FileComments, root string) htmlData {
 	data := htmlData{Files: make([]htmlFile, 0, len(files))}
 
@@ -181,4 +174,44 @@ func prepareHTMLData(files []gocommentextractor.FileComments, root string) htmlD
 	}
 
 	return data
+}
+
+//
+// =========================
+//  HTML generation (file mode)
+// =========================
+//
+
+// GenerateHTML writes a complete HTML documentation file to disk.
+func GenerateHTML(outputPath string, files []gocommentextractor.FileComments, root string) error {
+	data := prepareHTMLData(files, root)
+
+	f, err := os.Create(outputPath)
+	if err != nil {
+		return err
+	}
+	defer f.Close()
+
+	tmpl := template.Must(template.New("doc").Parse(htmlTemplate))
+	return tmpl.Execute(f, data)
+}
+
+//
+// =========================
+//  HTTP server mode
+// =========================
+//
+
+// ServeHTML renders the documentation HTML directly to an HTTP response.
+func ServeHTML(w http.ResponseWriter, files []gocommentextractor.FileComments, root string) {
+	data := prepareHTMLData(files, root)
+	tmpl := template.Must(template.New("doc").Parse(htmlTemplate))
+	_ = tmpl.Execute(w, data)
+}
+
+// ServeJSON exposes the raw extracted data as JSON.
+// Useful for SPA frontends or debugging.
+func ServeJSON(w http.ResponseWriter, files []gocommentextractor.FileComments) {
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(files)
 }
