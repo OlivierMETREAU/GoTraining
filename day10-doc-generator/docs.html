@@ -5,78 +5,29 @@
 <meta charset="UTF-8">
 <title>Go Project Documentation</title>
 <style>
-  body {
-    margin: 0;
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    display: flex;
-    height: 100vh;
-    overflow: hidden;
-  }
-  #sidebar {
-    width: 280px;
-    background: #f5f5f5;
-    border-right: 1px solid #ddd;
-    padding: 10px;
-    box-sizing: border-box;
-    overflow-y: auto;
-  }
-  #content {
-    flex: 1;
-    padding: 20px;
-    overflow-y: auto;
-  }
-  .file-item {
-    cursor: pointer;
-    padding: 4px 8px;
-    border-radius: 4px;
-    font-size: 14px;
-  }
-  .file-item:hover {
-    background: #e0e0e0;
-  }
-  .file-item.active {
-    background: #1976d2;
-    color: white;
-  }
-  .file-path {
-    font-family: monospace;
-    font-size: 12px;
-    color: #555;
-  }
-  .package-name {
-    font-weight: bold;
-    font-size: 18px;
-    margin-bottom: 4px;
-  }
-  .comment-block {
-    margin-bottom: 16px;
-    padding: 10px;
-    border-left: 3px solid #1976d2;
-    background: #fafafa;
-  }
-  .comment-context {
-    font-weight: bold;
-    font-size: 13px;
-    color: #1976d2;
-    margin-bottom: 4px;
-  }
-  .comment-text {
-    white-space: pre-wrap;
-    font-size: 14px;
-  }
-  .comment-lines {
-    font-size: 11px;
-    color: #888;
-    margin-top: 4px;
-  }
+  body { margin: 0; font-family: system-ui, sans-serif; display: flex; height: 100vh; overflow: hidden; }
+  #sidebar { width: 280px; background: #f5f5f5; border-right: 1px solid #ddd; padding: 10px; overflow-y: auto; }
+  #content { flex: 1; padding: 20px; overflow-y: auto; }
+  .file-item { cursor: pointer; padding: 4px 8px; border-radius: 4px; font-size: 14px; }
+  .file-item:hover { background: #e0e0e0; }
+  .file-item.active { background: #1976d2; color: white; }
+  .file-path { font-family: monospace; font-size: 12px; color: #555; }
+  .package-name { font-weight: bold; font-size: 18px; margin-bottom: 4px; }
+  .comment-block { margin-bottom: 16px; padding: 10px; border-left: 3px solid #1976d2; background: #fafafa; }
+  .comment-context { font-weight: bold; font-size: 14px; color: #1976d2; margin-bottom: 6px; }
+  .comment-text { white-space: pre-wrap; font-size: 14px; }
+  .comment-lines { font-size: 11px; color: #888; margin-top: 4px; }
+  h3 { margin-top: 24px; margin-bottom: 8px; }
 </style>
 </head>
+
 <body>
+
 <div id="sidebar">
   <h3>Files</h3>
   
-    <div class="file-item" data-target="file_bolt_386.go">
-      <div>bolt_386.go</div>
+    <div class="file-item" data-target="file_bolt_amd64.go">
+      <div>bolt_amd64.go</div>
       <div class="file-path">bolt</div>
     </div>
   
@@ -85,23 +36,13 @@
       <div class="file-path">bolt</div>
     </div>
   
-    <div class="file-item" data-target="file_bolt_amd64.go">
-      <div>bolt_amd64.go</div>
-      <div class="file-path">bolt</div>
-    </div>
-  
     <div class="file-item" data-target="file_bolt_arm.go">
       <div>bolt_arm.go</div>
       <div class="file-path">bolt</div>
     </div>
   
-    <div class="file-item" data-target="file_bolt_ppc.go">
-      <div>bolt_ppc.go</div>
-      <div class="file-path">bolt</div>
-    </div>
-  
-    <div class="file-item" data-target="file_bolt_ppc64.go">
-      <div>bolt_ppc64.go</div>
+    <div class="file-item" data-target="file_bolt_386.go">
+      <div>bolt_386.go</div>
       <div class="file-path">bolt</div>
     </div>
   
@@ -110,8 +51,8 @@
       <div class="file-path">bolt</div>
     </div>
   
-    <div class="file-item" data-target="file_bolt_ppc64le.go">
-      <div>bolt_ppc64le.go</div>
+    <div class="file-item" data-target="file_bolt_ppc.go">
+      <div>bolt_ppc.go</div>
       <div class="file-path">bolt</div>
     </div>
   
@@ -120,8 +61,18 @@
       <div class="file-path">bolt</div>
     </div>
   
+    <div class="file-item" data-target="file_bolt_ppc64.go">
+      <div>bolt_ppc64.go</div>
+      <div class="file-path">bolt</div>
+    </div>
+  
     <div class="file-item" data-target="file_bolt_s390x.go">
       <div>bolt_s390x.go</div>
+      <div class="file-path">bolt</div>
+    </div>
+  
+    <div class="file-item" data-target="file_bolt_ppc64le.go">
+      <div>bolt_ppc64le.go</div>
       <div class="file-path">bolt</div>
     </div>
   
@@ -145,11 +96,6 @@
       <div class="file-path">bolt</div>
     </div>
   
-    <div class="file-item" data-target="file_bucket.go">
-      <div>bucket.go</div>
-      <div class="file-path">bolt</div>
-    </div>
-  
     <div class="file-item" data-target="file_cursor.go">
       <div>cursor.go</div>
       <div class="file-path">bolt</div>
@@ -160,18 +106,23 @@
       <div class="file-path">bolt</div>
     </div>
   
+    <div class="file-item" data-target="file_bucket.go">
+      <div>bucket.go</div>
+      <div class="file-path">bolt</div>
+    </div>
+  
     <div class="file-item" data-target="file_errors.go">
       <div>errors.go</div>
       <div class="file-path">bolt</div>
     </div>
   
-    <div class="file-item" data-target="file_db.go">
-      <div>db.go</div>
+    <div class="file-item" data-target="file_freelist.go">
+      <div>freelist.go</div>
       <div class="file-path">bolt</div>
     </div>
   
-    <div class="file-item" data-target="file_freelist.go">
-      <div>freelist.go</div>
+    <div class="file-item" data-target="file_db.go">
+      <div>db.go</div>
       <div class="file-path">bolt</div>
     </div>
   
@@ -185,25 +136,28 @@
       <div class="file-path">bolt</div>
     </div>
   
-    <div class="file-item" data-target="file_tx.go">
-      <div>tx.go</div>
-      <div class="file-path">bolt</div>
-    </div>
-  
     <div class="file-item" data-target="file_cmd_bolt_main.go">
       <div>cmd\bolt\main.go</div>
       <div class="file-path">main</div>
+    </div>
+  
+    <div class="file-item" data-target="file_tx.go">
+      <div>tx.go</div>
+      <div class="file-path">bolt</div>
     </div>
   
 </div>
 
 <div id="content">
   
-  <div class="file-doc" id="file_bolt_386.go" style="display:none;">
+  <div class="file-doc" id="file_bolt_amd64.go" style="display:none;">
     <div class="package-name">package bolt</div>
-    <div class="file-path">bolt_386.go</div>
+    <div class="file-path">bolt_amd64.go</div>
     <hr>
+
     
+      <h3>const</h3>
+
       
       <div class="comment-block">
         <div class="comment-context">const</div>
@@ -218,6 +172,10 @@
 </div>
         <div class="comment-lines">Lines 6–6</div>
       </div>
+      
+    
+      <h3>var</h3>
+
       
       <div class="comment-block">
         <div class="comment-context">var</div>
@@ -233,7 +191,10 @@
     <div class="package-name">package bolt</div>
     <div class="file-path">bolt_arm64.go</div>
     <hr>
+
     
+      <h3>const</h3>
+
       
       <div class="comment-block">
         <div class="comment-context">const</div>
@@ -249,6 +210,10 @@
         <div class="comment-lines">Lines 8–8</div>
       </div>
       
+    
+      <h3>var</h3>
+
+      
       <div class="comment-block">
         <div class="comment-context">var</div>
         <div class="comment-text">Are unaligned load/stores broken on this arch?
@@ -259,11 +224,51 @@
     
   </div>
   
-  <div class="file-doc" id="file_bolt_amd64.go" style="display:none;">
+  <div class="file-doc" id="file_bolt_arm.go" style="display:none;">
     <div class="package-name">package bolt</div>
-    <div class="file-path">bolt_amd64.go</div>
+    <div class="file-path">bolt_arm.go</div>
     <hr>
+
     
+      <h3>const</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">const</div>
+        <div class="comment-text">maxMapSize represents the largest mmap size supported by Bolt.
+</div>
+        <div class="comment-lines">Lines 5–5</div>
+      </div>
+      
+      <div class="comment-block">
+        <div class="comment-context">const</div>
+        <div class="comment-text">maxAllocSize is the size used when creating array pointers.
+</div>
+        <div class="comment-lines">Lines 8–8</div>
+      </div>
+      
+    
+      <h3>var</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">var</div>
+        <div class="comment-text">Are unaligned load/stores broken on this arch?
+</div>
+        <div class="comment-lines">Lines 11–11</div>
+      </div>
+      
+    
+  </div>
+  
+  <div class="file-doc" id="file_bolt_386.go" style="display:none;">
+    <div class="package-name">package bolt</div>
+    <div class="file-path">bolt_386.go</div>
+    <hr>
+
+    
+      <h3>const</h3>
+
       
       <div class="comment-block">
         <div class="comment-context">const</div>
@@ -279,6 +284,10 @@
         <div class="comment-lines">Lines 6–6</div>
       </div>
       
+    
+      <h3>var</h3>
+
+      
       <div class="comment-block">
         <div class="comment-context">var</div>
         <div class="comment-text">Are unaligned load/stores broken on this arch?
@@ -289,94 +298,14 @@
     
   </div>
   
-  <div class="file-doc" id="file_bolt_arm.go" style="display:none;">
-    <div class="package-name">package bolt</div>
-    <div class="file-path">bolt_arm.go</div>
-    <hr>
-    
-      
-      <div class="comment-block">
-        <div class="comment-context">const</div>
-        <div class="comment-text">maxMapSize represents the largest mmap size supported by Bolt.
-</div>
-        <div class="comment-lines">Lines 5–5</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">const</div>
-        <div class="comment-text">maxAllocSize is the size used when creating array pointers.
-</div>
-        <div class="comment-lines">Lines 8–8</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">var</div>
-        <div class="comment-text">Are unaligned load/stores broken on this arch?
-</div>
-        <div class="comment-lines">Lines 11–11</div>
-      </div>
-      
-    
-  </div>
-  
-  <div class="file-doc" id="file_bolt_ppc.go" style="display:none;">
-    <div class="package-name">package bolt</div>
-    <div class="file-path">bolt_ppc.go</div>
-    <hr>
-    
-      
-      <div class="comment-block">
-        <div class="comment-context">const</div>
-        <div class="comment-text">maxMapSize represents the largest mmap size supported by Bolt.
-</div>
-        <div class="comment-lines">Lines 5–5</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">const</div>
-        <div class="comment-text">maxAllocSize is the size used when creating array pointers.
-</div>
-        <div class="comment-lines">Lines 8–8</div>
-      </div>
-      
-    
-  </div>
-  
-  <div class="file-doc" id="file_bolt_ppc64.go" style="display:none;">
-    <div class="package-name">package bolt</div>
-    <div class="file-path">bolt_ppc64.go</div>
-    <hr>
-    
-      
-      <div class="comment-block">
-        <div class="comment-context">const</div>
-        <div class="comment-text">maxMapSize represents the largest mmap size supported by Bolt.
-</div>
-        <div class="comment-lines">Lines 5–5</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">const</div>
-        <div class="comment-text">maxAllocSize is the size used when creating array pointers.
-</div>
-        <div class="comment-lines">Lines 8–8</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">var</div>
-        <div class="comment-text">Are unaligned load/stores broken on this arch?
-</div>
-        <div class="comment-lines">Lines 11–11</div>
-      </div>
-      
-    
-  </div>
-  
   <div class="file-doc" id="file_bolt_linux.go" style="display:none;">
     <div class="package-name">package bolt</div>
     <div class="file-path">bolt_linux.go</div>
     <hr>
+
     
+      <h3>func fdatasync</h3>
+
       
       <div class="comment-block">
         <div class="comment-context">func fdatasync</div>
@@ -388,11 +317,14 @@
     
   </div>
   
-  <div class="file-doc" id="file_bolt_ppc64le.go" style="display:none;">
+  <div class="file-doc" id="file_bolt_ppc.go" style="display:none;">
     <div class="package-name">package bolt</div>
-    <div class="file-path">bolt_ppc64le.go</div>
+    <div class="file-path">bolt_ppc.go</div>
     <hr>
+
     
+      <h3>const</h3>
+
       
       <div class="comment-block">
         <div class="comment-context">const</div>
@@ -407,6 +339,44 @@
 </div>
         <div class="comment-lines">Lines 8–8</div>
       </div>
+      
+    
+  </div>
+  
+  <div class="file-doc" id="file_bolt_openbsd.go" style="display:none;">
+    <div class="package-name">package bolt</div>
+    <div class="file-path">bolt_openbsd.go</div>
+    <hr>
+
+    
+  </div>
+  
+  <div class="file-doc" id="file_bolt_ppc64.go" style="display:none;">
+    <div class="package-name">package bolt</div>
+    <div class="file-path">bolt_ppc64.go</div>
+    <hr>
+
+    
+      <h3>const</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">const</div>
+        <div class="comment-text">maxMapSize represents the largest mmap size supported by Bolt.
+</div>
+        <div class="comment-lines">Lines 5–5</div>
+      </div>
+      
+      <div class="comment-block">
+        <div class="comment-context">const</div>
+        <div class="comment-text">maxAllocSize is the size used when creating array pointers.
+</div>
+        <div class="comment-lines">Lines 8–8</div>
+      </div>
+      
+    
+      <h3>var</h3>
+
       
       <div class="comment-block">
         <div class="comment-context">var</div>
@@ -418,20 +388,14 @@
     
   </div>
   
-  <div class="file-doc" id="file_bolt_openbsd.go" style="display:none;">
-    <div class="package-name">package bolt</div>
-    <div class="file-path">bolt_openbsd.go</div>
-    <hr>
-    
-      <p>No comments found in this file.</p>
-    
-  </div>
-  
   <div class="file-doc" id="file_bolt_s390x.go" style="display:none;">
     <div class="package-name">package bolt</div>
     <div class="file-path">bolt_s390x.go</div>
     <hr>
+
     
+      <h3>const</h3>
+
       
       <div class="comment-block">
         <div class="comment-context">const</div>
@@ -446,6 +410,47 @@
 </div>
         <div class="comment-lines">Lines 8–8</div>
       </div>
+      
+    
+      <h3>var</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">var</div>
+        <div class="comment-text">Are unaligned load/stores broken on this arch?
+</div>
+        <div class="comment-lines">Lines 11–11</div>
+      </div>
+      
+    
+  </div>
+  
+  <div class="file-doc" id="file_bolt_ppc64le.go" style="display:none;">
+    <div class="package-name">package bolt</div>
+    <div class="file-path">bolt_ppc64le.go</div>
+    <hr>
+
+    
+      <h3>const</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">const</div>
+        <div class="comment-text">maxMapSize represents the largest mmap size supported by Bolt.
+</div>
+        <div class="comment-lines">Lines 5–5</div>
+      </div>
+      
+      <div class="comment-block">
+        <div class="comment-context">const</div>
+        <div class="comment-text">maxAllocSize is the size used when creating array pointers.
+</div>
+        <div class="comment-lines">Lines 8–8</div>
+      </div>
+      
+    
+      <h3>var</h3>
+
       
       <div class="comment-block">
         <div class="comment-context">var</div>
@@ -461,7 +466,10 @@
     <div class="package-name">package bolt</div>
     <div class="file-path">boltsync_unix.go</div>
     <hr>
+
     
+      <h3>func fdatasync</h3>
+
       
       <div class="comment-block">
         <div class="comment-context">func fdatasync</div>
@@ -477,7 +485,10 @@
     <div class="package-name">package bolt</div>
     <div class="file-path">bolt_unix_solaris.go</div>
     <hr>
+
     
+      <h3>func flock</h3>
+
       
       <div class="comment-block">
         <div class="comment-context">func flock</div>
@@ -486,6 +497,10 @@
         <div class="comment-lines">Lines 13–13</div>
       </div>
       
+    
+      <h3>func funlock</h3>
+
+      
       <div class="comment-block">
         <div class="comment-context">func funlock</div>
         <div class="comment-text">funlock releases an advisory lock on a file descriptor.
@@ -493,12 +508,20 @@
         <div class="comment-lines">Lines 47–47</div>
       </div>
       
+    
+      <h3>func mmap</h3>
+
+      
       <div class="comment-block">
         <div class="comment-context">func mmap</div>
         <div class="comment-text">mmap memory maps a DB's data file.
 </div>
         <div class="comment-lines">Lines 57–57</div>
       </div>
+      
+    
+      <h3>func munmap</h3>
+
       
       <div class="comment-block">
         <div class="comment-context">func munmap</div>
@@ -514,7 +537,10 @@
     <div class="package-name">package bolt</div>
     <div class="file-path">bolt_unix.go</div>
     <hr>
+
     
+      <h3>func flock</h3>
+
       
       <div class="comment-block">
         <div class="comment-context">func flock</div>
@@ -523,6 +549,10 @@
         <div class="comment-lines">Lines 13–13</div>
       </div>
       
+    
+      <h3>func funlock</h3>
+
+      
       <div class="comment-block">
         <div class="comment-context">func funlock</div>
         <div class="comment-text">funlock releases an advisory lock on a file descriptor.
@@ -530,19 +560,9 @@
         <div class="comment-lines">Lines 42–42</div>
       </div>
       
-      <div class="comment-block">
-        <div class="comment-context">func mmap</div>
-        <div class="comment-text">mmap memory maps a DB's data file.
-</div>
-        <div class="comment-lines">Lines 47–47</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func munmap</div>
-        <div class="comment-text">munmap unmaps a DB's data file from memory.
-</div>
-        <div class="comment-lines">Lines 67–67</div>
-      </div>
+    
+      <h3>func madvise</h3>
+
       
       <div class="comment-block">
         <div class="comment-context">func madvise</div>
@@ -552,20 +572,38 @@
       </div>
       
     
+      <h3>func mmap</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func mmap</div>
+        <div class="comment-text">mmap memory maps a DB's data file.
+</div>
+        <div class="comment-lines">Lines 47–47</div>
+      </div>
+      
+    
+      <h3>func munmap</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func munmap</div>
+        <div class="comment-text">munmap unmaps a DB's data file from memory.
+</div>
+        <div class="comment-lines">Lines 67–67</div>
+      </div>
+      
+    
   </div>
   
   <div class="file-doc" id="file_bolt_windows.go" style="display:none;">
     <div class="package-name">package bolt</div>
     <div class="file-path">bolt_windows.go</div>
     <hr>
+
     
-      
-      <div class="comment-block">
-        <div class="comment-context">var</div>
-        <div class="comment-text">LockFileEx code derived from golang build filemutex_windows.go @ v1.5.1
-</div>
-        <div class="comment-lines">Lines 11–11</div>
-      </div>
+      <h3>func fdatasync</h3>
+
       
       <div class="comment-block">
         <div class="comment-context">func fdatasync</div>
@@ -574,12 +612,20 @@
         <div class="comment-lines">Lines 45–45</div>
       </div>
       
+    
+      <h3>func flock</h3>
+
+      
       <div class="comment-block">
         <div class="comment-context">func flock</div>
         <div class="comment-text">flock acquires an advisory lock on a file descriptor.
 </div>
         <div class="comment-lines">Lines 50–50</div>
       </div>
+      
+    
+      <h3>func funlock</h3>
+
       
       <div class="comment-block">
         <div class="comment-context">func funlock</div>
@@ -588,6 +634,10 @@
         <div class="comment-lines">Lines 88–88</div>
       </div>
       
+    
+      <h3>func mmap</h3>
+
+      
       <div class="comment-block">
         <div class="comment-context">func mmap</div>
         <div class="comment-text">mmap memory maps a DB's data file.
@@ -595,6 +645,10 @@ Based on: https://github.com/edsrzf/mmap-go
 </div>
         <div class="comment-lines">Lines 96–97</div>
       </div>
+      
+    
+      <h3>func munmap</h3>
+
       
       <div class="comment-block">
         <div class="comment-context">func munmap</div>
@@ -605,343 +659,14 @@ Based on: https://github.com/edsrzf/mmap-go
       </div>
       
     
-  </div>
-  
-  <div class="file-doc" id="file_bucket.go" style="display:none;">
-    <div class="package-name">package bolt</div>
-    <div class="file-path">bucket.go</div>
-    <hr>
-    
-      
-      <div class="comment-block">
-        <div class="comment-context">const</div>
-        <div class="comment-text">DefaultFillPercent is the percentage that split pages are filled.
-This value can be changed by setting Bucket.FillPercent.
-</div>
-        <div class="comment-lines">Lines 31–32</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">type</div>
-        <div class="comment-text">Bucket represents a collection of key/value pairs inside the database.
-</div>
-        <div class="comment-lines">Lines 35–35</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">type</div>
-        <div class="comment-text">bucket represents the on-file representation of a bucket.
-This is stored as the "value" of a bucket key. If the bucket is small enough,
-then its root page can be stored inline in the "value", after the bucket
-header. In the case of inline buckets, the "root" will be 0.
-</div>
-        <div class="comment-lines">Lines 52–55</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func newBucket</div>
-        <div class="comment-text">newBucket returns a new bucket associated with a transaction.
-</div>
-        <div class="comment-lines">Lines 61–61</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func Tx</div>
-        <div class="comment-text">Tx returns the tx of the bucket.
-</div>
-        <div class="comment-lines">Lines 71–71</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func Root</div>
-        <div class="comment-text">Root returns the root of the bucket.
-</div>
-        <div class="comment-lines">Lines 76–76</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func Writable</div>
-        <div class="comment-text">Writable returns whether the bucket is writable.
-</div>
-        <div class="comment-lines">Lines 81–81</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func Cursor</div>
-        <div class="comment-text">Cursor creates a cursor associated with the bucket.
-The cursor is only valid as long as the transaction is open.
-Do not use a cursor after the transaction is closed.
-</div>
-        <div class="comment-lines">Lines 86–88</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func Bucket</div>
-        <div class="comment-text">Bucket retrieves a nested bucket by name.
-Returns nil if the bucket does not exist.
-The bucket instance is only valid for the lifetime of the transaction.
-</div>
-        <div class="comment-lines">Lines 100–102</div>
-      </div>
+      <h3>var</h3>
+
       
       <div class="comment-block">
         <div class="comment-context">var</div>
-        <div class="comment-text">Otherwise create a bucket and cache it.
+        <div class="comment-text">LockFileEx code derived from golang build filemutex_windows.go @ v1.5.1
 </div>
-        <div class="comment-lines">Lines 119–119</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func openBucket</div>
-        <div class="comment-text">Helper method that re-interprets a sub-bucket value
-from a parent into a Bucket
-</div>
-        <div class="comment-lines">Lines 128–129</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func CreateBucket</div>
-        <div class="comment-text">CreateBucket creates a new bucket at the given key and returns the new bucket.
-Returns an error if the key already exists, if the bucket name is blank, or if the bucket name is too long.
-The bucket instance is only valid for the lifetime of the transaction.
-</div>
-        <div class="comment-lines">Lines 158–160</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">var</div>
-        <div class="comment-text">Create empty, inline bucket.
-</div>
-        <div class="comment-lines">Lines 182–182</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func CreateBucketIfNotExists</div>
-        <div class="comment-text">CreateBucketIfNotExists creates a new bucket if it doesn't already exist and returns a reference to it.
-Returns an error if the bucket name is blank, or if the bucket name is too long.
-The bucket instance is only valid for the lifetime of the transaction.
-</div>
-        <div class="comment-lines">Lines 202–204</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func DeleteBucket</div>
-        <div class="comment-text">DeleteBucket deletes a bucket at the given key.
-Returns an error if the bucket does not exists, or if the key represents a non-bucket value.
-</div>
-        <div class="comment-lines">Lines 215–216</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func Get</div>
-        <div class="comment-text">Get retrieves the value for a key in the bucket.
-Returns a nil value if the key does not exist or if the key is a nested bucket.
-The returned value is only valid for the life of the transaction.
-</div>
-        <div class="comment-lines">Lines 263–265</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func Put</div>
-        <div class="comment-text">Put sets the value for a key in the bucket.
-If the key exist then its previous value will be overwritten.
-Supplied value must remain valid for the life of the transaction.
-Returns an error if the bucket was created from a read-only transaction, if the key is blank, if the key is too large, or if the value is too large.
-</div>
-        <div class="comment-lines">Lines 281–284</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func Delete</div>
-        <div class="comment-text">Delete removes a key from the bucket.
-If the key does not exist then nothing is done and a nil error is returned.
-Returns an error if the bucket was created from a read-only transaction.
-</div>
-        <div class="comment-lines">Lines 314–316</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func Sequence</div>
-        <div class="comment-text">Sequence returns the current integer for the bucket without incrementing it.
-</div>
-        <div class="comment-lines">Lines 339–339</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func SetSequence</div>
-        <div class="comment-text">SetSequence updates the sequence number for the bucket.
-</div>
-        <div class="comment-lines">Lines 342–342</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func NextSequence</div>
-        <div class="comment-text">NextSequence returns an autoincrementing integer for the bucket.
-</div>
-        <div class="comment-lines">Lines 361–361</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func ForEach</div>
-        <div class="comment-text">ForEach executes a function for each key/value pair in a bucket.
-If the provided function returns an error then the iteration is stopped and
-the error is returned to the caller. The provided function must not modify
-the bucket; this will result in undefined behavior.
-</div>
-        <div class="comment-lines">Lines 380–383</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func Stats</div>
-        <div class="comment-text">Stat returns stats on a bucket.
-</div>
-        <div class="comment-lines">Lines 397–397</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func forEachPage</div>
-        <div class="comment-text">forEachPage iterates over every page in a bucket, including inline pages.
-</div>
-        <div class="comment-lines">Lines 479–479</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func forEachPageNode</div>
-        <div class="comment-text">forEachPageNode iterates over every page (or node) in a bucket.
-This also includes inline pages.
-</div>
-        <div class="comment-lines">Lines 491–492</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func spill</div>
-        <div class="comment-text">spill writes all the nodes for this bucket to dirty pages.
-</div>
-        <div class="comment-lines">Lines 525–525</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">var</div>
-        <div class="comment-text">If the child bucket is small enough and it has no child buckets then
-write it inline into the parent bucket's page. Otherwise spill it
-like a normal bucket and make the parent value a pointer to the page.
-</div>
-        <div class="comment-lines">Lines 529–531</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">var</div>
-        <div class="comment-text">Update parent node.
-</div>
-        <div class="comment-lines">Lines 552–552</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func inlineable</div>
-        <div class="comment-text">inlineable returns true if a bucket is small enough to be written inline
-and if it contains no subbuckets. Otherwise returns false.
-</div>
-        <div class="comment-lines">Lines 584–585</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">var</div>
-        <div class="comment-text">Bucket is not inlineable if it contains subbuckets or if it goes beyond
-our threshold for inline bucket size.
-</div>
-        <div class="comment-lines">Lines 594–595</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func maxInlineBucketSize</div>
-        <div class="comment-text">Returns the maximum total size of a bucket to make it a candidate for inlining.
-</div>
-        <div class="comment-lines">Lines 610–610</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func write</div>
-        <div class="comment-text">write allocates and writes a bucket to a byte slice.
-</div>
-        <div class="comment-lines">Lines 615–615</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">var</div>
-        <div class="comment-text">Allocate the appropriate size.
-</div>
-        <div class="comment-lines">Lines 617–617</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">var</div>
-        <div class="comment-text">Write a bucket header.
-</div>
-        <div class="comment-lines">Lines 621–621</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">var</div>
-        <div class="comment-text">Convert byte slice to a fake page and write the root node.
-</div>
-        <div class="comment-lines">Lines 625–625</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func rebalance</div>
-        <div class="comment-text">rebalance attempts to balance all nodes.
-</div>
-        <div class="comment-lines">Lines 632–632</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func node</div>
-        <div class="comment-text">node creates a node from a page and associates it with a given parent.
-</div>
-        <div class="comment-lines">Lines 642–642</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">var</div>
-        <div class="comment-text">Use the inline page if this is an inline bucket.
-</div>
-        <div class="comment-lines">Lines 659–659</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func free</div>
-        <div class="comment-text">free recursively frees all pages in the bucket.
-</div>
-        <div class="comment-lines">Lines 675–675</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func dereference</div>
-        <div class="comment-text">dereference removes all references to the old mmap.
-</div>
-        <div class="comment-lines">Lines 692–692</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func pageNode</div>
-        <div class="comment-text">pageNode returns the in-memory node, if it exists.
-Otherwise returns the underlying page.
-</div>
-        <div class="comment-lines">Lines 703–704</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">type</div>
-        <div class="comment-text">BucketStats records statistics about resources used by a bucket.
-</div>
-        <div class="comment-lines">Lines 729–729</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func cloneBytes</div>
-        <div class="comment-text">cloneBytes returns a copy of a given slice.
-</div>
-        <div class="comment-lines">Lines 772–772</div>
+        <div class="comment-lines">Lines 11–11</div>
       </div>
       
     
@@ -951,7 +676,211 @@ Otherwise returns the underlying page.
     <div class="package-name">package bolt</div>
     <div class="file-path">cursor.go</div>
     <hr>
+
     
+      <h3>func Bucket</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func Bucket</div>
+        <div class="comment-text">Bucket returns the bucket that this cursor was created from.
+</div>
+        <div class="comment-lines">Lines 23–23</div>
+      </div>
+      
+    
+      <h3>func Delete</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func Delete</div>
+        <div class="comment-text">Delete removes the current key/value under the cursor from the bucket.
+Delete fails if current key/value is a bucket or if the transaction is not writable.
+</div>
+        <div class="comment-lines">Lines 133–134</div>
+      </div>
+      
+    
+      <h3>func First</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func First</div>
+        <div class="comment-text">First moves the cursor to the first item in the bucket and returns its key and value.
+If the bucket is empty then a nil key and value are returned.
+The returned key and value are only valid for the life of the transaction.
+</div>
+        <div class="comment-lines">Lines 28–30</div>
+      </div>
+      
+    
+      <h3>func Last</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func Last</div>
+        <div class="comment-text">Last moves the cursor to the last item in the bucket and returns its key and value.
+If the bucket is empty then a nil key and value are returned.
+The returned key and value are only valid for the life of the transaction.
+</div>
+        <div class="comment-lines">Lines 52–54</div>
+      </div>
+      
+    
+      <h3>func Next</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func Next</div>
+        <div class="comment-text">Next moves the cursor to the next item in the bucket and returns its key and value.
+If the cursor is at the end of the bucket then a nil key and value are returned.
+The returned key and value are only valid for the life of the transaction.
+</div>
+        <div class="comment-lines">Lines 70–72</div>
+      </div>
+      
+    
+      <h3>func Prev</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func Prev</div>
+        <div class="comment-text">Prev moves the cursor to the previous item in the bucket and returns its key and value.
+If the cursor is at the beginning of the bucket then a nil key and value are returned.
+The returned key and value are only valid for the life of the transaction.
+</div>
+        <div class="comment-lines">Lines 82–84</div>
+      </div>
+      
+    
+      <h3>func Seek</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func Seek</div>
+        <div class="comment-text">Seek moves the cursor to a given key and returns it.
+If the key does not exist then the next key is used. If no keys
+follow, a nil key is returned.
+The returned key and value are only valid for the life of the transaction.
+</div>
+        <div class="comment-lines">Lines 113–116</div>
+      </div>
+      
+    
+      <h3>func count</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func count</div>
+        <div class="comment-text">count returns the number of inodes or page elements.
+</div>
+        <div class="comment-lines">Lines 394–394</div>
+      </div>
+      
+    
+      <h3>func first</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func first</div>
+        <div class="comment-text">first moves the cursor to the first leaf element under the last page in the stack.
+</div>
+        <div class="comment-lines">Lines 171–171</div>
+      </div>
+      
+    
+      <h3>func isLeaf</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func isLeaf</div>
+        <div class="comment-text">isLeaf returns whether the ref is pointing at a leaf page/node.
+</div>
+        <div class="comment-lines">Lines 386–386</div>
+      </div>
+      
+    
+      <h3>func keyValue</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func keyValue</div>
+        <div class="comment-text">keyValue returns the key and value of the current leaf element.
+</div>
+        <div class="comment-lines">Lines 339–339</div>
+      </div>
+      
+    
+      <h3>func last</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func last</div>
+        <div class="comment-text">last moves the cursor to the last leaf element under the last page in the stack.
+</div>
+        <div class="comment-lines">Lines 192–192</div>
+      </div>
+      
+    
+      <h3>func next</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func next</div>
+        <div class="comment-text">next moves to the next leaf element and returns the key and value.
+If the cursor is at the last leaf element then it stays there and returns nil.
+</div>
+        <div class="comment-lines">Lines 216–217</div>
+      </div>
+      
+    
+      <h3>func node</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func node</div>
+        <div class="comment-text">node returns the node that the cursor is currently positioned on.
+</div>
+        <div class="comment-lines">Lines 357–357</div>
+      </div>
+      
+    
+      <h3>func nsearch</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func nsearch</div>
+        <div class="comment-text">nsearch searches the leaf node on the top of the stack for a key.
+</div>
+        <div class="comment-lines">Lines 317–317</div>
+      </div>
+      
+    
+      <h3>func search</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func search</div>
+        <div class="comment-text">search recursively performs a binary search against a given page/node until it finds a given key.
+</div>
+        <div class="comment-lines">Lines 252–252</div>
+      </div>
+      
+    
+      <h3>func seek</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func seek</div>
+        <div class="comment-text">seek moves the cursor to a given key and returns it.
+If the key does not exist then the next key is used.
+</div>
+        <div class="comment-lines">Lines 152–153</div>
+      </div>
+      
+    
+      <h3>type</h3>
+
       
       <div class="comment-block">
         <div class="comment-context">type</div>
@@ -969,80 +898,15 @@ after mutating data.
       </div>
       
       <div class="comment-block">
-        <div class="comment-context">func Bucket</div>
-        <div class="comment-text">Bucket returns the bucket that this cursor was created from.
+        <div class="comment-context">type</div>
+        <div class="comment-text">elemRef represents a reference to an element on a given page/node.
 </div>
-        <div class="comment-lines">Lines 23–23</div>
+        <div class="comment-lines">Lines 379–379</div>
       </div>
       
-      <div class="comment-block">
-        <div class="comment-context">func First</div>
-        <div class="comment-text">First moves the cursor to the first item in the bucket and returns its key and value.
-If the bucket is empty then a nil key and value are returned.
-The returned key and value are only valid for the life of the transaction.
-</div>
-        <div class="comment-lines">Lines 28–30</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func Last</div>
-        <div class="comment-text">Last moves the cursor to the last item in the bucket and returns its key and value.
-If the bucket is empty then a nil key and value are returned.
-The returned key and value are only valid for the life of the transaction.
-</div>
-        <div class="comment-lines">Lines 52–54</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func Next</div>
-        <div class="comment-text">Next moves the cursor to the next item in the bucket and returns its key and value.
-If the cursor is at the end of the bucket then a nil key and value are returned.
-The returned key and value are only valid for the life of the transaction.
-</div>
-        <div class="comment-lines">Lines 70–72</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func Prev</div>
-        <div class="comment-text">Prev moves the cursor to the previous item in the bucket and returns its key and value.
-If the cursor is at the beginning of the bucket then a nil key and value are returned.
-The returned key and value are only valid for the life of the transaction.
-</div>
-        <div class="comment-lines">Lines 82–84</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func Seek</div>
-        <div class="comment-text">Seek moves the cursor to a given key and returns it.
-If the key does not exist then the next key is used. If no keys
-follow, a nil key is returned.
-The returned key and value are only valid for the life of the transaction.
-</div>
-        <div class="comment-lines">Lines 113–116</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func Delete</div>
-        <div class="comment-text">Delete removes the current key/value under the cursor from the bucket.
-Delete fails if current key/value is a bucket or if the transaction is not writable.
-</div>
-        <div class="comment-lines">Lines 133–134</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func seek</div>
-        <div class="comment-text">seek moves the cursor to a given key and returns it.
-If the key does not exist then the next key is used.
-</div>
-        <div class="comment-lines">Lines 152–153</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func first</div>
-        <div class="comment-text">first moves the cursor to the first leaf element under the last page in the stack.
-</div>
-        <div class="comment-lines">Lines 171–171</div>
-      </div>
+    
+      <h3>var</h3>
+
       
       <div class="comment-block">
         <div class="comment-context">var</div>
@@ -1059,25 +923,10 @@ If the key does not exist then the next key is used.
       </div>
       
       <div class="comment-block">
-        <div class="comment-context">func last</div>
-        <div class="comment-text">last moves the cursor to the last leaf element under the last page in the stack.
-</div>
-        <div class="comment-lines">Lines 192–192</div>
-      </div>
-      
-      <div class="comment-block">
         <div class="comment-context">var</div>
         <div class="comment-text">Keep adding pages pointing to the last element in the stack.
 </div>
         <div class="comment-lines">Lines 201–201</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func next</div>
-        <div class="comment-text">next moves to the next leaf element and returns the key and value.
-If the cursor is at the last leaf element then it stays there and returns nil.
-</div>
-        <div class="comment-lines">Lines 216–217</div>
       </div>
       
       <div class="comment-block">
@@ -1089,59 +938,10 @@ Move up the stack as we hit the end of each page in our stack.
       </div>
       
       <div class="comment-block">
-        <div class="comment-context">func search</div>
-        <div class="comment-text">search recursively performs a binary search against a given page/node until it finds a given key.
-</div>
-        <div class="comment-lines">Lines 252–252</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func nsearch</div>
-        <div class="comment-text">nsearch searches the leaf node on the top of the stack for a key.
-</div>
-        <div class="comment-lines">Lines 317–317</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func keyValue</div>
-        <div class="comment-text">keyValue returns the key and value of the current leaf element.
-</div>
-        <div class="comment-lines">Lines 339–339</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func node</div>
-        <div class="comment-text">node returns the node that the cursor is currently positioned on.
-</div>
-        <div class="comment-lines">Lines 357–357</div>
-      </div>
-      
-      <div class="comment-block">
         <div class="comment-context">var</div>
         <div class="comment-text">Start from root and traverse down the hierarchy.
 </div>
         <div class="comment-lines">Lines 366–366</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">type</div>
-        <div class="comment-text">elemRef represents a reference to an element on a given page/node.
-</div>
-        <div class="comment-lines">Lines 379–379</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func isLeaf</div>
-        <div class="comment-text">isLeaf returns whether the ref is pointing at a leaf page/node.
-</div>
-        <div class="comment-lines">Lines 386–386</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func count</div>
-        <div class="comment-text">count returns the number of inodes or page elements.
-</div>
-        <div class="comment-lines">Lines 394–394</div>
       </div>
       
     
@@ -1151,7 +951,10 @@ Move up the stack as we hit the end of each page in our stack.
     <div class="package-name">package bolt</div>
     <div class="file-path">doc.go</div>
     <hr>
+
     
+      <h3>package</h3>
+
       
       <div class="comment-block">
         <div class="comment-context">package</div>
@@ -1199,11 +1002,485 @@ point to different data or can point to invalid memory which will cause a panic.
     
   </div>
   
+  <div class="file-doc" id="file_bucket.go" style="display:none;">
+    <div class="package-name">package bolt</div>
+    <div class="file-path">bucket.go</div>
+    <hr>
+
+    
+      <h3>const</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">const</div>
+        <div class="comment-text">DefaultFillPercent is the percentage that split pages are filled.
+This value can be changed by setting Bucket.FillPercent.
+</div>
+        <div class="comment-lines">Lines 31–32</div>
+      </div>
+      
+    
+      <h3>func Bucket</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func Bucket</div>
+        <div class="comment-text">Bucket retrieves a nested bucket by name.
+Returns nil if the bucket does not exist.
+The bucket instance is only valid for the lifetime of the transaction.
+</div>
+        <div class="comment-lines">Lines 100–102</div>
+      </div>
+      
+    
+      <h3>func CreateBucket</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func CreateBucket</div>
+        <div class="comment-text">CreateBucket creates a new bucket at the given key and returns the new bucket.
+Returns an error if the key already exists, if the bucket name is blank, or if the bucket name is too long.
+The bucket instance is only valid for the lifetime of the transaction.
+</div>
+        <div class="comment-lines">Lines 158–160</div>
+      </div>
+      
+    
+      <h3>func CreateBucketIfNotExists</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func CreateBucketIfNotExists</div>
+        <div class="comment-text">CreateBucketIfNotExists creates a new bucket if it doesn't already exist and returns a reference to it.
+Returns an error if the bucket name is blank, or if the bucket name is too long.
+The bucket instance is only valid for the lifetime of the transaction.
+</div>
+        <div class="comment-lines">Lines 202–204</div>
+      </div>
+      
+    
+      <h3>func Cursor</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func Cursor</div>
+        <div class="comment-text">Cursor creates a cursor associated with the bucket.
+The cursor is only valid as long as the transaction is open.
+Do not use a cursor after the transaction is closed.
+</div>
+        <div class="comment-lines">Lines 86–88</div>
+      </div>
+      
+    
+      <h3>func Delete</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func Delete</div>
+        <div class="comment-text">Delete removes a key from the bucket.
+If the key does not exist then nothing is done and a nil error is returned.
+Returns an error if the bucket was created from a read-only transaction.
+</div>
+        <div class="comment-lines">Lines 314–316</div>
+      </div>
+      
+    
+      <h3>func DeleteBucket</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func DeleteBucket</div>
+        <div class="comment-text">DeleteBucket deletes a bucket at the given key.
+Returns an error if the bucket does not exists, or if the key represents a non-bucket value.
+</div>
+        <div class="comment-lines">Lines 215–216</div>
+      </div>
+      
+    
+      <h3>func ForEach</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func ForEach</div>
+        <div class="comment-text">ForEach executes a function for each key/value pair in a bucket.
+If the provided function returns an error then the iteration is stopped and
+the error is returned to the caller. The provided function must not modify
+the bucket; this will result in undefined behavior.
+</div>
+        <div class="comment-lines">Lines 380–383</div>
+      </div>
+      
+    
+      <h3>func Get</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func Get</div>
+        <div class="comment-text">Get retrieves the value for a key in the bucket.
+Returns a nil value if the key does not exist or if the key is a nested bucket.
+The returned value is only valid for the life of the transaction.
+</div>
+        <div class="comment-lines">Lines 263–265</div>
+      </div>
+      
+    
+      <h3>func NextSequence</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func NextSequence</div>
+        <div class="comment-text">NextSequence returns an autoincrementing integer for the bucket.
+</div>
+        <div class="comment-lines">Lines 361–361</div>
+      </div>
+      
+    
+      <h3>func Put</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func Put</div>
+        <div class="comment-text">Put sets the value for a key in the bucket.
+If the key exist then its previous value will be overwritten.
+Supplied value must remain valid for the life of the transaction.
+Returns an error if the bucket was created from a read-only transaction, if the key is blank, if the key is too large, or if the value is too large.
+</div>
+        <div class="comment-lines">Lines 281–284</div>
+      </div>
+      
+    
+      <h3>func Root</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func Root</div>
+        <div class="comment-text">Root returns the root of the bucket.
+</div>
+        <div class="comment-lines">Lines 76–76</div>
+      </div>
+      
+    
+      <h3>func Sequence</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func Sequence</div>
+        <div class="comment-text">Sequence returns the current integer for the bucket without incrementing it.
+</div>
+        <div class="comment-lines">Lines 339–339</div>
+      </div>
+      
+    
+      <h3>func SetSequence</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func SetSequence</div>
+        <div class="comment-text">SetSequence updates the sequence number for the bucket.
+</div>
+        <div class="comment-lines">Lines 342–342</div>
+      </div>
+      
+    
+      <h3>func Stats</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func Stats</div>
+        <div class="comment-text">Stat returns stats on a bucket.
+</div>
+        <div class="comment-lines">Lines 397–397</div>
+      </div>
+      
+    
+      <h3>func Tx</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func Tx</div>
+        <div class="comment-text">Tx returns the tx of the bucket.
+</div>
+        <div class="comment-lines">Lines 71–71</div>
+      </div>
+      
+    
+      <h3>func Writable</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func Writable</div>
+        <div class="comment-text">Writable returns whether the bucket is writable.
+</div>
+        <div class="comment-lines">Lines 81–81</div>
+      </div>
+      
+    
+      <h3>func cloneBytes</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func cloneBytes</div>
+        <div class="comment-text">cloneBytes returns a copy of a given slice.
+</div>
+        <div class="comment-lines">Lines 772–772</div>
+      </div>
+      
+    
+      <h3>func dereference</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func dereference</div>
+        <div class="comment-text">dereference removes all references to the old mmap.
+</div>
+        <div class="comment-lines">Lines 692–692</div>
+      </div>
+      
+    
+      <h3>func forEachPage</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func forEachPage</div>
+        <div class="comment-text">forEachPage iterates over every page in a bucket, including inline pages.
+</div>
+        <div class="comment-lines">Lines 479–479</div>
+      </div>
+      
+    
+      <h3>func forEachPageNode</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func forEachPageNode</div>
+        <div class="comment-text">forEachPageNode iterates over every page (or node) in a bucket.
+This also includes inline pages.
+</div>
+        <div class="comment-lines">Lines 491–492</div>
+      </div>
+      
+    
+      <h3>func free</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func free</div>
+        <div class="comment-text">free recursively frees all pages in the bucket.
+</div>
+        <div class="comment-lines">Lines 675–675</div>
+      </div>
+      
+    
+      <h3>func inlineable</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func inlineable</div>
+        <div class="comment-text">inlineable returns true if a bucket is small enough to be written inline
+and if it contains no subbuckets. Otherwise returns false.
+</div>
+        <div class="comment-lines">Lines 584–585</div>
+      </div>
+      
+    
+      <h3>func maxInlineBucketSize</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func maxInlineBucketSize</div>
+        <div class="comment-text">Returns the maximum total size of a bucket to make it a candidate for inlining.
+</div>
+        <div class="comment-lines">Lines 610–610</div>
+      </div>
+      
+    
+      <h3>func newBucket</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func newBucket</div>
+        <div class="comment-text">newBucket returns a new bucket associated with a transaction.
+</div>
+        <div class="comment-lines">Lines 61–61</div>
+      </div>
+      
+    
+      <h3>func node</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func node</div>
+        <div class="comment-text">node creates a node from a page and associates it with a given parent.
+</div>
+        <div class="comment-lines">Lines 642–642</div>
+      </div>
+      
+    
+      <h3>func openBucket</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func openBucket</div>
+        <div class="comment-text">Helper method that re-interprets a sub-bucket value
+from a parent into a Bucket
+</div>
+        <div class="comment-lines">Lines 128–129</div>
+      </div>
+      
+    
+      <h3>func pageNode</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func pageNode</div>
+        <div class="comment-text">pageNode returns the in-memory node, if it exists.
+Otherwise returns the underlying page.
+</div>
+        <div class="comment-lines">Lines 703–704</div>
+      </div>
+      
+    
+      <h3>func rebalance</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func rebalance</div>
+        <div class="comment-text">rebalance attempts to balance all nodes.
+</div>
+        <div class="comment-lines">Lines 632–632</div>
+      </div>
+      
+    
+      <h3>func spill</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func spill</div>
+        <div class="comment-text">spill writes all the nodes for this bucket to dirty pages.
+</div>
+        <div class="comment-lines">Lines 525–525</div>
+      </div>
+      
+    
+      <h3>func write</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func write</div>
+        <div class="comment-text">write allocates and writes a bucket to a byte slice.
+</div>
+        <div class="comment-lines">Lines 615–615</div>
+      </div>
+      
+    
+      <h3>type</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">type</div>
+        <div class="comment-text">Bucket represents a collection of key/value pairs inside the database.
+</div>
+        <div class="comment-lines">Lines 35–35</div>
+      </div>
+      
+      <div class="comment-block">
+        <div class="comment-context">type</div>
+        <div class="comment-text">bucket represents the on-file representation of a bucket.
+This is stored as the "value" of a bucket key. If the bucket is small enough,
+then its root page can be stored inline in the "value", after the bucket
+header. In the case of inline buckets, the "root" will be 0.
+</div>
+        <div class="comment-lines">Lines 52–55</div>
+      </div>
+      
+      <div class="comment-block">
+        <div class="comment-context">type</div>
+        <div class="comment-text">BucketStats records statistics about resources used by a bucket.
+</div>
+        <div class="comment-lines">Lines 729–729</div>
+      </div>
+      
+    
+      <h3>var</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">var</div>
+        <div class="comment-text">Otherwise create a bucket and cache it.
+</div>
+        <div class="comment-lines">Lines 119–119</div>
+      </div>
+      
+      <div class="comment-block">
+        <div class="comment-context">var</div>
+        <div class="comment-text">Create empty, inline bucket.
+</div>
+        <div class="comment-lines">Lines 182–182</div>
+      </div>
+      
+      <div class="comment-block">
+        <div class="comment-context">var</div>
+        <div class="comment-text">If the child bucket is small enough and it has no child buckets then
+write it inline into the parent bucket's page. Otherwise spill it
+like a normal bucket and make the parent value a pointer to the page.
+</div>
+        <div class="comment-lines">Lines 529–531</div>
+      </div>
+      
+      <div class="comment-block">
+        <div class="comment-context">var</div>
+        <div class="comment-text">Update parent node.
+</div>
+        <div class="comment-lines">Lines 552–552</div>
+      </div>
+      
+      <div class="comment-block">
+        <div class="comment-context">var</div>
+        <div class="comment-text">Bucket is not inlineable if it contains subbuckets or if it goes beyond
+our threshold for inline bucket size.
+</div>
+        <div class="comment-lines">Lines 594–595</div>
+      </div>
+      
+      <div class="comment-block">
+        <div class="comment-context">var</div>
+        <div class="comment-text">Allocate the appropriate size.
+</div>
+        <div class="comment-lines">Lines 617–617</div>
+      </div>
+      
+      <div class="comment-block">
+        <div class="comment-context">var</div>
+        <div class="comment-text">Write a bucket header.
+</div>
+        <div class="comment-lines">Lines 621–621</div>
+      </div>
+      
+      <div class="comment-block">
+        <div class="comment-context">var</div>
+        <div class="comment-text">Convert byte slice to a fake page and write the root node.
+</div>
+        <div class="comment-lines">Lines 625–625</div>
+      </div>
+      
+      <div class="comment-block">
+        <div class="comment-context">var</div>
+        <div class="comment-text">Use the inline page if this is an inline bucket.
+</div>
+        <div class="comment-lines">Lines 659–659</div>
+      </div>
+      
+    
+  </div>
+  
   <div class="file-doc" id="file_errors.go" style="display:none;">
     <div class="package-name">package bolt</div>
     <div class="file-path">errors.go</div>
     <hr>
+
     
+      <h3>var</h3>
+
       
       <div class="comment-block">
         <div class="comment-context">var</div>
@@ -1229,11 +1506,223 @@ point to different data or can point to invalid memory which will cause a panic.
     
   </div>
   
+  <div class="file-doc" id="file_freelist.go" style="display:none;">
+    <div class="package-name">package bolt</div>
+    <div class="file-path">freelist.go</div>
+    <hr>
+
+    
+      <h3>func allocate</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func allocate</div>
+        <div class="comment-text">allocate returns the starting page id of a contiguous list of pages of a given size.
+If a contiguous block cannot be found then 0 is returned.
+</div>
+        <div class="comment-lines">Lines 65–66</div>
+      </div>
+      
+    
+      <h3>func copyall</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func copyall</div>
+        <div class="comment-text">copyall copies into dst a list of all free ids and all pending ids in one sorted list.
+f.count returns the minimum length required for dst.
+</div>
+        <div class="comment-lines">Lines 54–55</div>
+      </div>
+      
+    
+      <h3>func count</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func count</div>
+        <div class="comment-text">count returns count of pages on the freelist
+</div>
+        <div class="comment-lines">Lines 35–35</div>
+      </div>
+      
+    
+      <h3>func free</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func free</div>
+        <div class="comment-text">free releases a page and its overflow for a given transaction id.
+If the page is already free then a panic will occur.
+</div>
+        <div class="comment-lines">Lines 109–110</div>
+      </div>
+      
+    
+      <h3>func free_count</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func free_count</div>
+        <div class="comment-text">free_count returns count of free pages
+</div>
+        <div class="comment-lines">Lines 40–40</div>
+      </div>
+      
+    
+      <h3>func freed</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func freed</div>
+        <div class="comment-text">freed returns whether a given page is in the free list.
+</div>
+        <div class="comment-lines">Lines 157–157</div>
+      </div>
+      
+    
+      <h3>func newFreelist</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func newFreelist</div>
+        <div class="comment-text">newFreelist returns an empty, initialized freelist.
+</div>
+        <div class="comment-lines">Lines 17–17</div>
+      </div>
+      
+    
+      <h3>func pending_count</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func pending_count</div>
+        <div class="comment-text">pending_count returns count of pending pages
+</div>
+        <div class="comment-lines">Lines 45–45</div>
+      </div>
+      
+    
+      <h3>func read</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func read</div>
+        <div class="comment-text">read initializes the freelist from a freelist page.
+</div>
+        <div class="comment-lines">Lines 162–162</div>
+      </div>
+      
+    
+      <h3>func reindex</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func reindex</div>
+        <div class="comment-text">reindex rebuilds the free cache based on available and pending free lists.
+</div>
+        <div class="comment-lines">Lines 241–241</div>
+      </div>
+      
+    
+      <h3>func release</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func release</div>
+        <div class="comment-text">release moves all page ids for a transaction id (or older) to the freelist.
+</div>
+        <div class="comment-lines">Lines 131–131</div>
+      </div>
+      
+    
+      <h3>func reload</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func reload</div>
+        <div class="comment-text">reload reads the freelist from a page and filters out pending items.
+</div>
+        <div class="comment-lines">Lines 214–214</div>
+      </div>
+      
+    
+      <h3>func rollback</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func rollback</div>
+        <div class="comment-text">rollback removes the pages from a given pending tx.
+</div>
+        <div class="comment-lines">Lines 146–146</div>
+      </div>
+      
+    
+      <h3>func size</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func size</div>
+        <div class="comment-text">size returns the size of the page after serialization.
+</div>
+        <div class="comment-lines">Lines 25–25</div>
+      </div>
+      
+    
+      <h3>func write</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func write</div>
+        <div class="comment-text">write writes the page ids onto a freelist page. All free and pending ids are
+saved to disk since in the event of a program crash, all pending ids will
+become free.
+</div>
+        <div class="comment-lines">Lines 188–190</div>
+      </div>
+      
+    
+      <h3>type</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">type</div>
+        <div class="comment-text">freelist represents a list of all pages that are available for allocation.
+It also tracks pages that have been freed but are still in use by open transactions.
+</div>
+        <div class="comment-lines">Lines 9–10</div>
+      </div>
+      
+    
+      <h3>var</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">var</div>
+        <div class="comment-text">Free page and all its overflow pages.
+</div>
+        <div class="comment-lines">Lines 116–116</div>
+      </div>
+      
+      <div class="comment-block">
+        <div class="comment-context">var</div>
+        <div class="comment-text">Check each page in the freelist and build a new available freelist
+with any pages not in the pending lists.
+</div>
+        <div class="comment-lines">Lines 226–227</div>
+      </div>
+      
+    
+  </div>
+  
   <div class="file-doc" id="file_db.go" style="display:none;">
     <div class="package-name">package bolt</div>
     <div class="file-path">db.go</div>
     <hr>
+
     
+      <h3>const</h3>
+
       
       <div class="comment-block">
         <div class="comment-context">const</div>
@@ -1273,164 +1762,9 @@ must be synchronized using the msync(2) syscall.
         <div class="comment-lines">Lines 32–32</div>
       </div>
       
-      <div class="comment-block">
-        <div class="comment-context">var</div>
-        <div class="comment-text">default page size for db is set to the OS page size.
-</div>
-        <div class="comment-lines">Lines 39–39</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">type</div>
-        <div class="comment-text">DB represents a collection of buckets persisted to a file on disk.
-All data access is performed through transactions which can be obtained through the DB.
-All the functions on DB will return a ErrDatabaseNotOpen if accessed before Open() is called.
-</div>
-        <div class="comment-lines">Lines 42–44</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func Path</div>
-        <div class="comment-text">Path returns the path to currently open database file.
-</div>
-        <div class="comment-lines">Lines 132–132</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func GoString</div>
-        <div class="comment-text">GoString returns the Go string representation of the database.
-</div>
-        <div class="comment-lines">Lines 137–137</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func String</div>
-        <div class="comment-text">String returns the string representation of the database.
-</div>
-        <div class="comment-lines">Lines 142–142</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func Open</div>
-        <div class="comment-text">Open creates and opens a database at the given path.
-If the file does not exist then it will be created automatically.
-Passing in nil options will cause Bolt to open the database with the default options.
-</div>
-        <div class="comment-lines">Lines 147–149</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">var</div>
-        <div class="comment-text">Read the first meta page to determine the page size.
-</div>
-        <div class="comment-lines">Lines 203–203</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func mmap</div>
-        <div class="comment-text">mmap opens the underlying memory-mapped file and initializes the meta references.
-minsz is the minimum size that the new mmap can be.
-</div>
-        <div class="comment-lines">Lines 243–244</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">var</div>
-        <div class="comment-text">Ensure the size is at least the minimum size.
-</div>
-        <div class="comment-lines">Lines 256–256</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func munmap</div>
-        <div class="comment-text">munmap unmaps the data file from memory.
-</div>
-        <div class="comment-lines">Lines 297–297</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func mmapSize</div>
-        <div class="comment-text">mmapSize determines the appropriate size for the mmap given the current size
-of the database. The minimum size is 32KB and doubles until it reaches 1GB.
-Returns an error if the new mmap size is greater than the max allowed.
-</div>
-        <div class="comment-lines">Lines 305–307</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func init</div>
-        <div class="comment-text">init creates a new database file and initializes its meta pages.
-</div>
-        <div class="comment-lines">Lines 342–342</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func Close</div>
-        <div class="comment-text">Close releases all database resources.
-All transactions must be closed before closing the database.
-</div>
-        <div class="comment-lines">Lines 389–390</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func Begin</div>
-        <div class="comment-text">Begin starts a new transaction.
-Multiple read-only transactions can be used concurrently but only one
-write transaction can be used at a time. Starting multiple write transactions
-will cause the calls to block and be serialized until the current write
-transaction finishes.
+    
+      <h3>func Batch</h3>
 
-Transactions should not be dependent on one another. Opening a read
-transaction and a write transaction in the same goroutine can cause the
-writer to deadlock because the database periodically needs to re-mmap itself
-as it grows and it cannot do that while a read transaction is open.
-
-If a long running read transaction (for example, a snapshot transaction) is
-needed, you might want to set DB.InitialMmapSize to a large enough value
-to avoid potential blocking of write transaction.
-
-IMPORTANT: You must close read-only transactions after you are finished or
-else the database will not reclaim old pages.
-</div>
-        <div class="comment-lines">Lines 442–458</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">var</div>
-        <div class="comment-text">Free any pages associated with closed read-only transactions.
-</div>
-        <div class="comment-lines">Lines 530–530</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func removeTx</div>
-        <div class="comment-text">removeTx removes a transaction from the database.
-</div>
-        <div class="comment-lines">Lines 544–544</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func Update</div>
-        <div class="comment-text">Update executes a function within the context of a read-write managed transaction.
-If no error is returned from the function then the transaction is committed.
-If an error is returned then the entire transaction is rolled back.
-Any error that is returned from the function or returned from the commit is
-returned from the Update() method.
-
-Attempting to manually commit or rollback within the function will cause a panic.
-</div>
-        <div class="comment-lines">Lines 574–580</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func View</div>
-        <div class="comment-text">View executes a function within the context of a managed read-only transaction.
-Any error that is returned from the function is returned from the View() method.
-
-Attempting to manually rollback within the function will cause a panic.
-</div>
-        <div class="comment-lines">Lines 608–611</div>
-      </div>
       
       <div class="comment-block">
         <div class="comment-context">func Batch</div>
@@ -1455,12 +1789,311 @@ Batch is only useful when there are multiple goroutines calling it.
         <div class="comment-lines">Lines 643–659</div>
       </div>
       
+    
+      <h3>func Begin</h3>
+
+      
       <div class="comment-block">
-        <div class="comment-context">func trigger</div>
-        <div class="comment-text">trigger runs the batch if it hasn't already been run.
+        <div class="comment-context">func Begin</div>
+        <div class="comment-text">Begin starts a new transaction.
+Multiple read-only transactions can be used concurrently but only one
+write transaction can be used at a time. Starting multiple write transactions
+will cause the calls to block and be serialized until the current write
+transaction finishes.
+
+Transactions should not be dependent on one another. Opening a read
+transaction and a write transaction in the same goroutine can cause the
+writer to deadlock because the database periodically needs to re-mmap itself
+as it grows and it cannot do that while a read transaction is open.
+
+If a long running read transaction (for example, a snapshot transaction) is
+needed, you might want to set DB.InitialMmapSize to a large enough value
+to avoid potential blocking of write transaction.
+
+IMPORTANT: You must close read-only transactions after you are finished or
+else the database will not reclaim old pages.
 </div>
-        <div class="comment-lines">Lines 697–697</div>
+        <div class="comment-lines">Lines 442–458</div>
       </div>
+      
+    
+      <h3>func Close</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func Close</div>
+        <div class="comment-text">Close releases all database resources.
+All transactions must be closed before closing the database.
+</div>
+        <div class="comment-lines">Lines 389–390</div>
+      </div>
+      
+    
+      <h3>func GoString</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func GoString</div>
+        <div class="comment-text">GoString returns the Go string representation of the database.
+</div>
+        <div class="comment-lines">Lines 137–137</div>
+      </div>
+      
+    
+      <h3>func Info</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func Info</div>
+        <div class="comment-text">This is for internal access to the raw data bytes from the C cursor, use
+carefully, or not at all.
+</div>
+        <div class="comment-lines">Lines 785–786</div>
+      </div>
+      
+    
+      <h3>func Open</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func Open</div>
+        <div class="comment-text">Open creates and opens a database at the given path.
+If the file does not exist then it will be created automatically.
+Passing in nil options will cause Bolt to open the database with the default options.
+</div>
+        <div class="comment-lines">Lines 147–149</div>
+      </div>
+      
+    
+      <h3>func Path</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func Path</div>
+        <div class="comment-text">Path returns the path to currently open database file.
+</div>
+        <div class="comment-lines">Lines 132–132</div>
+      </div>
+      
+    
+      <h3>func Stats</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func Stats</div>
+        <div class="comment-text">Stats retrieves ongoing performance stats for the database.
+This is only updated when a transaction closes.
+</div>
+        <div class="comment-lines">Lines 777–778</div>
+      </div>
+      
+    
+      <h3>func String</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func String</div>
+        <div class="comment-text">String returns the string representation of the database.
+</div>
+        <div class="comment-lines">Lines 142–142</div>
+      </div>
+      
+    
+      <h3>func Sub</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func Sub</div>
+        <div class="comment-text">Sub calculates and returns the difference between two sets of database stats.
+This is useful when obtaining stats at two different points and time and
+you need the performance counters that occurred within that time span.
+</div>
+        <div class="comment-lines">Lines 944–946</div>
+      </div>
+      
+    
+      <h3>func Sync</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func Sync</div>
+        <div class="comment-text">Sync executes fdatasync() against the database file handle.
+
+This is not necessary under normal operation, however, if you use NoSync
+then it allows you to force the database file to sync against the disk.
+</div>
+        <div class="comment-lines">Lines 771–774</div>
+      </div>
+      
+    
+      <h3>func Update</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func Update</div>
+        <div class="comment-text">Update executes a function within the context of a read-write managed transaction.
+If no error is returned from the function then the transaction is committed.
+If an error is returned then the entire transaction is rolled back.
+Any error that is returned from the function or returned from the commit is
+returned from the Update() method.
+
+Attempting to manually commit or rollback within the function will cause a panic.
+</div>
+        <div class="comment-lines">Lines 574–580</div>
+      </div>
+      
+    
+      <h3>func View</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func View</div>
+        <div class="comment-text">View executes a function within the context of a managed read-only transaction.
+Any error that is returned from the function is returned from the View() method.
+
+Attempting to manually rollback within the function will cause a panic.
+</div>
+        <div class="comment-lines">Lines 608–611</div>
+      </div>
+      
+    
+      <h3>func _assert</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func _assert</div>
+        <div class="comment-text">_assert will panic with a given formatted message if the given condition is false.
+</div>
+        <div class="comment-lines">Lines 1024–1024</div>
+      </div>
+      
+    
+      <h3>func allocate</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func allocate</div>
+        <div class="comment-text">allocate returns a contiguous block of memory starting at a given page.
+</div>
+        <div class="comment-lines">Lines 826–826</div>
+      </div>
+      
+    
+      <h3>func copy</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func copy</div>
+        <div class="comment-text">copy copies one meta object to another.
+</div>
+        <div class="comment-lines">Lines 994–994</div>
+      </div>
+      
+    
+      <h3>func grow</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func grow</div>
+        <div class="comment-text">grow grows the size of the database to the given sz.
+</div>
+        <div class="comment-lines">Lines 858–858</div>
+      </div>
+      
+    
+      <h3>func init</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func init</div>
+        <div class="comment-text">init creates a new database file and initializes its meta pages.
+</div>
+        <div class="comment-lines">Lines 342–342</div>
+      </div>
+      
+    
+      <h3>func meta</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func meta</div>
+        <div class="comment-text">meta retrieves the current meta page reference.
+</div>
+        <div class="comment-lines">Lines 802–802</div>
+      </div>
+      
+    
+      <h3>func mmap</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func mmap</div>
+        <div class="comment-text">mmap opens the underlying memory-mapped file and initializes the meta references.
+minsz is the minimum size that the new mmap can be.
+</div>
+        <div class="comment-lines">Lines 243–244</div>
+      </div>
+      
+    
+      <h3>func mmapSize</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func mmapSize</div>
+        <div class="comment-text">mmapSize determines the appropriate size for the mmap given the current size
+of the database. The minimum size is 32KB and doubles until it reaches 1GB.
+Returns an error if the new mmap size is greater than the max allowed.
+</div>
+        <div class="comment-lines">Lines 305–307</div>
+      </div>
+      
+    
+      <h3>func munmap</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func munmap</div>
+        <div class="comment-text">munmap unmaps the data file from memory.
+</div>
+        <div class="comment-lines">Lines 297–297</div>
+      </div>
+      
+    
+      <h3>func page</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func page</div>
+        <div class="comment-text">page retrieves a page reference from the mmap based on the current page size.
+</div>
+        <div class="comment-lines">Lines 791–791</div>
+      </div>
+      
+    
+      <h3>func pageInBuffer</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func pageInBuffer</div>
+        <div class="comment-text">pageInBuffer retrieves a page reference from a given byte array based on the current page size.
+</div>
+        <div class="comment-lines">Lines 797–797</div>
+      </div>
+      
+    
+      <h3>func removeTx</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func removeTx</div>
+        <div class="comment-text">removeTx removes a transaction from the database.
+</div>
+        <div class="comment-lines">Lines 544–544</div>
+      </div>
+      
+    
+      <h3>func run</h3>
+
       
       <div class="comment-block">
         <div class="comment-context">func run</div>
@@ -1468,6 +2101,109 @@ Batch is only useful when there are multiple goroutines calling it.
 back to DB.Batch.
 </div>
         <div class="comment-lines">Lines 702–703</div>
+      </div>
+      
+    
+      <h3>func sum64</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func sum64</div>
+        <div class="comment-text">generates the checksum for the meta.
+</div>
+        <div class="comment-lines">Lines 1017–1017</div>
+      </div>
+      
+    
+      <h3>func trigger</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func trigger</div>
+        <div class="comment-text">trigger runs the batch if it hasn't already been run.
+</div>
+        <div class="comment-lines">Lines 697–697</div>
+      </div>
+      
+    
+      <h3>func validate</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func validate</div>
+        <div class="comment-text">validate checks the marker bytes and version of the meta page to ensure it matches this binary.
+</div>
+        <div class="comment-lines">Lines 982–982</div>
+      </div>
+      
+    
+      <h3>func write</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func write</div>
+        <div class="comment-text">write writes the meta onto a page.
+</div>
+        <div class="comment-lines">Lines 999–999</div>
+      </div>
+      
+    
+      <h3>type</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">type</div>
+        <div class="comment-text">DB represents a collection of buckets persisted to a file on disk.
+All data access is performed through transactions which can be obtained through the DB.
+All the functions on DB will return a ErrDatabaseNotOpen if accessed before Open() is called.
+</div>
+        <div class="comment-lines">Lines 42–44</div>
+      </div>
+      
+      <div class="comment-block">
+        <div class="comment-context">type</div>
+        <div class="comment-text">Options represents the options that can be set when opening a database.
+</div>
+        <div class="comment-lines">Lines 894–894</div>
+      </div>
+      
+      <div class="comment-block">
+        <div class="comment-context">type</div>
+        <div class="comment-text">Stats represents statistics about the database.
+</div>
+        <div class="comment-lines">Lines 929–929</div>
+      </div>
+      
+    
+      <h3>var</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">var</div>
+        <div class="comment-text">default page size for db is set to the OS page size.
+</div>
+        <div class="comment-lines">Lines 39–39</div>
+      </div>
+      
+      <div class="comment-block">
+        <div class="comment-context">var</div>
+        <div class="comment-text">Read the first meta page to determine the page size.
+</div>
+        <div class="comment-lines">Lines 203–203</div>
+      </div>
+      
+      <div class="comment-block">
+        <div class="comment-context">var</div>
+        <div class="comment-text">Ensure the size is at least the minimum size.
+</div>
+        <div class="comment-lines">Lines 256–256</div>
+      </div>
+      
+      <div class="comment-block">
+        <div class="comment-context">var</div>
+        <div class="comment-text">Free any pages associated with closed read-only transactions.
+</div>
+        <div class="comment-lines">Lines 530–530</div>
       </div>
       
       <div class="comment-block">
@@ -1480,78 +2216,10 @@ callers.
       </div>
       
       <div class="comment-block">
-        <div class="comment-context">func Sync</div>
-        <div class="comment-text">Sync executes fdatasync() against the database file handle.
-
-This is not necessary under normal operation, however, if you use NoSync
-then it allows you to force the database file to sync against the disk.
-</div>
-        <div class="comment-lines">Lines 771–774</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func Stats</div>
-        <div class="comment-text">Stats retrieves ongoing performance stats for the database.
-This is only updated when a transaction closes.
-</div>
-        <div class="comment-lines">Lines 777–778</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func Info</div>
-        <div class="comment-text">This is for internal access to the raw data bytes from the C cursor, use
-carefully, or not at all.
-</div>
-        <div class="comment-lines">Lines 785–786</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func page</div>
-        <div class="comment-text">page retrieves a page reference from the mmap based on the current page size.
-</div>
-        <div class="comment-lines">Lines 791–791</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func pageInBuffer</div>
-        <div class="comment-text">pageInBuffer retrieves a page reference from a given byte array based on the current page size.
-</div>
-        <div class="comment-lines">Lines 797–797</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func meta</div>
-        <div class="comment-text">meta retrieves the current meta page reference.
-</div>
-        <div class="comment-lines">Lines 802–802</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func allocate</div>
-        <div class="comment-text">allocate returns a contiguous block of memory starting at a given page.
-</div>
-        <div class="comment-lines">Lines 826–826</div>
-      </div>
-      
-      <div class="comment-block">
         <div class="comment-context">var</div>
         <div class="comment-text">Allocate a temporary buffer for the page.
 </div>
         <div class="comment-lines">Lines 828–828</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func grow</div>
-        <div class="comment-text">grow grows the size of the database to the given sz.
-</div>
-        <div class="comment-lines">Lines 858–858</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">type</div>
-        <div class="comment-text">Options represents the options that can be set when opening a database.
-</div>
-        <div class="comment-lines">Lines 894–894</div>
       </div>
       
       <div class="comment-block">
@@ -1562,199 +2230,6 @@ No timeout is used which will cause Bolt to wait indefinitely for a lock.
         <div class="comment-lines">Lines 922–923</div>
       </div>
       
-      <div class="comment-block">
-        <div class="comment-context">type</div>
-        <div class="comment-text">Stats represents statistics about the database.
-</div>
-        <div class="comment-lines">Lines 929–929</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func Sub</div>
-        <div class="comment-text">Sub calculates and returns the difference between two sets of database stats.
-This is useful when obtaining stats at two different points and time and
-you need the performance counters that occurred within that time span.
-</div>
-        <div class="comment-lines">Lines 944–946</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func validate</div>
-        <div class="comment-text">validate checks the marker bytes and version of the meta page to ensure it matches this binary.
-</div>
-        <div class="comment-lines">Lines 982–982</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func copy</div>
-        <div class="comment-text">copy copies one meta object to another.
-</div>
-        <div class="comment-lines">Lines 994–994</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func write</div>
-        <div class="comment-text">write writes the meta onto a page.
-</div>
-        <div class="comment-lines">Lines 999–999</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func sum64</div>
-        <div class="comment-text">generates the checksum for the meta.
-</div>
-        <div class="comment-lines">Lines 1017–1017</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func _assert</div>
-        <div class="comment-text">_assert will panic with a given formatted message if the given condition is false.
-</div>
-        <div class="comment-lines">Lines 1024–1024</div>
-      </div>
-      
-    
-  </div>
-  
-  <div class="file-doc" id="file_freelist.go" style="display:none;">
-    <div class="package-name">package bolt</div>
-    <div class="file-path">freelist.go</div>
-    <hr>
-    
-      
-      <div class="comment-block">
-        <div class="comment-context">type</div>
-        <div class="comment-text">freelist represents a list of all pages that are available for allocation.
-It also tracks pages that have been freed but are still in use by open transactions.
-</div>
-        <div class="comment-lines">Lines 9–10</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func newFreelist</div>
-        <div class="comment-text">newFreelist returns an empty, initialized freelist.
-</div>
-        <div class="comment-lines">Lines 17–17</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func size</div>
-        <div class="comment-text">size returns the size of the page after serialization.
-</div>
-        <div class="comment-lines">Lines 25–25</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func count</div>
-        <div class="comment-text">count returns count of pages on the freelist
-</div>
-        <div class="comment-lines">Lines 35–35</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func free_count</div>
-        <div class="comment-text">free_count returns count of free pages
-</div>
-        <div class="comment-lines">Lines 40–40</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func pending_count</div>
-        <div class="comment-text">pending_count returns count of pending pages
-</div>
-        <div class="comment-lines">Lines 45–45</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func copyall</div>
-        <div class="comment-text">copyall copies into dst a list of all free ids and all pending ids in one sorted list.
-f.count returns the minimum length required for dst.
-</div>
-        <div class="comment-lines">Lines 54–55</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func allocate</div>
-        <div class="comment-text">allocate returns the starting page id of a contiguous list of pages of a given size.
-If a contiguous block cannot be found then 0 is returned.
-</div>
-        <div class="comment-lines">Lines 65–66</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func free</div>
-        <div class="comment-text">free releases a page and its overflow for a given transaction id.
-If the page is already free then a panic will occur.
-</div>
-        <div class="comment-lines">Lines 109–110</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">var</div>
-        <div class="comment-text">Free page and all its overflow pages.
-</div>
-        <div class="comment-lines">Lines 116–116</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func release</div>
-        <div class="comment-text">release moves all page ids for a transaction id (or older) to the freelist.
-</div>
-        <div class="comment-lines">Lines 131–131</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func rollback</div>
-        <div class="comment-text">rollback removes the pages from a given pending tx.
-</div>
-        <div class="comment-lines">Lines 146–146</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func freed</div>
-        <div class="comment-text">freed returns whether a given page is in the free list.
-</div>
-        <div class="comment-lines">Lines 157–157</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func read</div>
-        <div class="comment-text">read initializes the freelist from a freelist page.
-</div>
-        <div class="comment-lines">Lines 162–162</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func write</div>
-        <div class="comment-text">write writes the page ids onto a freelist page. All free and pending ids are
-saved to disk since in the event of a program crash, all pending ids will
-become free.
-</div>
-        <div class="comment-lines">Lines 188–190</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func reload</div>
-        <div class="comment-text">reload reads the freelist from a page and filters out pending items.
-</div>
-        <div class="comment-lines">Lines 214–214</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">var</div>
-        <div class="comment-text">Check each page in the freelist and build a new available freelist
-with any pages not in the pending lists.
-</div>
-        <div class="comment-lines">Lines 226–227</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func reindex</div>
-        <div class="comment-text">reindex rebuilds the free cache based on available and pending free lists.
-</div>
-        <div class="comment-lines">Lines 241–241</div>
-      </div>
-      
     
   </div>
   
@@ -1762,35 +2237,10 @@ with any pages not in the pending lists.
     <div class="package-name">package bolt</div>
     <div class="file-path">page.go</div>
     <hr>
+
     
-      
-      <div class="comment-block">
-        <div class="comment-context">func typ</div>
-        <div class="comment-text">typ returns a human readable page type string used for debugging.
-</div>
-        <div class="comment-lines">Lines 38–38</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func meta</div>
-        <div class="comment-text">meta returns a pointer to the metadata section of the page.
-</div>
-        <div class="comment-lines">Lines 52–52</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func leafPageElement</div>
-        <div class="comment-text">leafPageElement retrieves the leaf node by index
-</div>
-        <div class="comment-lines">Lines 57–57</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func leafPageElements</div>
-        <div class="comment-text">leafPageElements retrieves a list of leaf nodes.
-</div>
-        <div class="comment-lines">Lines 63–63</div>
-      </div>
+      <h3>func branchPageElement</h3>
+
       
       <div class="comment-block">
         <div class="comment-context">func branchPageElement</div>
@@ -1799,12 +2249,20 @@ with any pages not in the pending lists.
         <div class="comment-lines">Lines 71–71</div>
       </div>
       
+    
+      <h3>func branchPageElements</h3>
+
+      
       <div class="comment-block">
         <div class="comment-context">func branchPageElements</div>
         <div class="comment-text">branchPageElements retrieves a list of branch nodes.
 </div>
         <div class="comment-lines">Lines 76–76</div>
       </div>
+      
+    
+      <h3>func hexdump</h3>
+
       
       <div class="comment-block">
         <div class="comment-context">func hexdump</div>
@@ -1813,12 +2271,9 @@ with any pages not in the pending lists.
         <div class="comment-lines">Lines 84–84</div>
       </div>
       
-      <div class="comment-block">
-        <div class="comment-context">type</div>
-        <div class="comment-text">branchPageElement represents a node on a branch page.
-</div>
-        <div class="comment-lines">Lines 96–96</div>
-      </div>
+    
+      <h3>func key</h3>
+
       
       <div class="comment-block">
         <div class="comment-context">func key</div>
@@ -1828,32 +2283,37 @@ with any pages not in the pending lists.
       </div>
       
       <div class="comment-block">
-        <div class="comment-context">type</div>
-        <div class="comment-text">leafPageElement represents a node on a leaf page.
-</div>
-        <div class="comment-lines">Lines 109–109</div>
-      </div>
-      
-      <div class="comment-block">
         <div class="comment-context">func key</div>
         <div class="comment-text">key returns a byte slice of the node key.
 </div>
         <div class="comment-lines">Lines 117–117</div>
       </div>
       
-      <div class="comment-block">
-        <div class="comment-context">func value</div>
-        <div class="comment-text">value returns a byte slice of the node value.
-</div>
-        <div class="comment-lines">Lines 123–123</div>
-      </div>
+    
+      <h3>func leafPageElement</h3>
+
       
       <div class="comment-block">
-        <div class="comment-context">type</div>
-        <div class="comment-text">PageInfo represents human readable information about a page.
+        <div class="comment-context">func leafPageElement</div>
+        <div class="comment-text">leafPageElement retrieves the leaf node by index
 </div>
-        <div class="comment-lines">Lines 129–129</div>
+        <div class="comment-lines">Lines 57–57</div>
       </div>
+      
+    
+      <h3>func leafPageElements</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func leafPageElements</div>
+        <div class="comment-text">leafPageElements retrieves a list of leaf nodes.
+</div>
+        <div class="comment-lines">Lines 63–63</div>
+      </div>
+      
+    
+      <h3>func merge</h3>
+
       
       <div class="comment-block">
         <div class="comment-context">func merge</div>
@@ -1861,6 +2321,10 @@ with any pages not in the pending lists.
 </div>
         <div class="comment-lines">Lines 143–143</div>
       </div>
+      
+    
+      <h3>func mergepgids</h3>
+
       
       <div class="comment-block">
         <div class="comment-context">func mergepgids</div>
@@ -1871,27 +2335,130 @@ If dst is too small, it panics.
       </div>
       
     
+      <h3>func meta</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func meta</div>
+        <div class="comment-text">meta returns a pointer to the metadata section of the page.
+</div>
+        <div class="comment-lines">Lines 52–52</div>
+      </div>
+      
+    
+      <h3>func typ</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func typ</div>
+        <div class="comment-text">typ returns a human readable page type string used for debugging.
+</div>
+        <div class="comment-lines">Lines 38–38</div>
+      </div>
+      
+    
+      <h3>func value</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func value</div>
+        <div class="comment-text">value returns a byte slice of the node value.
+</div>
+        <div class="comment-lines">Lines 123–123</div>
+      </div>
+      
+    
+      <h3>type</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">type</div>
+        <div class="comment-text">branchPageElement represents a node on a branch page.
+</div>
+        <div class="comment-lines">Lines 96–96</div>
+      </div>
+      
+      <div class="comment-block">
+        <div class="comment-context">type</div>
+        <div class="comment-text">leafPageElement represents a node on a leaf page.
+</div>
+        <div class="comment-lines">Lines 109–109</div>
+      </div>
+      
+      <div class="comment-block">
+        <div class="comment-context">type</div>
+        <div class="comment-text">PageInfo represents human readable information about a page.
+</div>
+        <div class="comment-lines">Lines 129–129</div>
+      </div>
+      
+    
   </div>
   
   <div class="file-doc" id="file_node.go" style="display:none;">
     <div class="package-name">package bolt</div>
     <div class="file-path">node.go</div>
     <hr>
+
     
+      <h3>func childAt</h3>
+
       
       <div class="comment-block">
-        <div class="comment-context">type</div>
-        <div class="comment-text">node represents an in-memory, deserialized page.
+        <div class="comment-context">func childAt</div>
+        <div class="comment-text">childAt returns the child node at a given index.
 </div>
-        <div class="comment-lines">Lines 10–10</div>
+        <div class="comment-lines">Lines 72–72</div>
       </div>
       
+    
+      <h3>func childIndex</h3>
+
+      
       <div class="comment-block">
-        <div class="comment-context">func root</div>
-        <div class="comment-text">root returns the top-level node this node is attached to.
+        <div class="comment-context">func childIndex</div>
+        <div class="comment-text">childIndex returns the index of a given child node.
 </div>
-        <div class="comment-lines">Lines 23–23</div>
+        <div class="comment-lines">Lines 80–80</div>
       </div>
+      
+    
+      <h3>func del</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func del</div>
+        <div class="comment-text">del removes a key from the node.
+</div>
+        <div class="comment-lines">Lines 143–143</div>
+      </div>
+      
+    
+      <h3>func dereference</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func dereference</div>
+        <div class="comment-text">dereference causes the node to copy all its inode key/value references to heap memory.
+This is required when the mmap is reallocated so inodes are not pointing to stale data.
+</div>
+        <div class="comment-lines">Lines 521–522</div>
+      </div>
+      
+    
+      <h3>func free</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func free</div>
+        <div class="comment-text">free adds the node's underlying page to the freelist.
+</div>
+        <div class="comment-lines">Lines 553–553</div>
+      </div>
+      
+    
+      <h3>func minKeys</h3>
+
       
       <div class="comment-block">
         <div class="comment-context">func minKeys</div>
@@ -1900,12 +2467,121 @@ If dst is too small, it panics.
         <div class="comment-lines">Lines 31–31</div>
       </div>
       
+    
+      <h3>func nextSibling</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func nextSibling</div>
+        <div class="comment-text">nextSibling returns the next node with the same parent.
+</div>
+        <div class="comment-lines">Lines 91–91</div>
+      </div>
+      
+    
+      <h3>func numChildren</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func numChildren</div>
+        <div class="comment-text">numChildren returns the number of children.
+</div>
+        <div class="comment-lines">Lines 86–86</div>
+      </div>
+      
+    
+      <h3>func pageElementSize</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func pageElementSize</div>
+        <div class="comment-text">pageElementSize returns the size of each page element based on the type of node.
+</div>
+        <div class="comment-lines">Lines 64–64</div>
+      </div>
+      
+    
+      <h3>func prevSibling</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func prevSibling</div>
+        <div class="comment-text">prevSibling returns the previous node with the same parent.
+</div>
+        <div class="comment-lines">Lines 103–103</div>
+      </div>
+      
+    
+      <h3>func put</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func put</div>
+        <div class="comment-text">put inserts a key/value.
+</div>
+        <div class="comment-lines">Lines 115–115</div>
+      </div>
+      
+    
+      <h3>func read</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func read</div>
+        <div class="comment-text">read initializes the node from a page.
+</div>
+        <div class="comment-lines">Lines 160–160</div>
+      </div>
+      
+    
+      <h3>func rebalance</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func rebalance</div>
+        <div class="comment-text">rebalance attempts to combine the node with sibling nodes if the node fill
+size is below a threshold or if there are not enough keys.
+</div>
+        <div class="comment-lines">Lines 407–408</div>
+      </div>
+      
+    
+      <h3>func removeChild</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func removeChild</div>
+        <div class="comment-text">removes a node from the list of in-memory children.
+This does not affect the inodes.
+</div>
+        <div class="comment-lines">Lines 510–511</div>
+      </div>
+      
+    
+      <h3>func root</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func root</div>
+        <div class="comment-text">root returns the top-level node this node is attached to.
+</div>
+        <div class="comment-lines">Lines 23–23</div>
+      </div>
+      
+    
+      <h3>func size</h3>
+
+      
       <div class="comment-block">
         <div class="comment-context">func size</div>
         <div class="comment-text">size returns the size of the node after serialization.
 </div>
         <div class="comment-lines">Lines 39–39</div>
       </div>
+      
+    
+      <h3>func sizeLessThan</h3>
+
       
       <div class="comment-block">
         <div class="comment-context">func sizeLessThan</div>
@@ -1916,75 +2592,21 @@ to know if it fits inside a certain page size.
         <div class="comment-lines">Lines 49–51</div>
       </div>
       
-      <div class="comment-block">
-        <div class="comment-context">func pageElementSize</div>
-        <div class="comment-text">pageElementSize returns the size of each page element based on the type of node.
-</div>
-        <div class="comment-lines">Lines 64–64</div>
-      </div>
+    
+      <h3>func spill</h3>
+
       
       <div class="comment-block">
-        <div class="comment-context">func childAt</div>
-        <div class="comment-text">childAt returns the child node at a given index.
+        <div class="comment-context">func spill</div>
+        <div class="comment-text">spill writes the nodes to dirty pages and splits nodes as it goes.
+Returns an error if dirty pages cannot be allocated.
 </div>
-        <div class="comment-lines">Lines 72–72</div>
+        <div class="comment-lines">Lines 337–338</div>
       </div>
       
-      <div class="comment-block">
-        <div class="comment-context">func childIndex</div>
-        <div class="comment-text">childIndex returns the index of a given child node.
-</div>
-        <div class="comment-lines">Lines 80–80</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func numChildren</div>
-        <div class="comment-text">numChildren returns the number of children.
-</div>
-        <div class="comment-lines">Lines 86–86</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func nextSibling</div>
-        <div class="comment-text">nextSibling returns the next node with the same parent.
-</div>
-        <div class="comment-lines">Lines 91–91</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func prevSibling</div>
-        <div class="comment-text">prevSibling returns the previous node with the same parent.
-</div>
-        <div class="comment-lines">Lines 103–103</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func put</div>
-        <div class="comment-text">put inserts a key/value.
-</div>
-        <div class="comment-lines">Lines 115–115</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func del</div>
-        <div class="comment-text">del removes a key from the node.
-</div>
-        <div class="comment-lines">Lines 143–143</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func read</div>
-        <div class="comment-text">read initializes the node from a page.
-</div>
-        <div class="comment-lines">Lines 160–160</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func write</div>
-        <div class="comment-text">write writes the items onto one or more pages.
-</div>
-        <div class="comment-lines">Lines 190–190</div>
-      </div>
+    
+      <h3>func split</h3>
+
       
       <div class="comment-block">
         <div class="comment-context">func split</div>
@@ -1994,20 +2616,9 @@ This should only be called from the spill() function.
         <div class="comment-lines">Lines 248–249</div>
       </div>
       
-      <div class="comment-block">
-        <div class="comment-context">func splitTwo</div>
-        <div class="comment-text">splitTwo breaks up a node into two smaller nodes, if appropriate.
-This should only be called from the split() function.
-</div>
-        <div class="comment-lines">Lines 271–272</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">var</div>
-        <div class="comment-text">Determine the threshold before starting a new node.
-</div>
-        <div class="comment-lines">Lines 280–280</div>
-      </div>
+    
+      <h3>func splitIndex</h3>
+
       
       <div class="comment-block">
         <div class="comment-context">func splitIndex</div>
@@ -2018,12 +2629,58 @@ This is only be called from split().
         <div class="comment-lines">Lines 312–314</div>
       </div>
       
+    
+      <h3>func splitTwo</h3>
+
+      
       <div class="comment-block">
-        <div class="comment-context">func spill</div>
-        <div class="comment-text">spill writes the nodes to dirty pages and splits nodes as it goes.
-Returns an error if dirty pages cannot be allocated.
+        <div class="comment-context">func splitTwo</div>
+        <div class="comment-text">splitTwo breaks up a node into two smaller nodes, if appropriate.
+This should only be called from the split() function.
 </div>
-        <div class="comment-lines">Lines 337–338</div>
+        <div class="comment-lines">Lines 271–272</div>
+      </div>
+      
+    
+      <h3>func write</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func write</div>
+        <div class="comment-text">write writes the items onto one or more pages.
+</div>
+        <div class="comment-lines">Lines 190–190</div>
+      </div>
+      
+    
+      <h3>type</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">type</div>
+        <div class="comment-text">node represents an in-memory, deserialized page.
+</div>
+        <div class="comment-lines">Lines 10–10</div>
+      </div>
+      
+      <div class="comment-block">
+        <div class="comment-context">type</div>
+        <div class="comment-text">inode represents an internal node inside of a node.
+It can be used to point to elements in a page or point
+to an element which hasn't been added to a page yet.
+</div>
+        <div class="comment-lines">Lines 594–596</div>
+      </div>
+      
+    
+      <h3>var</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">var</div>
+        <div class="comment-text">Determine the threshold before starting a new node.
+</div>
+        <div class="comment-lines">Lines 280–280</div>
       </div>
       
       <div class="comment-block">
@@ -2031,14 +2688,6 @@ Returns an error if dirty pages cannot be allocated.
         <div class="comment-text">Split nodes into appropriate sizes. The first node will always be n.
 </div>
         <div class="comment-lines">Lines 358–358</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func rebalance</div>
-        <div class="comment-text">rebalance attempts to combine the node with sibling nodes if the node fill
-size is below a threshold or if there are not enough keys.
-</div>
-        <div class="comment-lines">Lines 407–408</div>
       </div>
       
       <div class="comment-block">
@@ -2055,303 +2704,6 @@ size is below a threshold or if there are not enough keys.
         <div class="comment-lines">Lines 462–462</div>
       </div>
       
-      <div class="comment-block">
-        <div class="comment-context">func removeChild</div>
-        <div class="comment-text">removes a node from the list of in-memory children.
-This does not affect the inodes.
-</div>
-        <div class="comment-lines">Lines 510–511</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func dereference</div>
-        <div class="comment-text">dereference causes the node to copy all its inode key/value references to heap memory.
-This is required when the mmap is reallocated so inodes are not pointing to stale data.
-</div>
-        <div class="comment-lines">Lines 521–522</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func free</div>
-        <div class="comment-text">free adds the node's underlying page to the freelist.
-</div>
-        <div class="comment-lines">Lines 553–553</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">type</div>
-        <div class="comment-text">inode represents an internal node inside of a node.
-It can be used to point to elements in a page or point
-to an element which hasn't been added to a page yet.
-</div>
-        <div class="comment-lines">Lines 594–596</div>
-      </div>
-      
-    
-  </div>
-  
-  <div class="file-doc" id="file_tx.go" style="display:none;">
-    <div class="package-name">package bolt</div>
-    <div class="file-path">tx.go</div>
-    <hr>
-    
-      
-      <div class="comment-block">
-        <div class="comment-context">type</div>
-        <div class="comment-text">txid represents the internal transaction identifier.
-</div>
-        <div class="comment-lines">Lines 13–13</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">type</div>
-        <div class="comment-text">Tx represents a read-only or read/write transaction on the database.
-Read-only transactions can be used for retrieving values for keys and creating cursors.
-Read/write transactions can create and remove buckets and create and remove keys.
-
-IMPORTANT: You must commit or rollback transactions when you are done with
-them. Pages can not be reclaimed by the writer until no more transactions
-are using them. A long running read transaction can cause the database to
-quickly grow.
-</div>
-        <div class="comment-lines">Lines 16–23</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func init</div>
-        <div class="comment-text">init initializes the transaction.
-</div>
-        <div class="comment-lines">Lines 43–43</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func ID</div>
-        <div class="comment-text">ID returns the transaction id.
-</div>
-        <div class="comment-lines">Lines 64–64</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func DB</div>
-        <div class="comment-text">DB returns a reference to the database that created the transaction.
-</div>
-        <div class="comment-lines">Lines 69–69</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func Size</div>
-        <div class="comment-text">Size returns current database size in bytes as seen by this transaction.
-</div>
-        <div class="comment-lines">Lines 74–74</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func Writable</div>
-        <div class="comment-text">Writable returns whether the transaction can perform write operations.
-</div>
-        <div class="comment-lines">Lines 79–79</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func Cursor</div>
-        <div class="comment-text">Cursor creates a cursor associated with the root bucket.
-All items in the cursor will return a nil value because all root bucket keys point to buckets.
-The cursor is only valid as long as the transaction is open.
-Do not use a cursor after the transaction is closed.
-</div>
-        <div class="comment-lines">Lines 84–87</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func Stats</div>
-        <div class="comment-text">Stats retrieves a copy of the current transaction statistics.
-</div>
-        <div class="comment-lines">Lines 92–92</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func Bucket</div>
-        <div class="comment-text">Bucket retrieves a bucket by name.
-Returns nil if the bucket does not exist.
-The bucket instance is only valid for the lifetime of the transaction.
-</div>
-        <div class="comment-lines">Lines 97–99</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func CreateBucket</div>
-        <div class="comment-text">CreateBucket creates a new bucket.
-Returns an error if the bucket already exists, if the bucket name is blank, or if the bucket name is too long.
-The bucket instance is only valid for the lifetime of the transaction.
-</div>
-        <div class="comment-lines">Lines 104–106</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func CreateBucketIfNotExists</div>
-        <div class="comment-text">CreateBucketIfNotExists creates a new bucket if it doesn't already exist.
-Returns an error if the bucket name is blank, or if the bucket name is too long.
-The bucket instance is only valid for the lifetime of the transaction.
-</div>
-        <div class="comment-lines">Lines 111–113</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func DeleteBucket</div>
-        <div class="comment-text">DeleteBucket deletes a bucket.
-Returns an error if the bucket cannot be found or if the key represents a non-bucket value.
-</div>
-        <div class="comment-lines">Lines 118–119</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func ForEach</div>
-        <div class="comment-text">ForEach executes a function for each bucket in the root.
-If the provided function returns an error then the iteration is stopped and
-the error is returned to the caller.
-</div>
-        <div class="comment-lines">Lines 124–126</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func OnCommit</div>
-        <div class="comment-text">OnCommit adds a handler function to be executed after the transaction successfully commits.
-</div>
-        <div class="comment-lines">Lines 136–136</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func Commit</div>
-        <div class="comment-text">Commit writes all changes to disk and updates the meta page.
-Returns an error if a disk write error occurs, or if Commit is
-called on a read-only transaction.
-</div>
-        <div class="comment-lines">Lines 141–143</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">var</div>
-        <div class="comment-text">Rebalance nodes which have had deletions.
-</div>
-        <div class="comment-lines">Lines 154–154</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func Rollback</div>
-        <div class="comment-text">Rollback closes the transaction and ignores all previous updates. Read-only
-transactions must be rolled back and not committed.
-</div>
-        <div class="comment-lines">Lines 238–239</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">var</div>
-        <div class="comment-text">Grab freelist stats.
-</div>
-        <div class="comment-lines">Lines 265–265</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func Copy</div>
-        <div class="comment-text">Copy writes the entire database to a writer.
-This function exists for backwards compatibility.
-
-Deprecated; Use WriteTo() instead.
-</div>
-        <div class="comment-lines">Lines 293–296</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func WriteTo</div>
-        <div class="comment-text">WriteTo writes the entire database to a writer.
-If err == nil then exactly tx.Size() bytes will be written into the writer.
-</div>
-        <div class="comment-lines">Lines 302–303</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func CopyFile</div>
-        <div class="comment-text">CopyFile copies the entire database to file at the given path.
-A reader transaction is maintained during the copy so it is safe to continue
-using the database while a copy is in progress.
-</div>
-        <div class="comment-lines">Lines 352–354</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func Check</div>
-        <div class="comment-text">Check performs several consistency checks on the database for this transaction.
-An error is returned if any inconsistency is found.
-
-It can be safely run concurrently on a writable transaction. However, this
-incurs a high cost for large databases and databases with a lot of subbuckets
-because of caching. This overhead can be removed if running on a read-only
-transaction, however, it is not safe to execute other writer transactions at
-the same time.
-</div>
-        <div class="comment-lines">Lines 369–376</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func allocate</div>
-        <div class="comment-text">allocate returns a contiguous block of memory starting at a given page.
-</div>
-        <div class="comment-lines">Lines 456–456</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func write</div>
-        <div class="comment-text">write writes any dirty pages to disk.
-</div>
-        <div class="comment-lines">Lines 473–473</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func writeMeta</div>
-        <div class="comment-text">writeMeta writes the meta to the disk.
-</div>
-        <div class="comment-lines">Lines 546–546</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func page</div>
-        <div class="comment-text">page returns a reference to the page with a given id.
-If page has been written to then a temporary buffered page is returned.
-</div>
-        <div class="comment-lines">Lines 569–570</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func forEachPage</div>
-        <div class="comment-text">forEachPage iterates over every page within a given page and executes a function.
-</div>
-        <div class="comment-lines">Lines 583–583</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func Page</div>
-        <div class="comment-text">Page returns page information for a given page number.
-This is only safe for concurrent use when used by a writable transaction.
-</div>
-        <div class="comment-lines">Lines 599–600</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">type</div>
-        <div class="comment-text">TxStats represents statistics about the actions performed by the transaction.
-</div>
-        <div class="comment-lines">Lines 626–626</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func Sub</div>
-        <div class="comment-text">Sub calculates and returns the difference between two sets of transaction stats.
-This is useful when obtaining stats at two different points and time and
-you need the performance counters that occurred within that time span.
-</div>
-        <div class="comment-lines">Lines 668–670</div>
-      </div>
-      
     
   </div>
   
@@ -2359,435 +2711,16 @@ you need the performance counters that occurred within that time span.
     <div class="package-name">package main</div>
     <div class="file-path">cmd\bolt\main.go</div>
     <hr>
+
     
+      <h3>const</h3>
+
       
       <div class="comment-block">
         <div class="comment-context">const</div>
         <div class="comment-text">PageHeaderSize represents the size of the bolt.page header.
 </div>
         <div class="comment-lines">Lines 59–59</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">type</div>
-        <div class="comment-text">Main represents the main program execution.
-</div>
-        <div class="comment-lines">Lines 72–72</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func NewMain</div>
-        <div class="comment-text">NewMain returns a new instance of Main connect to the standard input/output.
-</div>
-        <div class="comment-lines">Lines 79–79</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func Run</div>
-        <div class="comment-text">Run executes the program.
-</div>
-        <div class="comment-lines">Lines 88–88</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func Usage</div>
-        <div class="comment-text">Usage returns the help message.
-</div>
-        <div class="comment-lines">Lines 122–122</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">type</div>
-        <div class="comment-text">CheckCommand represents the "check" command execution.
-</div>
-        <div class="comment-lines">Lines 145–145</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func newCheckCommand</div>
-        <div class="comment-text">NewCheckCommand returns a CheckCommand.
-</div>
-        <div class="comment-lines">Lines 152–152</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func Run</div>
-        <div class="comment-text">Run executes the command.
-</div>
-        <div class="comment-lines">Lines 161–161</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func Usage</div>
-        <div class="comment-text">Usage returns the help message.
-</div>
-        <div class="comment-lines">Lines 216–216</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">type</div>
-        <div class="comment-text">InfoCommand represents the "info" command execution.
-</div>
-        <div class="comment-lines">Lines 230–230</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func newInfoCommand</div>
-        <div class="comment-text">NewInfoCommand returns a InfoCommand.
-</div>
-        <div class="comment-lines">Lines 237–237</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func Run</div>
-        <div class="comment-text">Run executes the command.
-</div>
-        <div class="comment-lines">Lines 246–246</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func Usage</div>
-        <div class="comment-text">Usage returns the help message.
-</div>
-        <div class="comment-lines">Lines 280–280</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">type</div>
-        <div class="comment-text">DumpCommand represents the "dump" command execution.
-</div>
-        <div class="comment-lines">Lines 289–289</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func newDumpCommand</div>
-        <div class="comment-text">newDumpCommand returns a DumpCommand.
-</div>
-        <div class="comment-lines">Lines 296–296</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func Run</div>
-        <div class="comment-text">Run executes the command.
-</div>
-        <div class="comment-lines">Lines 305–305</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func PrintPage</div>
-        <div class="comment-text">PrintPage prints a given page as hexadecimal.
-</div>
-        <div class="comment-lines">Lines 362–362</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">var</div>
-        <div class="comment-text">Write out to writer in 16-byte lines.
-</div>
-        <div class="comment-lines">Lines 375–375</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func Usage</div>
-        <div class="comment-text">Usage returns the help message.
-</div>
-        <div class="comment-lines">Lines 407–407</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">type</div>
-        <div class="comment-text">PageCommand represents the "page" command execution.
-</div>
-        <div class="comment-lines">Lines 416–416</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func newPageCommand</div>
-        <div class="comment-text">newPageCommand returns a PageCommand.
-</div>
-        <div class="comment-lines">Lines 423–423</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func Run</div>
-        <div class="comment-text">Run executes the command.
-</div>
-        <div class="comment-lines">Lines 432–432</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func PrintMeta</div>
-        <div class="comment-text">PrintMeta prints the data from the meta page.
-</div>
-        <div class="comment-lines">Lines 504–504</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func PrintLeaf</div>
-        <div class="comment-text">PrintLeaf prints the data for a leaf page.
-</div>
-        <div class="comment-lines">Lines 519–519</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">var</div>
-        <div class="comment-text">Format key as string.
-</div>
-        <div class="comment-lines">Lines 531–531</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">var</div>
-        <div class="comment-text">Format value as string.
-</div>
-        <div class="comment-lines">Lines 539–539</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func PrintBranch</div>
-        <div class="comment-text">PrintBranch prints the data for a leaf page.
-</div>
-        <div class="comment-lines">Lines 556–556</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">var</div>
-        <div class="comment-text">Format key as string.
-</div>
-        <div class="comment-lines">Lines 568–568</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func PrintFreelist</div>
-        <div class="comment-text">PrintFreelist prints the data for a freelist page.
-</div>
-        <div class="comment-lines">Lines 582–582</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func PrintPage</div>
-        <div class="comment-text">PrintPage prints a given page as hexadecimal.
-</div>
-        <div class="comment-lines">Lines 599–599</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">var</div>
-        <div class="comment-text">Write out to writer in 16-byte lines.
-</div>
-        <div class="comment-lines">Lines 612–612</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func Usage</div>
-        <div class="comment-text">Usage returns the help message.
-</div>
-        <div class="comment-lines">Lines 644–644</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">type</div>
-        <div class="comment-text">PagesCommand represents the "pages" command execution.
-</div>
-        <div class="comment-lines">Lines 653–653</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func newPagesCommand</div>
-        <div class="comment-text">NewPagesCommand returns a PagesCommand.
-</div>
-        <div class="comment-lines">Lines 660–660</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func Run</div>
-        <div class="comment-text">Run executes the command.
-</div>
-        <div class="comment-lines">Lines 669–669</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">var</div>
-        <div class="comment-text">Only display count and overflow if this is a non-free page.
-</div>
-        <div class="comment-lines">Lines 710–710</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func Usage</div>
-        <div class="comment-text">Usage returns the help message.
-</div>
-        <div class="comment-lines">Lines 732–732</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">type</div>
-        <div class="comment-text">StatsCommand represents the "stats" command execution.
-</div>
-        <div class="comment-lines">Lines 747–747</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func newStatsCommand</div>
-        <div class="comment-text">NewStatsCommand returns a StatsCommand.
-</div>
-        <div class="comment-lines">Lines 754–754</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func Run</div>
-        <div class="comment-text">Run executes the command.
-</div>
-        <div class="comment-lines">Lines 763–763</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func Usage</div>
-        <div class="comment-text">Usage returns the help message.
-</div>
-        <div class="comment-lines">Lines 846–846</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">type</div>
-        <div class="comment-text">BenchCommand represents the "bench" command execution.
-</div>
-        <div class="comment-lines">Lines 884–884</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func newBenchCommand</div>
-        <div class="comment-text">NewBenchCommand returns a BenchCommand using the
-</div>
-        <div class="comment-lines">Lines 891–891</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func Run</div>
-        <div class="comment-text">Run executes the "bench" command.
-</div>
-        <div class="comment-lines">Lines 900–900</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">var</div>
-        <div class="comment-text">Write to the database.
-</div>
-        <div class="comment-lines">Lines 923–923</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func ParseFlags</div>
-        <div class="comment-text">ParseFlags parses the command line flags.
-</div>
-        <div class="comment-lines">Lines 941–941</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func runWrites</div>
-        <div class="comment-text">Writes to the database.
-</div>
-        <div class="comment-lines">Lines 988–988</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func runReads</div>
-        <div class="comment-text">Reads from the database.
-</div>
-        <div class="comment-lines">Lines 1114–1114</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">var</div>
-        <div class="comment-text">File handlers for the various profiles.
-</div>
-        <div class="comment-lines">Lines 1214–1214</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func startProfiling</div>
-        <div class="comment-text">Starts all profiles set on the options.
-</div>
-        <div class="comment-lines">Lines 1217–1217</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func stopProfiling</div>
-        <div class="comment-text">Stops all profiles.
-</div>
-        <div class="comment-lines">Lines 1252–1252</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">type</div>
-        <div class="comment-text">BenchOptions represents the set of options that can be passed to "bolt bench".
-</div>
-        <div class="comment-lines">Lines 1274–1274</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">type</div>
-        <div class="comment-text">BenchResults represents the performance results of the benchmark.
-</div>
-        <div class="comment-lines">Lines 1293–1293</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func WriteOpDuration</div>
-        <div class="comment-text">Returns the duration for a single write operation.
-</div>
-        <div class="comment-lines">Lines 1301–1301</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func WriteOpsPerSecond</div>
-        <div class="comment-text">Returns average number of write operations that can be performed per second.
-</div>
-        <div class="comment-lines">Lines 1309–1309</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func ReadOpDuration</div>
-        <div class="comment-text">Returns the duration for a single read operation.
-</div>
-        <div class="comment-lines">Lines 1318–1318</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func ReadOpsPerSecond</div>
-        <div class="comment-text">Returns average number of read operations that can be performed per second.
-</div>
-        <div class="comment-lines">Lines 1326–1326</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func isPrintable</div>
-        <div class="comment-text">isPrintable returns true if the string is valid unicode and contains only printable runes.
-</div>
-        <div class="comment-lines">Lines 1344–1344</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func ReadPage</div>
-        <div class="comment-text">ReadPage reads page info & full page data from a path.
-This is not transactionally safe.
-</div>
-        <div class="comment-lines">Lines 1357–1358</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func ReadPageSize</div>
-        <div class="comment-text">ReadPageSize reads page size a path.
-This is not transactionally safe.
-</div>
-        <div class="comment-lines">Lines 1397–1398</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func atois</div>
-        <div class="comment-text">atois parses a slice of strings into integers.
-</div>
-        <div class="comment-lines">Lines 1418–1418</div>
       </div>
       
       <div class="comment-block">
@@ -2809,6 +2742,586 @@ This is not transactionally safe.
         <div class="comment-text">DO NOT EDIT. Copied from the "bolt" package.
 </div>
         <div class="comment-lines">Lines 1442–1442</div>
+      </div>
+      
+    
+      <h3>func NewMain</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func NewMain</div>
+        <div class="comment-text">NewMain returns a new instance of Main connect to the standard input/output.
+</div>
+        <div class="comment-lines">Lines 79–79</div>
+      </div>
+      
+    
+      <h3>func ParseFlags</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func ParseFlags</div>
+        <div class="comment-text">ParseFlags parses the command line flags.
+</div>
+        <div class="comment-lines">Lines 941–941</div>
+      </div>
+      
+    
+      <h3>func PrintBranch</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func PrintBranch</div>
+        <div class="comment-text">PrintBranch prints the data for a leaf page.
+</div>
+        <div class="comment-lines">Lines 556–556</div>
+      </div>
+      
+    
+      <h3>func PrintFreelist</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func PrintFreelist</div>
+        <div class="comment-text">PrintFreelist prints the data for a freelist page.
+</div>
+        <div class="comment-lines">Lines 582–582</div>
+      </div>
+      
+    
+      <h3>func PrintLeaf</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func PrintLeaf</div>
+        <div class="comment-text">PrintLeaf prints the data for a leaf page.
+</div>
+        <div class="comment-lines">Lines 519–519</div>
+      </div>
+      
+    
+      <h3>func PrintMeta</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func PrintMeta</div>
+        <div class="comment-text">PrintMeta prints the data from the meta page.
+</div>
+        <div class="comment-lines">Lines 504–504</div>
+      </div>
+      
+    
+      <h3>func PrintPage</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func PrintPage</div>
+        <div class="comment-text">PrintPage prints a given page as hexadecimal.
+</div>
+        <div class="comment-lines">Lines 362–362</div>
+      </div>
+      
+      <div class="comment-block">
+        <div class="comment-context">func PrintPage</div>
+        <div class="comment-text">PrintPage prints a given page as hexadecimal.
+</div>
+        <div class="comment-lines">Lines 599–599</div>
+      </div>
+      
+    
+      <h3>func ReadOpDuration</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func ReadOpDuration</div>
+        <div class="comment-text">Returns the duration for a single read operation.
+</div>
+        <div class="comment-lines">Lines 1318–1318</div>
+      </div>
+      
+    
+      <h3>func ReadOpsPerSecond</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func ReadOpsPerSecond</div>
+        <div class="comment-text">Returns average number of read operations that can be performed per second.
+</div>
+        <div class="comment-lines">Lines 1326–1326</div>
+      </div>
+      
+    
+      <h3>func ReadPage</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func ReadPage</div>
+        <div class="comment-text">ReadPage reads page info & full page data from a path.
+This is not transactionally safe.
+</div>
+        <div class="comment-lines">Lines 1357–1358</div>
+      </div>
+      
+    
+      <h3>func ReadPageSize</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func ReadPageSize</div>
+        <div class="comment-text">ReadPageSize reads page size a path.
+This is not transactionally safe.
+</div>
+        <div class="comment-lines">Lines 1397–1398</div>
+      </div>
+      
+    
+      <h3>func Run</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func Run</div>
+        <div class="comment-text">Run executes the program.
+</div>
+        <div class="comment-lines">Lines 88–88</div>
+      </div>
+      
+      <div class="comment-block">
+        <div class="comment-context">func Run</div>
+        <div class="comment-text">Run executes the command.
+</div>
+        <div class="comment-lines">Lines 161–161</div>
+      </div>
+      
+      <div class="comment-block">
+        <div class="comment-context">func Run</div>
+        <div class="comment-text">Run executes the command.
+</div>
+        <div class="comment-lines">Lines 246–246</div>
+      </div>
+      
+      <div class="comment-block">
+        <div class="comment-context">func Run</div>
+        <div class="comment-text">Run executes the command.
+</div>
+        <div class="comment-lines">Lines 305–305</div>
+      </div>
+      
+      <div class="comment-block">
+        <div class="comment-context">func Run</div>
+        <div class="comment-text">Run executes the command.
+</div>
+        <div class="comment-lines">Lines 432–432</div>
+      </div>
+      
+      <div class="comment-block">
+        <div class="comment-context">func Run</div>
+        <div class="comment-text">Run executes the command.
+</div>
+        <div class="comment-lines">Lines 669–669</div>
+      </div>
+      
+      <div class="comment-block">
+        <div class="comment-context">func Run</div>
+        <div class="comment-text">Run executes the command.
+</div>
+        <div class="comment-lines">Lines 763–763</div>
+      </div>
+      
+      <div class="comment-block">
+        <div class="comment-context">func Run</div>
+        <div class="comment-text">Run executes the "bench" command.
+</div>
+        <div class="comment-lines">Lines 900–900</div>
+      </div>
+      
+      <div class="comment-block">
+        <div class="comment-context">func Run</div>
+        <div class="comment-text">Run executes the command.
+</div>
+        <div class="comment-lines">Lines 1557–1557</div>
+      </div>
+      
+    
+      <h3>func Type</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func Type</div>
+        <div class="comment-text">DO NOT EDIT. Copied from the "bolt" package.
+</div>
+        <div class="comment-lines">Lines 1479–1479</div>
+      </div>
+      
+    
+      <h3>func Usage</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func Usage</div>
+        <div class="comment-text">Usage returns the help message.
+</div>
+        <div class="comment-lines">Lines 122–122</div>
+      </div>
+      
+      <div class="comment-block">
+        <div class="comment-context">func Usage</div>
+        <div class="comment-text">Usage returns the help message.
+</div>
+        <div class="comment-lines">Lines 216–216</div>
+      </div>
+      
+      <div class="comment-block">
+        <div class="comment-context">func Usage</div>
+        <div class="comment-text">Usage returns the help message.
+</div>
+        <div class="comment-lines">Lines 280–280</div>
+      </div>
+      
+      <div class="comment-block">
+        <div class="comment-context">func Usage</div>
+        <div class="comment-text">Usage returns the help message.
+</div>
+        <div class="comment-lines">Lines 407–407</div>
+      </div>
+      
+      <div class="comment-block">
+        <div class="comment-context">func Usage</div>
+        <div class="comment-text">Usage returns the help message.
+</div>
+        <div class="comment-lines">Lines 644–644</div>
+      </div>
+      
+      <div class="comment-block">
+        <div class="comment-context">func Usage</div>
+        <div class="comment-text">Usage returns the help message.
+</div>
+        <div class="comment-lines">Lines 732–732</div>
+      </div>
+      
+      <div class="comment-block">
+        <div class="comment-context">func Usage</div>
+        <div class="comment-text">Usage returns the help message.
+</div>
+        <div class="comment-lines">Lines 846–846</div>
+      </div>
+      
+      <div class="comment-block">
+        <div class="comment-context">func Usage</div>
+        <div class="comment-text">Usage returns the help message.
+</div>
+        <div class="comment-lines">Lines 1724–1724</div>
+      </div>
+      
+    
+      <h3>func WriteOpDuration</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func WriteOpDuration</div>
+        <div class="comment-text">Returns the duration for a single write operation.
+</div>
+        <div class="comment-lines">Lines 1301–1301</div>
+      </div>
+      
+    
+      <h3>func WriteOpsPerSecond</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func WriteOpsPerSecond</div>
+        <div class="comment-text">Returns average number of write operations that can be performed per second.
+</div>
+        <div class="comment-lines">Lines 1309–1309</div>
+      </div>
+      
+    
+      <h3>func atois</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func atois</div>
+        <div class="comment-text">atois parses a slice of strings into integers.
+</div>
+        <div class="comment-lines">Lines 1418–1418</div>
+      </div>
+      
+    
+      <h3>func branchPageElement</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func branchPageElement</div>
+        <div class="comment-text">DO NOT EDIT. Copied from the "bolt" package.
+</div>
+        <div class="comment-lines">Lines 1499–1499</div>
+      </div>
+      
+    
+      <h3>func isPrintable</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func isPrintable</div>
+        <div class="comment-text">isPrintable returns true if the string is valid unicode and contains only printable runes.
+</div>
+        <div class="comment-lines">Lines 1344–1344</div>
+      </div>
+      
+    
+      <h3>func key</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func key</div>
+        <div class="comment-text">DO NOT EDIT. Copied from the "bolt" package.
+</div>
+        <div class="comment-lines">Lines 1511–1511</div>
+      </div>
+      
+      <div class="comment-block">
+        <div class="comment-context">func key</div>
+        <div class="comment-text">DO NOT EDIT. Copied from the "bolt" package.
+</div>
+        <div class="comment-lines">Lines 1525–1525</div>
+      </div>
+      
+    
+      <h3>func leafPageElement</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func leafPageElement</div>
+        <div class="comment-text">DO NOT EDIT. Copied from the "bolt" package.
+</div>
+        <div class="comment-lines">Lines 1493–1493</div>
+      </div>
+      
+    
+      <h3>func newBenchCommand</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func newBenchCommand</div>
+        <div class="comment-text">NewBenchCommand returns a BenchCommand using the
+</div>
+        <div class="comment-lines">Lines 891–891</div>
+      </div>
+      
+    
+      <h3>func newCheckCommand</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func newCheckCommand</div>
+        <div class="comment-text">NewCheckCommand returns a CheckCommand.
+</div>
+        <div class="comment-lines">Lines 152–152</div>
+      </div>
+      
+    
+      <h3>func newCompactCommand</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func newCompactCommand</div>
+        <div class="comment-text">newCompactCommand returns a CompactCommand.
+</div>
+        <div class="comment-lines">Lines 1548–1548</div>
+      </div>
+      
+    
+      <h3>func newDumpCommand</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func newDumpCommand</div>
+        <div class="comment-text">newDumpCommand returns a DumpCommand.
+</div>
+        <div class="comment-lines">Lines 296–296</div>
+      </div>
+      
+    
+      <h3>func newInfoCommand</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func newInfoCommand</div>
+        <div class="comment-text">NewInfoCommand returns a InfoCommand.
+</div>
+        <div class="comment-lines">Lines 237–237</div>
+      </div>
+      
+    
+      <h3>func newPageCommand</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func newPageCommand</div>
+        <div class="comment-text">newPageCommand returns a PageCommand.
+</div>
+        <div class="comment-lines">Lines 423–423</div>
+      </div>
+      
+    
+      <h3>func newPagesCommand</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func newPagesCommand</div>
+        <div class="comment-text">NewPagesCommand returns a PagesCommand.
+</div>
+        <div class="comment-lines">Lines 660–660</div>
+      </div>
+      
+    
+      <h3>func newStatsCommand</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func newStatsCommand</div>
+        <div class="comment-text">NewStatsCommand returns a StatsCommand.
+</div>
+        <div class="comment-lines">Lines 754–754</div>
+      </div>
+      
+    
+      <h3>func runReads</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func runReads</div>
+        <div class="comment-text">Reads from the database.
+</div>
+        <div class="comment-lines">Lines 1114–1114</div>
+      </div>
+      
+    
+      <h3>func runWrites</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func runWrites</div>
+        <div class="comment-text">Writes to the database.
+</div>
+        <div class="comment-lines">Lines 988–988</div>
+      </div>
+      
+    
+      <h3>func startProfiling</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func startProfiling</div>
+        <div class="comment-text">Starts all profiles set on the options.
+</div>
+        <div class="comment-lines">Lines 1217–1217</div>
+      </div>
+      
+    
+      <h3>func stopProfiling</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func stopProfiling</div>
+        <div class="comment-text">Stops all profiles.
+</div>
+        <div class="comment-lines">Lines 1252–1252</div>
+      </div>
+      
+    
+      <h3>func value</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func value</div>
+        <div class="comment-text">DO NOT EDIT. Copied from the "bolt" package.
+</div>
+        <div class="comment-lines">Lines 1531–1531</div>
+      </div>
+      
+    
+      <h3>func walk</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func walk</div>
+        <div class="comment-text">walk walks recursively the bolt database db, calling walkFn for each key it finds.
+</div>
+        <div class="comment-lines">Lines 1693–1693</div>
+      </div>
+      
+    
+      <h3>type</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">type</div>
+        <div class="comment-text">Main represents the main program execution.
+</div>
+        <div class="comment-lines">Lines 72–72</div>
+      </div>
+      
+      <div class="comment-block">
+        <div class="comment-context">type</div>
+        <div class="comment-text">CheckCommand represents the "check" command execution.
+</div>
+        <div class="comment-lines">Lines 145–145</div>
+      </div>
+      
+      <div class="comment-block">
+        <div class="comment-context">type</div>
+        <div class="comment-text">InfoCommand represents the "info" command execution.
+</div>
+        <div class="comment-lines">Lines 230–230</div>
+      </div>
+      
+      <div class="comment-block">
+        <div class="comment-context">type</div>
+        <div class="comment-text">DumpCommand represents the "dump" command execution.
+</div>
+        <div class="comment-lines">Lines 289–289</div>
+      </div>
+      
+      <div class="comment-block">
+        <div class="comment-context">type</div>
+        <div class="comment-text">PageCommand represents the "page" command execution.
+</div>
+        <div class="comment-lines">Lines 416–416</div>
+      </div>
+      
+      <div class="comment-block">
+        <div class="comment-context">type</div>
+        <div class="comment-text">PagesCommand represents the "pages" command execution.
+</div>
+        <div class="comment-lines">Lines 653–653</div>
+      </div>
+      
+      <div class="comment-block">
+        <div class="comment-context">type</div>
+        <div class="comment-text">StatsCommand represents the "stats" command execution.
+</div>
+        <div class="comment-lines">Lines 747–747</div>
+      </div>
+      
+      <div class="comment-block">
+        <div class="comment-context">type</div>
+        <div class="comment-text">BenchCommand represents the "bench" command execution.
+</div>
+        <div class="comment-lines">Lines 884–884</div>
+      </div>
+      
+      <div class="comment-block">
+        <div class="comment-context">type</div>
+        <div class="comment-text">BenchOptions represents the set of options that can be passed to "bolt bench".
+</div>
+        <div class="comment-lines">Lines 1274–1274</div>
+      </div>
+      
+      <div class="comment-block">
+        <div class="comment-context">type</div>
+        <div class="comment-text">BenchResults represents the performance results of the benchmark.
+</div>
+        <div class="comment-lines">Lines 1293–1293</div>
       </div>
       
       <div class="comment-block">
@@ -2847,38 +3360,10 @@ This is not transactionally safe.
       </div>
       
       <div class="comment-block">
-        <div class="comment-context">func Type</div>
-        <div class="comment-text">DO NOT EDIT. Copied from the "bolt" package.
-</div>
-        <div class="comment-lines">Lines 1479–1479</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func leafPageElement</div>
-        <div class="comment-text">DO NOT EDIT. Copied from the "bolt" package.
-</div>
-        <div class="comment-lines">Lines 1493–1493</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func branchPageElement</div>
-        <div class="comment-text">DO NOT EDIT. Copied from the "bolt" package.
-</div>
-        <div class="comment-lines">Lines 1499–1499</div>
-      </div>
-      
-      <div class="comment-block">
         <div class="comment-context">type</div>
         <div class="comment-text">DO NOT EDIT. Copied from the "bolt" package.
 </div>
         <div class="comment-lines">Lines 1504–1504</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func key</div>
-        <div class="comment-text">DO NOT EDIT. Copied from the "bolt" package.
-</div>
-        <div class="comment-lines">Lines 1511–1511</div>
       </div>
       
       <div class="comment-block">
@@ -2889,45 +3374,10 @@ This is not transactionally safe.
       </div>
       
       <div class="comment-block">
-        <div class="comment-context">func key</div>
-        <div class="comment-text">DO NOT EDIT. Copied from the "bolt" package.
-</div>
-        <div class="comment-lines">Lines 1525–1525</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func value</div>
-        <div class="comment-text">DO NOT EDIT. Copied from the "bolt" package.
-</div>
-        <div class="comment-lines">Lines 1531–1531</div>
-      </div>
-      
-      <div class="comment-block">
         <div class="comment-context">type</div>
         <div class="comment-text">CompactCommand represents the "compact" command execution.
 </div>
         <div class="comment-lines">Lines 1537–1537</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func newCompactCommand</div>
-        <div class="comment-text">newCompactCommand returns a CompactCommand.
-</div>
-        <div class="comment-lines">Lines 1548–1548</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">func Run</div>
-        <div class="comment-text">Run executes the command.
-</div>
-        <div class="comment-lines">Lines 1557–1557</div>
-      </div>
-      
-      <div class="comment-block">
-        <div class="comment-context">var</div>
-        <div class="comment-text">commit regularly, or we'll run out of memory for large datasets if using one transaction.
-</div>
-        <div class="comment-lines">Lines 1620–1620</div>
       </div>
       
       <div class="comment-block">
@@ -2939,18 +3389,447 @@ owning the discovered key/value pair k/v.
         <div class="comment-lines">Lines 1688–1690</div>
       </div>
       
+    
+      <h3>var</h3>
+
+      
       <div class="comment-block">
-        <div class="comment-context">func walk</div>
-        <div class="comment-text">walk walks recursively the bolt database db, calling walkFn for each key it finds.
+        <div class="comment-context">var</div>
+        <div class="comment-text">Write out to writer in 16-byte lines.
 </div>
-        <div class="comment-lines">Lines 1693–1693</div>
+        <div class="comment-lines">Lines 375–375</div>
       </div>
       
       <div class="comment-block">
-        <div class="comment-context">func Usage</div>
-        <div class="comment-text">Usage returns the help message.
+        <div class="comment-context">var</div>
+        <div class="comment-text">Format key as string.
 </div>
-        <div class="comment-lines">Lines 1724–1724</div>
+        <div class="comment-lines">Lines 531–531</div>
+      </div>
+      
+      <div class="comment-block">
+        <div class="comment-context">var</div>
+        <div class="comment-text">Format value as string.
+</div>
+        <div class="comment-lines">Lines 539–539</div>
+      </div>
+      
+      <div class="comment-block">
+        <div class="comment-context">var</div>
+        <div class="comment-text">Format key as string.
+</div>
+        <div class="comment-lines">Lines 568–568</div>
+      </div>
+      
+      <div class="comment-block">
+        <div class="comment-context">var</div>
+        <div class="comment-text">Write out to writer in 16-byte lines.
+</div>
+        <div class="comment-lines">Lines 612–612</div>
+      </div>
+      
+      <div class="comment-block">
+        <div class="comment-context">var</div>
+        <div class="comment-text">Only display count and overflow if this is a non-free page.
+</div>
+        <div class="comment-lines">Lines 710–710</div>
+      </div>
+      
+      <div class="comment-block">
+        <div class="comment-context">var</div>
+        <div class="comment-text">Write to the database.
+</div>
+        <div class="comment-lines">Lines 923–923</div>
+      </div>
+      
+      <div class="comment-block">
+        <div class="comment-context">var</div>
+        <div class="comment-text">File handlers for the various profiles.
+</div>
+        <div class="comment-lines">Lines 1214–1214</div>
+      </div>
+      
+      <div class="comment-block">
+        <div class="comment-context">var</div>
+        <div class="comment-text">commit regularly, or we'll run out of memory for large datasets if using one transaction.
+</div>
+        <div class="comment-lines">Lines 1620–1620</div>
+      </div>
+      
+    
+  </div>
+  
+  <div class="file-doc" id="file_tx.go" style="display:none;">
+    <div class="package-name">package bolt</div>
+    <div class="file-path">tx.go</div>
+    <hr>
+
+    
+      <h3>func Bucket</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func Bucket</div>
+        <div class="comment-text">Bucket retrieves a bucket by name.
+Returns nil if the bucket does not exist.
+The bucket instance is only valid for the lifetime of the transaction.
+</div>
+        <div class="comment-lines">Lines 97–99</div>
+      </div>
+      
+    
+      <h3>func Check</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func Check</div>
+        <div class="comment-text">Check performs several consistency checks on the database for this transaction.
+An error is returned if any inconsistency is found.
+
+It can be safely run concurrently on a writable transaction. However, this
+incurs a high cost for large databases and databases with a lot of subbuckets
+because of caching. This overhead can be removed if running on a read-only
+transaction, however, it is not safe to execute other writer transactions at
+the same time.
+</div>
+        <div class="comment-lines">Lines 369–376</div>
+      </div>
+      
+    
+      <h3>func Commit</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func Commit</div>
+        <div class="comment-text">Commit writes all changes to disk and updates the meta page.
+Returns an error if a disk write error occurs, or if Commit is
+called on a read-only transaction.
+</div>
+        <div class="comment-lines">Lines 141–143</div>
+      </div>
+      
+    
+      <h3>func Copy</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func Copy</div>
+        <div class="comment-text">Copy writes the entire database to a writer.
+This function exists for backwards compatibility.
+
+Deprecated; Use WriteTo() instead.
+</div>
+        <div class="comment-lines">Lines 293–296</div>
+      </div>
+      
+    
+      <h3>func CopyFile</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func CopyFile</div>
+        <div class="comment-text">CopyFile copies the entire database to file at the given path.
+A reader transaction is maintained during the copy so it is safe to continue
+using the database while a copy is in progress.
+</div>
+        <div class="comment-lines">Lines 352–354</div>
+      </div>
+      
+    
+      <h3>func CreateBucket</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func CreateBucket</div>
+        <div class="comment-text">CreateBucket creates a new bucket.
+Returns an error if the bucket already exists, if the bucket name is blank, or if the bucket name is too long.
+The bucket instance is only valid for the lifetime of the transaction.
+</div>
+        <div class="comment-lines">Lines 104–106</div>
+      </div>
+      
+    
+      <h3>func CreateBucketIfNotExists</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func CreateBucketIfNotExists</div>
+        <div class="comment-text">CreateBucketIfNotExists creates a new bucket if it doesn't already exist.
+Returns an error if the bucket name is blank, or if the bucket name is too long.
+The bucket instance is only valid for the lifetime of the transaction.
+</div>
+        <div class="comment-lines">Lines 111–113</div>
+      </div>
+      
+    
+      <h3>func Cursor</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func Cursor</div>
+        <div class="comment-text">Cursor creates a cursor associated with the root bucket.
+All items in the cursor will return a nil value because all root bucket keys point to buckets.
+The cursor is only valid as long as the transaction is open.
+Do not use a cursor after the transaction is closed.
+</div>
+        <div class="comment-lines">Lines 84–87</div>
+      </div>
+      
+    
+      <h3>func DB</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func DB</div>
+        <div class="comment-text">DB returns a reference to the database that created the transaction.
+</div>
+        <div class="comment-lines">Lines 69–69</div>
+      </div>
+      
+    
+      <h3>func DeleteBucket</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func DeleteBucket</div>
+        <div class="comment-text">DeleteBucket deletes a bucket.
+Returns an error if the bucket cannot be found or if the key represents a non-bucket value.
+</div>
+        <div class="comment-lines">Lines 118–119</div>
+      </div>
+      
+    
+      <h3>func ForEach</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func ForEach</div>
+        <div class="comment-text">ForEach executes a function for each bucket in the root.
+If the provided function returns an error then the iteration is stopped and
+the error is returned to the caller.
+</div>
+        <div class="comment-lines">Lines 124–126</div>
+      </div>
+      
+    
+      <h3>func ID</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func ID</div>
+        <div class="comment-text">ID returns the transaction id.
+</div>
+        <div class="comment-lines">Lines 64–64</div>
+      </div>
+      
+    
+      <h3>func OnCommit</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func OnCommit</div>
+        <div class="comment-text">OnCommit adds a handler function to be executed after the transaction successfully commits.
+</div>
+        <div class="comment-lines">Lines 136–136</div>
+      </div>
+      
+    
+      <h3>func Page</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func Page</div>
+        <div class="comment-text">Page returns page information for a given page number.
+This is only safe for concurrent use when used by a writable transaction.
+</div>
+        <div class="comment-lines">Lines 599–600</div>
+      </div>
+      
+    
+      <h3>func Rollback</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func Rollback</div>
+        <div class="comment-text">Rollback closes the transaction and ignores all previous updates. Read-only
+transactions must be rolled back and not committed.
+</div>
+        <div class="comment-lines">Lines 238–239</div>
+      </div>
+      
+    
+      <h3>func Size</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func Size</div>
+        <div class="comment-text">Size returns current database size in bytes as seen by this transaction.
+</div>
+        <div class="comment-lines">Lines 74–74</div>
+      </div>
+      
+    
+      <h3>func Stats</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func Stats</div>
+        <div class="comment-text">Stats retrieves a copy of the current transaction statistics.
+</div>
+        <div class="comment-lines">Lines 92–92</div>
+      </div>
+      
+    
+      <h3>func Sub</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func Sub</div>
+        <div class="comment-text">Sub calculates and returns the difference between two sets of transaction stats.
+This is useful when obtaining stats at two different points and time and
+you need the performance counters that occurred within that time span.
+</div>
+        <div class="comment-lines">Lines 668–670</div>
+      </div>
+      
+    
+      <h3>func Writable</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func Writable</div>
+        <div class="comment-text">Writable returns whether the transaction can perform write operations.
+</div>
+        <div class="comment-lines">Lines 79–79</div>
+      </div>
+      
+    
+      <h3>func WriteTo</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func WriteTo</div>
+        <div class="comment-text">WriteTo writes the entire database to a writer.
+If err == nil then exactly tx.Size() bytes will be written into the writer.
+</div>
+        <div class="comment-lines">Lines 302–303</div>
+      </div>
+      
+    
+      <h3>func allocate</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func allocate</div>
+        <div class="comment-text">allocate returns a contiguous block of memory starting at a given page.
+</div>
+        <div class="comment-lines">Lines 456–456</div>
+      </div>
+      
+    
+      <h3>func forEachPage</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func forEachPage</div>
+        <div class="comment-text">forEachPage iterates over every page within a given page and executes a function.
+</div>
+        <div class="comment-lines">Lines 583–583</div>
+      </div>
+      
+    
+      <h3>func init</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func init</div>
+        <div class="comment-text">init initializes the transaction.
+</div>
+        <div class="comment-lines">Lines 43–43</div>
+      </div>
+      
+    
+      <h3>func page</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func page</div>
+        <div class="comment-text">page returns a reference to the page with a given id.
+If page has been written to then a temporary buffered page is returned.
+</div>
+        <div class="comment-lines">Lines 569–570</div>
+      </div>
+      
+    
+      <h3>func write</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func write</div>
+        <div class="comment-text">write writes any dirty pages to disk.
+</div>
+        <div class="comment-lines">Lines 473–473</div>
+      </div>
+      
+    
+      <h3>func writeMeta</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">func writeMeta</div>
+        <div class="comment-text">writeMeta writes the meta to the disk.
+</div>
+        <div class="comment-lines">Lines 546–546</div>
+      </div>
+      
+    
+      <h3>type</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">type</div>
+        <div class="comment-text">txid represents the internal transaction identifier.
+</div>
+        <div class="comment-lines">Lines 13–13</div>
+      </div>
+      
+      <div class="comment-block">
+        <div class="comment-context">type</div>
+        <div class="comment-text">Tx represents a read-only or read/write transaction on the database.
+Read-only transactions can be used for retrieving values for keys and creating cursors.
+Read/write transactions can create and remove buckets and create and remove keys.
+
+IMPORTANT: You must commit or rollback transactions when you are done with
+them. Pages can not be reclaimed by the writer until no more transactions
+are using them. A long running read transaction can cause the database to
+quickly grow.
+</div>
+        <div class="comment-lines">Lines 16–23</div>
+      </div>
+      
+      <div class="comment-block">
+        <div class="comment-context">type</div>
+        <div class="comment-text">TxStats represents statistics about the actions performed by the transaction.
+</div>
+        <div class="comment-lines">Lines 626–626</div>
+      </div>
+      
+    
+      <h3>var</h3>
+
+      
+      <div class="comment-block">
+        <div class="comment-context">var</div>
+        <div class="comment-text">Rebalance nodes which have had deletions.
+</div>
+        <div class="comment-lines">Lines 154–154</div>
+      </div>
+      
+      <div class="comment-block">
+        <div class="comment-context">var</div>
+        <div class="comment-text">Grab freelist stats.
+</div>
+        <div class="comment-lines">Lines 265–265</div>
       </div>
       
     
@@ -2969,17 +3848,16 @@ owning the discovered key/value pair k/v.
     }
 
     if (items.length > 0) {
-      const firstId = items[0].getAttribute('data-target');
-      show(firstId);
+      show(items[0].getAttribute('data-target'));
     }
 
     items.forEach(item => {
       item.addEventListener('click', () => {
-        const id = item.getAttribute('data-target');
-        show(id);
+        show(item.getAttribute('data-target'));
       });
     });
   })();
 </script>
+
 </body>
 </html>

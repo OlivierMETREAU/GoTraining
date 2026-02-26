@@ -9,6 +9,8 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"os/exec"
+	"runtime"
 
 	"example.com/day10-doc-generator/htmldocgenerator"
 )
@@ -28,7 +30,28 @@ func main() {
 		log.Fatalf("Error extracting project info: %v", err)
 	}
 
-	if err := htmldocgenerator.GenerateHTML("docs.html", results, input); err != nil {
+	output := "docs.html"
+	if err := htmldocgenerator.GenerateHTML(output, results, input); err != nil {
 		log.Fatalf("HTML generation failed: %v", err)
+	}
+
+	fmt.Printf("Documentation generated: %s\n", output)
+
+	// Open the HTML file automatically
+	if err := openBrowser(output); err != nil {
+		fmt.Printf("Could not open browser automatically: %v\n", err)
+	}
+}
+
+func openBrowser(path string) error {
+	switch runtime.GOOS {
+	case "linux":
+		return exec.Command("xdg-open", path).Start()
+	case "windows":
+		return exec.Command("cmd", "/c", "start", path).Start()
+	case "darwin":
+		return exec.Command("open", path).Start()
+	default:
+		return fmt.Errorf("unsupported platform")
 	}
 }

@@ -16,16 +16,17 @@ import (
 // - Generate HTML pages (per file, per package, or a global index)
 
 type htmlFile struct {
-	ID       string
-	Path     string
-	RelPath  string
-	Package  string
-	Comments []gocommentextractor.CommentBlock
+	ID          string
+	RelPath     string
+	Package     string
+	GroupedDocs map[string][]gocommentextractor.CommentBlock
 }
 
 type htmlData struct {
 	Files []htmlFile
 }
+
+type GroupedComments map[string][]gocommentextractor.CommentBlock
 
 // FindGoFiles recursively scans a directory and returns all .go files
 // except *_test.go files.
@@ -117,19 +118,18 @@ func runWorkers(files []string, workerCount int) ([]gocommentextractor.FileComme
 func GenerateHTML(outputPath string, files []gocommentextractor.FileComments, root string) error {
 	data := htmlData{Files: make([]htmlFile, 0, len(files))}
 
-	for i, fc := range files {
+	for _, fc := range files {
 		rel, _ := filepath.Rel(root, fc.FilePath)
 		id := "file_" + strings.ReplaceAll(rel, string(os.PathSeparator), "_")
 
-		data.Files = append(data.Files, htmlFile{
-			ID:       id,
-			Path:     fc.FilePath,
-			RelPath:  rel,
-			Package:  fc.Package,
-			Comments: fc.Comments,
-		})
+		grouped := groupByContext(fc.Comments)
 
-		_ = i
+		data.Files = append(data.Files, htmlFile{
+			ID:          id,
+			RelPath:     rel,
+			Package:     fc.Package,
+			GroupedDocs: grouped,
+		})
 	}
 
 	f, err := os.Create(outputPath)
@@ -140,4 +140,34 @@ func GenerateHTML(outputPath string, files []gocommentextractor.FileComments, ro
 
 	tmpl := template.Must(template.New("doc").Parse(htmlTemplate))
 	return tmpl.Execute(f, data)
+}
+
+func groupByContext(comments []gocommentextractor.CommentBlock) map[string][]gocommentextractor.CommentBlock {
+	grouped := make(map[string][]gocommentextractor.CommentBlock)
+
+	for _, c := range comments {
+		grouped[c.Context] = append(grouped[c.Context], c)
+	}
+
+	return grouped
+}
+
+func prepareHTMLData(files []gocommentextractor.FileComments, root string) htmlData {
+	data := htmlData{Files: make([]htmlFile, 0, len(files))}
+
+	for _, fc := range files {
+		rel, _ := filepath.Rel(root, fc.FilePath)
+		id := "file_" + strings.ReplaceAll(rel, string(os.PathSeparator), "_")
+
+		grouped := groupByContext(fc.Comments)
+
+		data.Files = append(data.Files, htmlFile{
+			ID:          id,
+			RelPath:     rel,
+			Package:     fc.Package,
+			GroupedDocs: grouped,
+		})
+	}
+
+	return data
 }
