@@ -1,9 +1,11 @@
 package gocommentextractor
 
-// Responsibility:
-// - Parse .go files
-// - Extract comments (package comments, type comments, func comments, inline comments)
-// - Return a structured representation
+// Package gocommentextractor
+//
+// Responsibilities:
+//   - Parse .go source files using the Go AST
+//   - Extract documentation comments (package, type, function, const, var, import)
+//   - Return a structured representation suitable for documentation generation
 
 import (
 	"go/ast"
@@ -11,29 +13,47 @@ import (
 	"go/token"
 )
 
-// CommentBlock structure containing the linStart, lineEnd, text and context of each comment block
+//
+// ============================================================
+//  Data structures
+// ============================================================
+//
+
+// CommentBlock represents a single extracted comment block.
+// It includes the text, the line range, the semantic context,
+// and an optional sub-context (e.g., function name).
 type CommentBlock struct {
-	Text       string
-	LineStart  int
-	LineEnd    int
-	Context    string // "package", "type", "function", "var", "const", ...
-	SubContext string // e.g. "Open", "NewDB", "Run", ...
+	Text       string // Raw comment text
+	LineStart  int    // First line of the comment block
+	LineEnd    int    // Last line of the comment block
+	Context    string // "package", "type", "function", "var", "const", "import", ...
+	SubContext string // Additional detail, e.g. function name ("Open")
 }
 
-// FileComments strcuture containing the filePth, the package name and the slice of comments
+// FileComments represents all extracted comments for a single Go file.
 type FileComments struct {
-	FilePath string
-	Package  string
-	Comments []CommentBlock
-	Err      error
+	FilePath string         // Absolute or relative path to the file
+	Package  string         // Package name declared in the file
+	Comments []CommentBlock // All extracted comment blocks
+	Err      error          // Optional error encountered during parsing
 }
 
+//
+// ============================================================
+//  Public API
+// ============================================================
+//
+
+// GetCommentFromGoFile parses a Go source file and extracts all
+// documentation comments (package-level and declaration-level).
 func GetCommentFromGoFile(path string) (FileComments, error) {
 	fset := token.NewFileSet()
+
 	file, err := parser.ParseFile(fset, path, nil, parser.ParseComments)
 	if err != nil {
 		return FileComments{}, err
 	}
+
 	fc := FileComments{
 		FilePath: path,
 		Package:  file.Name.Name,
@@ -46,6 +66,14 @@ func GetCommentFromGoFile(path string) (FileComments, error) {
 	return fc, nil
 }
 
+//
+// ============================================================
+//  Extraction helpers
+// ============================================================
+//
+
+// extractPackageComments extracts the comment block immediately above
+// the `package xyz` declaration, if present.
 func extractPackageComments(file *ast.File, fset *token.FileSet, fc *FileComments) {
 	if file.Doc == nil {
 		return
@@ -62,10 +90,19 @@ func extractPackageComments(file *ast.File, fset *token.FileSet, fc *FileComment
 	})
 }
 
+// extractDeclarationComments extracts comments attached to:
+//   - type declarations
+//   - const blocks
+//   - var blocks
+//   - import blocks
+//   - function declarations
+//
+// It walks the AST and collects all top-level documentation comments.
 func extractDeclarationComments(file *ast.File, fset *token.FileSet, fc *FileComments) {
 	ast.Inspect(file, func(n ast.Node) bool {
 		switch node := n.(type) {
 
+		// General declarations: type, const, var, import
 		case *ast.GenDecl:
 			if node.Doc == nil {
 				return true
@@ -93,6 +130,7 @@ func extractDeclarationComments(file *ast.File, fset *token.FileSet, fc *FileCom
 				Context:   ctx,
 			})
 
+		// Function declarations
 		case *ast.FuncDecl:
 			if node.Doc == nil {
 				return true
@@ -108,7 +146,6 @@ func extractDeclarationComments(file *ast.File, fset *token.FileSet, fc *FileCom
 				Context:    "function",
 				SubContext: node.Name.Name,
 			})
-
 		}
 
 		return true
