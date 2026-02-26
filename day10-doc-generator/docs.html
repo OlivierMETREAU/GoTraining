@@ -31,6 +31,17 @@
   <h3>Files</h3>
   
     <div class="file-item" 
+         data-target="file_bolt_arm64.go" 
+         data-name="bolt_arm64.go"
+         data-content="maxMapSize represents the largest mmap size supported by Bolt.
+ maxAllocSize is the size used when creating array pointers.
+ Are unaligned load/stores broken on this arch?
+ ">
+      <div>bolt_arm64.go</div>
+      <div class="file-path">bolt</div>
+    </div>
+  
+    <div class="file-item" 
          data-target="file_bolt_arm.go" 
          data-name="bolt_arm.go"
          data-content="maxMapSize represents the largest mmap size supported by Bolt.
@@ -49,17 +60,6 @@
  Are unaligned load/stores broken on this arch?
  ">
       <div>bolt_386.go</div>
-      <div class="file-path">bolt</div>
-    </div>
-  
-    <div class="file-item" 
-         data-target="file_bolt_arm64.go" 
-         data-name="bolt_arm64.go"
-         data-content="maxMapSize represents the largest mmap size supported by Bolt.
- maxAllocSize is the size used when creating array pointers.
- Are unaligned load/stores broken on this arch?
- ">
-      <div>bolt_arm64.go</div>
       <div class="file-path">bolt</div>
     </div>
   
@@ -94,6 +94,14 @@
     </div>
   
     <div class="file-item" 
+         data-target="file_bolt_openbsd.go" 
+         data-name="bolt_openbsd.go"
+         data-content="">
+      <div>bolt_openbsd.go</div>
+      <div class="file-path">bolt</div>
+    </div>
+  
+    <div class="file-item" 
          data-target="file_bolt_ppc64.go" 
          data-name="bolt_ppc64.go"
          data-content="maxMapSize represents the largest mmap size supported by Bolt.
@@ -123,14 +131,6 @@
  Are unaligned load/stores broken on this arch?
  ">
       <div>bolt_s390x.go</div>
-      <div class="file-path">bolt</div>
-    </div>
-  
-    <div class="file-item" 
-         data-target="file_bolt_openbsd.go" 
-         data-name="bolt_openbsd.go"
-         data-content="">
-      <div>bolt_openbsd.go</div>
       <div class="file-path">bolt</div>
     </div>
   
@@ -285,227 +285,6 @@ point to different data or can point to invalid memory which will cause a panic.
     </div>
   
     <div class="file-item" 
-         data-target="file_errors.go" 
-         data-name="errors.go"
-         data-content="These errors can be returned when opening or calling methods on a DB.
- These errors can occur when beginning or committing a Tx.
- These errors can occur when putting or deleting a value or a bucket.
- ">
-      <div>errors.go</div>
-      <div class="file-path">bolt</div>
-    </div>
-  
-    <div class="file-item" 
-         data-target="file_freelist.go" 
-         data-name="freelist.go"
-         data-content="newFreelist returns an empty, initialized freelist.
- size returns the size of the page after serialization.
- count returns count of pages on the freelist
- free_count returns count of free pages
- pending_count returns count of pending pages
- copyall copies into dst a list of all free ids and all pending ids in one sorted list.
-f.count returns the minimum length required for dst.
- allocate returns the starting page id of a contiguous list of pages of a given size.
-If a contiguous block cannot be found then 0 is returned.
- free releases a page and its overflow for a given transaction id.
-If the page is already free then a panic will occur.
- release moves all page ids for a transaction id (or older) to the freelist.
- rollback removes the pages from a given pending tx.
- freed returns whether a given page is in the free list.
- read initializes the freelist from a freelist page.
- write writes the page ids onto a freelist page. All free and pending ids are
-saved to disk since in the event of a program crash, all pending ids will
-become free.
- reload reads the freelist from a page and filters out pending items.
- reindex rebuilds the free cache based on available and pending free lists.
- freelist represents a list of all pages that are available for allocation.
-It also tracks pages that have been freed but are still in use by open transactions.
- Free page and all its overflow pages.
- Check each page in the freelist and build a new available freelist
-with any pages not in the pending lists.
- ">
-      <div>freelist.go</div>
-      <div class="file-path">bolt</div>
-    </div>
-  
-    <div class="file-item" 
-         data-target="file_bucket.go" 
-         data-name="bucket.go"
-         data-content="DefaultFillPercent is the percentage that split pages are filled.
-This value can be changed by setting Bucket.FillPercent.
- newBucket returns a new bucket associated with a transaction.
- Tx returns the tx of the bucket.
- Root returns the root of the bucket.
- Writable returns whether the bucket is writable.
- Cursor creates a cursor associated with the bucket.
-The cursor is only valid as long as the transaction is open.
-Do not use a cursor after the transaction is closed.
- Bucket retrieves a nested bucket by name.
-Returns nil if the bucket does not exist.
-The bucket instance is only valid for the lifetime of the transaction.
- Helper method that re-interprets a sub-bucket value
-from a parent into a Bucket
- CreateBucket creates a new bucket at the given key and returns the new bucket.
-Returns an error if the key already exists, if the bucket name is blank, or if the bucket name is too long.
-The bucket instance is only valid for the lifetime of the transaction.
- CreateBucketIfNotExists creates a new bucket if it doesn't already exist and returns a reference to it.
-Returns an error if the bucket name is blank, or if the bucket name is too long.
-The bucket instance is only valid for the lifetime of the transaction.
- DeleteBucket deletes a bucket at the given key.
-Returns an error if the bucket does not exists, or if the key represents a non-bucket value.
- Get retrieves the value for a key in the bucket.
-Returns a nil value if the key does not exist or if the key is a nested bucket.
-The returned value is only valid for the life of the transaction.
- Put sets the value for a key in the bucket.
-If the key exist then its previous value will be overwritten.
-Supplied value must remain valid for the life of the transaction.
-Returns an error if the bucket was created from a read-only transaction, if the key is blank, if the key is too large, or if the value is too large.
- Delete removes a key from the bucket.
-If the key does not exist then nothing is done and a nil error is returned.
-Returns an error if the bucket was created from a read-only transaction.
- Sequence returns the current integer for the bucket without incrementing it.
- SetSequence updates the sequence number for the bucket.
- NextSequence returns an autoincrementing integer for the bucket.
- ForEach executes a function for each key/value pair in a bucket.
-If the provided function returns an error then the iteration is stopped and
-the error is returned to the caller. The provided function must not modify
-the bucket; this will result in undefined behavior.
- Stat returns stats on a bucket.
- forEachPage iterates over every page in a bucket, including inline pages.
- forEachPageNode iterates over every page (or node) in a bucket.
-This also includes inline pages.
- spill writes all the nodes for this bucket to dirty pages.
- inlineable returns true if a bucket is small enough to be written inline
-and if it contains no subbuckets. Otherwise returns false.
- Returns the maximum total size of a bucket to make it a candidate for inlining.
- write allocates and writes a bucket to a byte slice.
- rebalance attempts to balance all nodes.
- node creates a node from a page and associates it with a given parent.
- free recursively frees all pages in the bucket.
- dereference removes all references to the old mmap.
- pageNode returns the in-memory node, if it exists.
-Otherwise returns the underlying page.
- cloneBytes returns a copy of a given slice.
- Bucket represents a collection of key/value pairs inside the database.
- bucket represents the on-file representation of a bucket.
-This is stored as the "value" of a bucket key. If the bucket is small enough,
-then its root page can be stored inline in the "value", after the bucket
-header. In the case of inline buckets, the "root" will be 0.
- BucketStats records statistics about resources used by a bucket.
- Otherwise create a bucket and cache it.
- Create empty, inline bucket.
- If the child bucket is small enough and it has no child buckets then
-write it inline into the parent bucket's page. Otherwise spill it
-like a normal bucket and make the parent value a pointer to the page.
- Update parent node.
- Bucket is not inlineable if it contains subbuckets or if it goes beyond
-our threshold for inline bucket size.
- Allocate the appropriate size.
- Write a bucket header.
- Convert byte slice to a fake page and write the root node.
- Use the inline page if this is an inline bucket.
- ">
-      <div>bucket.go</div>
-      <div class="file-path">bolt</div>
-    </div>
-  
-    <div class="file-item" 
-         data-target="file_cmd_bolt_main.go" 
-         data-name="cmd\bolt\main.go"
-         data-content="PageHeaderSize represents the size of the bolt.page header.
- DO NOT EDIT. Copied from the "bolt" package.
- DO NOT EDIT. Copied from the "bolt" package.
- DO NOT EDIT. Copied from the "bolt" package.
- NewMain returns a new instance of Main connect to the standard input/output.
- Run executes the program.
- Usage returns the help message.
- NewCheckCommand returns a CheckCommand.
- Run executes the command.
- Usage returns the help message.
- NewInfoCommand returns a InfoCommand.
- Run executes the command.
- Usage returns the help message.
- newDumpCommand returns a DumpCommand.
- Run executes the command.
- PrintPage prints a given page as hexadecimal.
- Usage returns the help message.
- newPageCommand returns a PageCommand.
- Run executes the command.
- PrintMeta prints the data from the meta page.
- PrintLeaf prints the data for a leaf page.
- PrintBranch prints the data for a leaf page.
- PrintFreelist prints the data for a freelist page.
- PrintPage prints a given page as hexadecimal.
- Usage returns the help message.
- NewPagesCommand returns a PagesCommand.
- Run executes the command.
- Usage returns the help message.
- NewStatsCommand returns a StatsCommand.
- Run executes the command.
- Usage returns the help message.
- NewBenchCommand returns a BenchCommand using the
- Run executes the "bench" command.
- ParseFlags parses the command line flags.
- Writes to the database.
- Reads from the database.
- Starts all profiles set on the options.
- Stops all profiles.
- Returns the duration for a single write operation.
- Returns average number of write operations that can be performed per second.
- Returns the duration for a single read operation.
- Returns average number of read operations that can be performed per second.
- isPrintable returns true if the string is valid unicode and contains only printable runes.
- ReadPage reads page info & full page data from a path.
-This is not transactionally safe.
- ReadPageSize reads page size a path.
-This is not transactionally safe.
- atois parses a slice of strings into integers.
- DO NOT EDIT. Copied from the "bolt" package.
- DO NOT EDIT. Copied from the "bolt" package.
- DO NOT EDIT. Copied from the "bolt" package.
- DO NOT EDIT. Copied from the "bolt" package.
- DO NOT EDIT. Copied from the "bolt" package.
- DO NOT EDIT. Copied from the "bolt" package.
- newCompactCommand returns a CompactCommand.
- Run executes the command.
- walk walks recursively the bolt database db, calling walkFn for each key it finds.
- Usage returns the help message.
- Main represents the main program execution.
- CheckCommand represents the "check" command execution.
- InfoCommand represents the "info" command execution.
- DumpCommand represents the "dump" command execution.
- PageCommand represents the "page" command execution.
- PagesCommand represents the "pages" command execution.
- StatsCommand represents the "stats" command execution.
- BenchCommand represents the "bench" command execution.
- BenchOptions represents the set of options that can be passed to "bolt bench".
- BenchResults represents the performance results of the benchmark.
- DO NOT EDIT. Copied from the "bolt" package.
- DO NOT EDIT. Copied from the "bolt" package.
- DO NOT EDIT. Copied from the "bolt" package.
- DO NOT EDIT. Copied from the "bolt" package.
- DO NOT EDIT. Copied from the "bolt" package.
- DO NOT EDIT. Copied from the "bolt" package.
- DO NOT EDIT. Copied from the "bolt" package.
- CompactCommand represents the "compact" command execution.
- walkFunc is the type of the function called for keys (buckets and "normal"
-values) discovered by Walk. keys is the list of keys to descend to the bucket
-owning the discovered key/value pair k/v.
- Write out to writer in 16-byte lines.
- Format key as string.
- Format value as string.
- Format key as string.
- Write out to writer in 16-byte lines.
- Only display count and overflow if this is a non-free page.
- Write to the database.
- File handlers for the various profiles.
- commit regularly, or we'll run out of memory for large datasets if using one transaction.
- ">
-      <div>cmd\bolt\main.go</div>
-      <div class="file-path">main</div>
-    </div>
-  
-    <div class="file-item" 
          data-target="file_db.go" 
          data-name="db.go"
          data-content="The largest step that can be taken when remapping the mmap.
@@ -622,6 +401,251 @@ No timeout is used which will cause Bolt to wait indefinitely for a lock.
     </div>
   
     <div class="file-item" 
+         data-target="file_errors.go" 
+         data-name="errors.go"
+         data-content="These errors can be returned when opening or calling methods on a DB.
+ These errors can occur when beginning or committing a Tx.
+ These errors can occur when putting or deleting a value or a bucket.
+ ">
+      <div>errors.go</div>
+      <div class="file-path">bolt</div>
+    </div>
+  
+    <div class="file-item" 
+         data-target="file_bucket.go" 
+         data-name="bucket.go"
+         data-content="DefaultFillPercent is the percentage that split pages are filled.
+This value can be changed by setting Bucket.FillPercent.
+ newBucket returns a new bucket associated with a transaction.
+ Tx returns the tx of the bucket.
+ Root returns the root of the bucket.
+ Writable returns whether the bucket is writable.
+ Cursor creates a cursor associated with the bucket.
+The cursor is only valid as long as the transaction is open.
+Do not use a cursor after the transaction is closed.
+ Bucket retrieves a nested bucket by name.
+Returns nil if the bucket does not exist.
+The bucket instance is only valid for the lifetime of the transaction.
+ Helper method that re-interprets a sub-bucket value
+from a parent into a Bucket
+ CreateBucket creates a new bucket at the given key and returns the new bucket.
+Returns an error if the key already exists, if the bucket name is blank, or if the bucket name is too long.
+The bucket instance is only valid for the lifetime of the transaction.
+ CreateBucketIfNotExists creates a new bucket if it doesn't already exist and returns a reference to it.
+Returns an error if the bucket name is blank, or if the bucket name is too long.
+The bucket instance is only valid for the lifetime of the transaction.
+ DeleteBucket deletes a bucket at the given key.
+Returns an error if the bucket does not exists, or if the key represents a non-bucket value.
+ Get retrieves the value for a key in the bucket.
+Returns a nil value if the key does not exist or if the key is a nested bucket.
+The returned value is only valid for the life of the transaction.
+ Put sets the value for a key in the bucket.
+If the key exist then its previous value will be overwritten.
+Supplied value must remain valid for the life of the transaction.
+Returns an error if the bucket was created from a read-only transaction, if the key is blank, if the key is too large, or if the value is too large.
+ Delete removes a key from the bucket.
+If the key does not exist then nothing is done and a nil error is returned.
+Returns an error if the bucket was created from a read-only transaction.
+ Sequence returns the current integer for the bucket without incrementing it.
+ SetSequence updates the sequence number for the bucket.
+ NextSequence returns an autoincrementing integer for the bucket.
+ ForEach executes a function for each key/value pair in a bucket.
+If the provided function returns an error then the iteration is stopped and
+the error is returned to the caller. The provided function must not modify
+the bucket; this will result in undefined behavior.
+ Stat returns stats on a bucket.
+ forEachPage iterates over every page in a bucket, including inline pages.
+ forEachPageNode iterates over every page (or node) in a bucket.
+This also includes inline pages.
+ spill writes all the nodes for this bucket to dirty pages.
+ inlineable returns true if a bucket is small enough to be written inline
+and if it contains no subbuckets. Otherwise returns false.
+ Returns the maximum total size of a bucket to make it a candidate for inlining.
+ write allocates and writes a bucket to a byte slice.
+ rebalance attempts to balance all nodes.
+ node creates a node from a page and associates it with a given parent.
+ free recursively frees all pages in the bucket.
+ dereference removes all references to the old mmap.
+ pageNode returns the in-memory node, if it exists.
+Otherwise returns the underlying page.
+ cloneBytes returns a copy of a given slice.
+ Bucket represents a collection of key/value pairs inside the database.
+ bucket represents the on-file representation of a bucket.
+This is stored as the "value" of a bucket key. If the bucket is small enough,
+then its root page can be stored inline in the "value", after the bucket
+header. In the case of inline buckets, the "root" will be 0.
+ BucketStats records statistics about resources used by a bucket.
+ Otherwise create a bucket and cache it.
+ Create empty, inline bucket.
+ If the child bucket is small enough and it has no child buckets then
+write it inline into the parent bucket's page. Otherwise spill it
+like a normal bucket and make the parent value a pointer to the page.
+ Update parent node.
+ Bucket is not inlineable if it contains subbuckets or if it goes beyond
+our threshold for inline bucket size.
+ Allocate the appropriate size.
+ Write a bucket header.
+ Convert byte slice to a fake page and write the root node.
+ Use the inline page if this is an inline bucket.
+ ">
+      <div>bucket.go</div>
+      <div class="file-path">bolt</div>
+    </div>
+  
+    <div class="file-item" 
+         data-target="file_freelist.go" 
+         data-name="freelist.go"
+         data-content="newFreelist returns an empty, initialized freelist.
+ size returns the size of the page after serialization.
+ count returns count of pages on the freelist
+ free_count returns count of free pages
+ pending_count returns count of pending pages
+ copyall copies into dst a list of all free ids and all pending ids in one sorted list.
+f.count returns the minimum length required for dst.
+ allocate returns the starting page id of a contiguous list of pages of a given size.
+If a contiguous block cannot be found then 0 is returned.
+ free releases a page and its overflow for a given transaction id.
+If the page is already free then a panic will occur.
+ release moves all page ids for a transaction id (or older) to the freelist.
+ rollback removes the pages from a given pending tx.
+ freed returns whether a given page is in the free list.
+ read initializes the freelist from a freelist page.
+ write writes the page ids onto a freelist page. All free and pending ids are
+saved to disk since in the event of a program crash, all pending ids will
+become free.
+ reload reads the freelist from a page and filters out pending items.
+ reindex rebuilds the free cache based on available and pending free lists.
+ freelist represents a list of all pages that are available for allocation.
+It also tracks pages that have been freed but are still in use by open transactions.
+ Free page and all its overflow pages.
+ Check each page in the freelist and build a new available freelist
+with any pages not in the pending lists.
+ ">
+      <div>freelist.go</div>
+      <div class="file-path">bolt</div>
+    </div>
+  
+    <div class="file-item" 
+         data-target="file_page.go" 
+         data-name="page.go"
+         data-content="typ returns a human readable page type string used for debugging.
+ meta returns a pointer to the metadata section of the page.
+ leafPageElement retrieves the leaf node by index
+ leafPageElements retrieves a list of leaf nodes.
+ branchPageElement retrieves the branch node by index
+ branchPageElements retrieves a list of branch nodes.
+ dump writes n bytes of the page to STDERR as hex output.
+ key returns a byte slice of the node key.
+ key returns a byte slice of the node key.
+ value returns a byte slice of the node value.
+ merge returns the sorted union of a and b.
+ mergepgids copies the sorted union of a and b into dst.
+If dst is too small, it panics.
+ branchPageElement represents a node on a branch page.
+ leafPageElement represents a node on a leaf page.
+ PageInfo represents human readable information about a page.
+ ">
+      <div>page.go</div>
+      <div class="file-path">bolt</div>
+    </div>
+  
+    <div class="file-item" 
+         data-target="file_cmd_bolt_main.go" 
+         data-name="cmd\bolt\main.go"
+         data-content="PageHeaderSize represents the size of the bolt.page header.
+ DO NOT EDIT. Copied from the "bolt" package.
+ DO NOT EDIT. Copied from the "bolt" package.
+ DO NOT EDIT. Copied from the "bolt" package.
+ NewMain returns a new instance of Main connect to the standard input/output.
+ Run executes the program.
+ Usage returns the help message.
+ NewCheckCommand returns a CheckCommand.
+ Run executes the command.
+ Usage returns the help message.
+ NewInfoCommand returns a InfoCommand.
+ Run executes the command.
+ Usage returns the help message.
+ newDumpCommand returns a DumpCommand.
+ Run executes the command.
+ PrintPage prints a given page as hexadecimal.
+ Usage returns the help message.
+ newPageCommand returns a PageCommand.
+ Run executes the command.
+ PrintMeta prints the data from the meta page.
+ PrintLeaf prints the data for a leaf page.
+ PrintBranch prints the data for a leaf page.
+ PrintFreelist prints the data for a freelist page.
+ PrintPage prints a given page as hexadecimal.
+ Usage returns the help message.
+ NewPagesCommand returns a PagesCommand.
+ Run executes the command.
+ Usage returns the help message.
+ NewStatsCommand returns a StatsCommand.
+ Run executes the command.
+ Usage returns the help message.
+ NewBenchCommand returns a BenchCommand using the
+ Run executes the "bench" command.
+ ParseFlags parses the command line flags.
+ Writes to the database.
+ Reads from the database.
+ Starts all profiles set on the options.
+ Stops all profiles.
+ Returns the duration for a single write operation.
+ Returns average number of write operations that can be performed per second.
+ Returns the duration for a single read operation.
+ Returns average number of read operations that can be performed per second.
+ isPrintable returns true if the string is valid unicode and contains only printable runes.
+ ReadPage reads page info & full page data from a path.
+This is not transactionally safe.
+ ReadPageSize reads page size a path.
+This is not transactionally safe.
+ atois parses a slice of strings into integers.
+ DO NOT EDIT. Copied from the "bolt" package.
+ DO NOT EDIT. Copied from the "bolt" package.
+ DO NOT EDIT. Copied from the "bolt" package.
+ DO NOT EDIT. Copied from the "bolt" package.
+ DO NOT EDIT. Copied from the "bolt" package.
+ DO NOT EDIT. Copied from the "bolt" package.
+ newCompactCommand returns a CompactCommand.
+ Run executes the command.
+ walk walks recursively the bolt database db, calling walkFn for each key it finds.
+ Usage returns the help message.
+ Main represents the main program execution.
+ CheckCommand represents the "check" command execution.
+ InfoCommand represents the "info" command execution.
+ DumpCommand represents the "dump" command execution.
+ PageCommand represents the "page" command execution.
+ PagesCommand represents the "pages" command execution.
+ StatsCommand represents the "stats" command execution.
+ BenchCommand represents the "bench" command execution.
+ BenchOptions represents the set of options that can be passed to "bolt bench".
+ BenchResults represents the performance results of the benchmark.
+ DO NOT EDIT. Copied from the "bolt" package.
+ DO NOT EDIT. Copied from the "bolt" package.
+ DO NOT EDIT. Copied from the "bolt" package.
+ DO NOT EDIT. Copied from the "bolt" package.
+ DO NOT EDIT. Copied from the "bolt" package.
+ DO NOT EDIT. Copied from the "bolt" package.
+ DO NOT EDIT. Copied from the "bolt" package.
+ CompactCommand represents the "compact" command execution.
+ walkFunc is the type of the function called for keys (buckets and "normal"
+values) discovered by Walk. keys is the list of keys to descend to the bucket
+owning the discovered key/value pair k/v.
+ Write out to writer in 16-byte lines.
+ Format key as string.
+ Format value as string.
+ Format key as string.
+ Write out to writer in 16-byte lines.
+ Only display count and overflow if this is a non-free page.
+ Write to the database.
+ File handlers for the various profiles.
+ commit regularly, or we'll run out of memory for large datasets if using one transaction.
+ ">
+      <div>cmd\bolt\main.go</div>
+      <div class="file-path">main</div>
+    </div>
+  
+    <div class="file-item" 
          data-target="file_node.go" 
          data-name="node.go"
          data-content="root returns the top-level node this node is attached to.
@@ -666,30 +690,6 @@ to an element which hasn't been added to a page yet.
  Destination node is right sibling if idx == 0, otherwise left sibling.
  ">
       <div>node.go</div>
-      <div class="file-path">bolt</div>
-    </div>
-  
-    <div class="file-item" 
-         data-target="file_page.go" 
-         data-name="page.go"
-         data-content="typ returns a human readable page type string used for debugging.
- meta returns a pointer to the metadata section of the page.
- leafPageElement retrieves the leaf node by index
- leafPageElements retrieves a list of leaf nodes.
- branchPageElement retrieves the branch node by index
- branchPageElements retrieves a list of branch nodes.
- dump writes n bytes of the page to STDERR as hex output.
- key returns a byte slice of the node key.
- key returns a byte slice of the node key.
- value returns a byte slice of the node value.
- merge returns the sorted union of a and b.
- mergepgids copies the sorted union of a and b into dst.
-If dst is too small, it panics.
- branchPageElement represents a node on a branch page.
- leafPageElement represents a node on a leaf page.
- PageInfo represents human readable information about a page.
- ">
-      <div>page.go</div>
       <div class="file-path">bolt</div>
     </div>
   
@@ -774,6 +774,56 @@ quickly grow.
 </div>
 
 <div id="content">
+  
+  <div class="file-doc" id="file_bolt_arm64.go" style="display:none;">
+    <div class="package-name">package bolt</div>
+    <div class="file-path">bolt_arm64.go</div>
+    <hr>
+
+    
+      <div class="context-group" data-context="const">
+        <h3>const</h3>
+
+        
+        <div class="comment-block" data-text="maxMapSize represents the largest mmap size supported by Bolt.
+">
+          <div class="comment-context">
+            const
+          </div>
+          <div class="comment-text">maxMapSize represents the largest mmap size supported by Bolt.
+</div>
+          <div class="comment-lines">Lines 5–5</div>
+        </div>
+        
+        <div class="comment-block" data-text="maxAllocSize is the size used when creating array pointers.
+">
+          <div class="comment-context">
+            const
+          </div>
+          <div class="comment-text">maxAllocSize is the size used when creating array pointers.
+</div>
+          <div class="comment-lines">Lines 8–8</div>
+        </div>
+        
+      </div>
+    
+      <div class="context-group" data-context="var">
+        <h3>var</h3>
+
+        
+        <div class="comment-block" data-text="Are unaligned load/stores broken on this arch?
+">
+          <div class="comment-context">
+            var
+          </div>
+          <div class="comment-text">Are unaligned load/stores broken on this arch?
+</div>
+          <div class="comment-lines">Lines 11–11</div>
+        </div>
+        
+      </div>
+    
+  </div>
   
   <div class="file-doc" id="file_bolt_arm.go" style="display:none;">
     <div class="package-name">package bolt</div>
@@ -869,56 +919,6 @@ quickly grow.
           <div class="comment-text">Are unaligned load/stores broken on this arch?
 </div>
           <div class="comment-lines">Lines 9–9</div>
-        </div>
-        
-      </div>
-    
-  </div>
-  
-  <div class="file-doc" id="file_bolt_arm64.go" style="display:none;">
-    <div class="package-name">package bolt</div>
-    <div class="file-path">bolt_arm64.go</div>
-    <hr>
-
-    
-      <div class="context-group" data-context="const">
-        <h3>const</h3>
-
-        
-        <div class="comment-block" data-text="maxMapSize represents the largest mmap size supported by Bolt.
-">
-          <div class="comment-context">
-            const
-          </div>
-          <div class="comment-text">maxMapSize represents the largest mmap size supported by Bolt.
-</div>
-          <div class="comment-lines">Lines 5–5</div>
-        </div>
-        
-        <div class="comment-block" data-text="maxAllocSize is the size used when creating array pointers.
-">
-          <div class="comment-context">
-            const
-          </div>
-          <div class="comment-text">maxAllocSize is the size used when creating array pointers.
-</div>
-          <div class="comment-lines">Lines 8–8</div>
-        </div>
-        
-      </div>
-    
-      <div class="context-group" data-context="var">
-        <h3>var</h3>
-
-        
-        <div class="comment-block" data-text="Are unaligned load/stores broken on this arch?
-">
-          <div class="comment-context">
-            var
-          </div>
-          <div class="comment-text">Are unaligned load/stores broken on this arch?
-</div>
-          <div class="comment-lines">Lines 11–11</div>
         </div>
         
       </div>
@@ -1030,6 +1030,14 @@ quickly grow.
         </div>
         
       </div>
+    
+  </div>
+  
+  <div class="file-doc" id="file_bolt_openbsd.go" style="display:none;">
+    <div class="package-name">package bolt</div>
+    <div class="file-path">bolt_openbsd.go</div>
+    <hr>
+
     
   </div>
   
@@ -1180,14 +1188,6 @@ quickly grow.
         </div>
         
       </div>
-    
-  </div>
-  
-  <div class="file-doc" id="file_bolt_openbsd.go" style="display:none;">
-    <div class="package-name">package bolt</div>
-    <div class="file-path">bolt_openbsd.go</div>
-    <hr>
-
     
   </div>
   
@@ -1825,6 +1825,614 @@ point to different data or can point to invalid memory which will cause a panic.
     
   </div>
   
+  <div class="file-doc" id="file_db.go" style="display:none;">
+    <div class="package-name">package bolt</div>
+    <div class="file-path">db.go</div>
+    <hr>
+
+    
+      <div class="context-group" data-context="const">
+        <h3>const</h3>
+
+        
+        <div class="comment-block" data-text="The largest step that can be taken when remapping the mmap.
+">
+          <div class="comment-context">
+            const
+          </div>
+          <div class="comment-text">The largest step that can be taken when remapping the mmap.
+</div>
+          <div class="comment-lines">Lines 17–17</div>
+        </div>
+        
+        <div class="comment-block" data-text="The data file format version.
+">
+          <div class="comment-context">
+            const
+          </div>
+          <div class="comment-text">The data file format version.
+</div>
+          <div class="comment-lines">Lines 20–20</div>
+        </div>
+        
+        <div class="comment-block" data-text="Represents a marker value to indicate that a file is a Bolt DB.
+">
+          <div class="comment-context">
+            const
+          </div>
+          <div class="comment-text">Represents a marker value to indicate that a file is a Bolt DB.
+</div>
+          <div class="comment-lines">Lines 23–23</div>
+        </div>
+        
+        <div class="comment-block" data-text="IgnoreNoSync specifies whether the NoSync field of a DB is ignored when
+syncing changes to a file.  This is required as some operating systems,
+such as OpenBSD, do not have a unified buffer cache (UBC) and writes
+must be synchronized using the msync(2) syscall.
+">
+          <div class="comment-context">
+            const
+          </div>
+          <div class="comment-text">IgnoreNoSync specifies whether the NoSync field of a DB is ignored when
+syncing changes to a file.  This is required as some operating systems,
+such as OpenBSD, do not have a unified buffer cache (UBC) and writes
+must be synchronized using the msync(2) syscall.
+</div>
+          <div class="comment-lines">Lines 26–29</div>
+        </div>
+        
+        <div class="comment-block" data-text="Default values if not set in a DB instance.
+">
+          <div class="comment-context">
+            const
+          </div>
+          <div class="comment-text">Default values if not set in a DB instance.
+</div>
+          <div class="comment-lines">Lines 32–32</div>
+        </div>
+        
+      </div>
+    
+      <div class="context-group" data-context="function">
+        <h3>function</h3>
+
+        
+        <div class="comment-block" data-text="Path returns the path to currently open database file.
+">
+          <div class="comment-context">
+            function — Path
+          </div>
+          <div class="comment-text">Path returns the path to currently open database file.
+</div>
+          <div class="comment-lines">Lines 132–132</div>
+        </div>
+        
+        <div class="comment-block" data-text="GoString returns the Go string representation of the database.
+">
+          <div class="comment-context">
+            function — GoString
+          </div>
+          <div class="comment-text">GoString returns the Go string representation of the database.
+</div>
+          <div class="comment-lines">Lines 137–137</div>
+        </div>
+        
+        <div class="comment-block" data-text="String returns the string representation of the database.
+">
+          <div class="comment-context">
+            function — String
+          </div>
+          <div class="comment-text">String returns the string representation of the database.
+</div>
+          <div class="comment-lines">Lines 142–142</div>
+        </div>
+        
+        <div class="comment-block" data-text="Open creates and opens a database at the given path.
+If the file does not exist then it will be created automatically.
+Passing in nil options will cause Bolt to open the database with the default options.
+">
+          <div class="comment-context">
+            function — Open
+          </div>
+          <div class="comment-text">Open creates and opens a database at the given path.
+If the file does not exist then it will be created automatically.
+Passing in nil options will cause Bolt to open the database with the default options.
+</div>
+          <div class="comment-lines">Lines 147–149</div>
+        </div>
+        
+        <div class="comment-block" data-text="mmap opens the underlying memory-mapped file and initializes the meta references.
+minsz is the minimum size that the new mmap can be.
+">
+          <div class="comment-context">
+            function — mmap
+          </div>
+          <div class="comment-text">mmap opens the underlying memory-mapped file and initializes the meta references.
+minsz is the minimum size that the new mmap can be.
+</div>
+          <div class="comment-lines">Lines 243–244</div>
+        </div>
+        
+        <div class="comment-block" data-text="munmap unmaps the data file from memory.
+">
+          <div class="comment-context">
+            function — munmap
+          </div>
+          <div class="comment-text">munmap unmaps the data file from memory.
+</div>
+          <div class="comment-lines">Lines 297–297</div>
+        </div>
+        
+        <div class="comment-block" data-text="mmapSize determines the appropriate size for the mmap given the current size
+of the database. The minimum size is 32KB and doubles until it reaches 1GB.
+Returns an error if the new mmap size is greater than the max allowed.
+">
+          <div class="comment-context">
+            function — mmapSize
+          </div>
+          <div class="comment-text">mmapSize determines the appropriate size for the mmap given the current size
+of the database. The minimum size is 32KB and doubles until it reaches 1GB.
+Returns an error if the new mmap size is greater than the max allowed.
+</div>
+          <div class="comment-lines">Lines 305–307</div>
+        </div>
+        
+        <div class="comment-block" data-text="init creates a new database file and initializes its meta pages.
+">
+          <div class="comment-context">
+            function — init
+          </div>
+          <div class="comment-text">init creates a new database file and initializes its meta pages.
+</div>
+          <div class="comment-lines">Lines 342–342</div>
+        </div>
+        
+        <div class="comment-block" data-text="Close releases all database resources.
+All transactions must be closed before closing the database.
+">
+          <div class="comment-context">
+            function — Close
+          </div>
+          <div class="comment-text">Close releases all database resources.
+All transactions must be closed before closing the database.
+</div>
+          <div class="comment-lines">Lines 389–390</div>
+        </div>
+        
+        <div class="comment-block" data-text="Begin starts a new transaction.
+Multiple read-only transactions can be used concurrently but only one
+write transaction can be used at a time. Starting multiple write transactions
+will cause the calls to block and be serialized until the current write
+transaction finishes.
+
+Transactions should not be dependent on one another. Opening a read
+transaction and a write transaction in the same goroutine can cause the
+writer to deadlock because the database periodically needs to re-mmap itself
+as it grows and it cannot do that while a read transaction is open.
+
+If a long running read transaction (for example, a snapshot transaction) is
+needed, you might want to set DB.InitialMmapSize to a large enough value
+to avoid potential blocking of write transaction.
+
+IMPORTANT: You must close read-only transactions after you are finished or
+else the database will not reclaim old pages.
+">
+          <div class="comment-context">
+            function — Begin
+          </div>
+          <div class="comment-text">Begin starts a new transaction.
+Multiple read-only transactions can be used concurrently but only one
+write transaction can be used at a time. Starting multiple write transactions
+will cause the calls to block and be serialized until the current write
+transaction finishes.
+
+Transactions should not be dependent on one another. Opening a read
+transaction and a write transaction in the same goroutine can cause the
+writer to deadlock because the database periodically needs to re-mmap itself
+as it grows and it cannot do that while a read transaction is open.
+
+If a long running read transaction (for example, a snapshot transaction) is
+needed, you might want to set DB.InitialMmapSize to a large enough value
+to avoid potential blocking of write transaction.
+
+IMPORTANT: You must close read-only transactions after you are finished or
+else the database will not reclaim old pages.
+</div>
+          <div class="comment-lines">Lines 442–458</div>
+        </div>
+        
+        <div class="comment-block" data-text="removeTx removes a transaction from the database.
+">
+          <div class="comment-context">
+            function — removeTx
+          </div>
+          <div class="comment-text">removeTx removes a transaction from the database.
+</div>
+          <div class="comment-lines">Lines 544–544</div>
+        </div>
+        
+        <div class="comment-block" data-text="Update executes a function within the context of a read-write managed transaction.
+If no error is returned from the function then the transaction is committed.
+If an error is returned then the entire transaction is rolled back.
+Any error that is returned from the function or returned from the commit is
+returned from the Update() method.
+
+Attempting to manually commit or rollback within the function will cause a panic.
+">
+          <div class="comment-context">
+            function — Update
+          </div>
+          <div class="comment-text">Update executes a function within the context of a read-write managed transaction.
+If no error is returned from the function then the transaction is committed.
+If an error is returned then the entire transaction is rolled back.
+Any error that is returned from the function or returned from the commit is
+returned from the Update() method.
+
+Attempting to manually commit or rollback within the function will cause a panic.
+</div>
+          <div class="comment-lines">Lines 574–580</div>
+        </div>
+        
+        <div class="comment-block" data-text="View executes a function within the context of a managed read-only transaction.
+Any error that is returned from the function is returned from the View() method.
+
+Attempting to manually rollback within the function will cause a panic.
+">
+          <div class="comment-context">
+            function — View
+          </div>
+          <div class="comment-text">View executes a function within the context of a managed read-only transaction.
+Any error that is returned from the function is returned from the View() method.
+
+Attempting to manually rollback within the function will cause a panic.
+</div>
+          <div class="comment-lines">Lines 608–611</div>
+        </div>
+        
+        <div class="comment-block" data-text="Batch calls fn as part of a batch. It behaves similar to Update,
+except:
+
+1. concurrent Batch calls can be combined into a single Bolt
+transaction.
+
+2. the function passed to Batch may be called multiple times,
+regardless of whether it returns error or not.
+
+This means that Batch function side effects must be idempotent and
+take permanent effect only after a successful return is seen in
+caller.
+
+The maximum batch size and delay can be adjusted with DB.MaxBatchSize
+and DB.MaxBatchDelay, respectively.
+
+Batch is only useful when there are multiple goroutines calling it.
+">
+          <div class="comment-context">
+            function — Batch
+          </div>
+          <div class="comment-text">Batch calls fn as part of a batch. It behaves similar to Update,
+except:
+
+1. concurrent Batch calls can be combined into a single Bolt
+transaction.
+
+2. the function passed to Batch may be called multiple times,
+regardless of whether it returns error or not.
+
+This means that Batch function side effects must be idempotent and
+take permanent effect only after a successful return is seen in
+caller.
+
+The maximum batch size and delay can be adjusted with DB.MaxBatchSize
+and DB.MaxBatchDelay, respectively.
+
+Batch is only useful when there are multiple goroutines calling it.
+</div>
+          <div class="comment-lines">Lines 643–659</div>
+        </div>
+        
+        <div class="comment-block" data-text="trigger runs the batch if it hasn't already been run.
+">
+          <div class="comment-context">
+            function — trigger
+          </div>
+          <div class="comment-text">trigger runs the batch if it hasn't already been run.
+</div>
+          <div class="comment-lines">Lines 697–697</div>
+        </div>
+        
+        <div class="comment-block" data-text="run performs the transactions in the batch and communicates results
+back to DB.Batch.
+">
+          <div class="comment-context">
+            function — run
+          </div>
+          <div class="comment-text">run performs the transactions in the batch and communicates results
+back to DB.Batch.
+</div>
+          <div class="comment-lines">Lines 702–703</div>
+        </div>
+        
+        <div class="comment-block" data-text="Sync executes fdatasync() against the database file handle.
+
+This is not necessary under normal operation, however, if you use NoSync
+then it allows you to force the database file to sync against the disk.
+">
+          <div class="comment-context">
+            function — Sync
+          </div>
+          <div class="comment-text">Sync executes fdatasync() against the database file handle.
+
+This is not necessary under normal operation, however, if you use NoSync
+then it allows you to force the database file to sync against the disk.
+</div>
+          <div class="comment-lines">Lines 771–774</div>
+        </div>
+        
+        <div class="comment-block" data-text="Stats retrieves ongoing performance stats for the database.
+This is only updated when a transaction closes.
+">
+          <div class="comment-context">
+            function — Stats
+          </div>
+          <div class="comment-text">Stats retrieves ongoing performance stats for the database.
+This is only updated when a transaction closes.
+</div>
+          <div class="comment-lines">Lines 777–778</div>
+        </div>
+        
+        <div class="comment-block" data-text="This is for internal access to the raw data bytes from the C cursor, use
+carefully, or not at all.
+">
+          <div class="comment-context">
+            function — Info
+          </div>
+          <div class="comment-text">This is for internal access to the raw data bytes from the C cursor, use
+carefully, or not at all.
+</div>
+          <div class="comment-lines">Lines 785–786</div>
+        </div>
+        
+        <div class="comment-block" data-text="page retrieves a page reference from the mmap based on the current page size.
+">
+          <div class="comment-context">
+            function — page
+          </div>
+          <div class="comment-text">page retrieves a page reference from the mmap based on the current page size.
+</div>
+          <div class="comment-lines">Lines 791–791</div>
+        </div>
+        
+        <div class="comment-block" data-text="pageInBuffer retrieves a page reference from a given byte array based on the current page size.
+">
+          <div class="comment-context">
+            function — pageInBuffer
+          </div>
+          <div class="comment-text">pageInBuffer retrieves a page reference from a given byte array based on the current page size.
+</div>
+          <div class="comment-lines">Lines 797–797</div>
+        </div>
+        
+        <div class="comment-block" data-text="meta retrieves the current meta page reference.
+">
+          <div class="comment-context">
+            function — meta
+          </div>
+          <div class="comment-text">meta retrieves the current meta page reference.
+</div>
+          <div class="comment-lines">Lines 802–802</div>
+        </div>
+        
+        <div class="comment-block" data-text="allocate returns a contiguous block of memory starting at a given page.
+">
+          <div class="comment-context">
+            function — allocate
+          </div>
+          <div class="comment-text">allocate returns a contiguous block of memory starting at a given page.
+</div>
+          <div class="comment-lines">Lines 826–826</div>
+        </div>
+        
+        <div class="comment-block" data-text="grow grows the size of the database to the given sz.
+">
+          <div class="comment-context">
+            function — grow
+          </div>
+          <div class="comment-text">grow grows the size of the database to the given sz.
+</div>
+          <div class="comment-lines">Lines 858–858</div>
+        </div>
+        
+        <div class="comment-block" data-text="Sub calculates and returns the difference between two sets of database stats.
+This is useful when obtaining stats at two different points and time and
+you need the performance counters that occurred within that time span.
+">
+          <div class="comment-context">
+            function — Sub
+          </div>
+          <div class="comment-text">Sub calculates and returns the difference between two sets of database stats.
+This is useful when obtaining stats at two different points and time and
+you need the performance counters that occurred within that time span.
+</div>
+          <div class="comment-lines">Lines 944–946</div>
+        </div>
+        
+        <div class="comment-block" data-text="validate checks the marker bytes and version of the meta page to ensure it matches this binary.
+">
+          <div class="comment-context">
+            function — validate
+          </div>
+          <div class="comment-text">validate checks the marker bytes and version of the meta page to ensure it matches this binary.
+</div>
+          <div class="comment-lines">Lines 982–982</div>
+        </div>
+        
+        <div class="comment-block" data-text="copy copies one meta object to another.
+">
+          <div class="comment-context">
+            function — copy
+          </div>
+          <div class="comment-text">copy copies one meta object to another.
+</div>
+          <div class="comment-lines">Lines 994–994</div>
+        </div>
+        
+        <div class="comment-block" data-text="write writes the meta onto a page.
+">
+          <div class="comment-context">
+            function — write
+          </div>
+          <div class="comment-text">write writes the meta onto a page.
+</div>
+          <div class="comment-lines">Lines 999–999</div>
+        </div>
+        
+        <div class="comment-block" data-text="generates the checksum for the meta.
+">
+          <div class="comment-context">
+            function — sum64
+          </div>
+          <div class="comment-text">generates the checksum for the meta.
+</div>
+          <div class="comment-lines">Lines 1017–1017</div>
+        </div>
+        
+        <div class="comment-block" data-text="_assert will panic with a given formatted message if the given condition is false.
+">
+          <div class="comment-context">
+            function — _assert
+          </div>
+          <div class="comment-text">_assert will panic with a given formatted message if the given condition is false.
+</div>
+          <div class="comment-lines">Lines 1024–1024</div>
+        </div>
+        
+      </div>
+    
+      <div class="context-group" data-context="type">
+        <h3>type</h3>
+
+        
+        <div class="comment-block" data-text="DB represents a collection of buckets persisted to a file on disk.
+All data access is performed through transactions which can be obtained through the DB.
+All the functions on DB will return a ErrDatabaseNotOpen if accessed before Open() is called.
+">
+          <div class="comment-context">
+            type
+          </div>
+          <div class="comment-text">DB represents a collection of buckets persisted to a file on disk.
+All data access is performed through transactions which can be obtained through the DB.
+All the functions on DB will return a ErrDatabaseNotOpen if accessed before Open() is called.
+</div>
+          <div class="comment-lines">Lines 42–44</div>
+        </div>
+        
+        <div class="comment-block" data-text="Options represents the options that can be set when opening a database.
+">
+          <div class="comment-context">
+            type
+          </div>
+          <div class="comment-text">Options represents the options that can be set when opening a database.
+</div>
+          <div class="comment-lines">Lines 894–894</div>
+        </div>
+        
+        <div class="comment-block" data-text="Stats represents statistics about the database.
+">
+          <div class="comment-context">
+            type
+          </div>
+          <div class="comment-text">Stats represents statistics about the database.
+</div>
+          <div class="comment-lines">Lines 929–929</div>
+        </div>
+        
+      </div>
+    
+      <div class="context-group" data-context="var">
+        <h3>var</h3>
+
+        
+        <div class="comment-block" data-text="default page size for db is set to the OS page size.
+">
+          <div class="comment-context">
+            var
+          </div>
+          <div class="comment-text">default page size for db is set to the OS page size.
+</div>
+          <div class="comment-lines">Lines 39–39</div>
+        </div>
+        
+        <div class="comment-block" data-text="Read the first meta page to determine the page size.
+">
+          <div class="comment-context">
+            var
+          </div>
+          <div class="comment-text">Read the first meta page to determine the page size.
+</div>
+          <div class="comment-lines">Lines 203–203</div>
+        </div>
+        
+        <div class="comment-block" data-text="Ensure the size is at least the minimum size.
+">
+          <div class="comment-context">
+            var
+          </div>
+          <div class="comment-text">Ensure the size is at least the minimum size.
+</div>
+          <div class="comment-lines">Lines 256–256</div>
+        </div>
+        
+        <div class="comment-block" data-text="Free any pages associated with closed read-only transactions.
+">
+          <div class="comment-context">
+            var
+          </div>
+          <div class="comment-text">Free any pages associated with closed read-only transactions.
+</div>
+          <div class="comment-lines">Lines 530–530</div>
+        </div>
+        
+        <div class="comment-block" data-text="trySolo is a special sentinel error value used for signaling that a
+transaction function should be re-run. It should never be seen by
+callers.
+">
+          <div class="comment-context">
+            var
+          </div>
+          <div class="comment-text">trySolo is a special sentinel error value used for signaling that a
+transaction function should be re-run. It should never be seen by
+callers.
+</div>
+          <div class="comment-lines">Lines 746–748</div>
+        </div>
+        
+        <div class="comment-block" data-text="Allocate a temporary buffer for the page.
+">
+          <div class="comment-context">
+            var
+          </div>
+          <div class="comment-text">Allocate a temporary buffer for the page.
+</div>
+          <div class="comment-lines">Lines 828–828</div>
+        </div>
+        
+        <div class="comment-block" data-text="DefaultOptions represent the options used if nil options are passed into Open().
+No timeout is used which will cause Bolt to wait indefinitely for a lock.
+">
+          <div class="comment-context">
+            var
+          </div>
+          <div class="comment-text">DefaultOptions represent the options used if nil options are passed into Open().
+No timeout is used which will cause Bolt to wait indefinitely for a lock.
+</div>
+          <div class="comment-lines">Lines 922–923</div>
+        </div>
+        
+      </div>
+    
+  </div>
+  
   <div class="file-doc" id="file_errors.go" style="display:none;">
     <div class="package-name">package bolt</div>
     <div class="file-path">errors.go</div>
@@ -1863,226 +2471,6 @@ point to different data or can point to invalid memory which will cause a panic.
           <div class="comment-text">These errors can occur when putting or deleting a value or a bucket.
 </div>
           <div class="comment-lines">Lines 46–46</div>
-        </div>
-        
-      </div>
-    
-  </div>
-  
-  <div class="file-doc" id="file_freelist.go" style="display:none;">
-    <div class="package-name">package bolt</div>
-    <div class="file-path">freelist.go</div>
-    <hr>
-
-    
-      <div class="context-group" data-context="function">
-        <h3>function</h3>
-
-        
-        <div class="comment-block" data-text="newFreelist returns an empty, initialized freelist.
-">
-          <div class="comment-context">
-            function — newFreelist
-          </div>
-          <div class="comment-text">newFreelist returns an empty, initialized freelist.
-</div>
-          <div class="comment-lines">Lines 17–17</div>
-        </div>
-        
-        <div class="comment-block" data-text="size returns the size of the page after serialization.
-">
-          <div class="comment-context">
-            function — size
-          </div>
-          <div class="comment-text">size returns the size of the page after serialization.
-</div>
-          <div class="comment-lines">Lines 25–25</div>
-        </div>
-        
-        <div class="comment-block" data-text="count returns count of pages on the freelist
-">
-          <div class="comment-context">
-            function — count
-          </div>
-          <div class="comment-text">count returns count of pages on the freelist
-</div>
-          <div class="comment-lines">Lines 35–35</div>
-        </div>
-        
-        <div class="comment-block" data-text="free_count returns count of free pages
-">
-          <div class="comment-context">
-            function — free_count
-          </div>
-          <div class="comment-text">free_count returns count of free pages
-</div>
-          <div class="comment-lines">Lines 40–40</div>
-        </div>
-        
-        <div class="comment-block" data-text="pending_count returns count of pending pages
-">
-          <div class="comment-context">
-            function — pending_count
-          </div>
-          <div class="comment-text">pending_count returns count of pending pages
-</div>
-          <div class="comment-lines">Lines 45–45</div>
-        </div>
-        
-        <div class="comment-block" data-text="copyall copies into dst a list of all free ids and all pending ids in one sorted list.
-f.count returns the minimum length required for dst.
-">
-          <div class="comment-context">
-            function — copyall
-          </div>
-          <div class="comment-text">copyall copies into dst a list of all free ids and all pending ids in one sorted list.
-f.count returns the minimum length required for dst.
-</div>
-          <div class="comment-lines">Lines 54–55</div>
-        </div>
-        
-        <div class="comment-block" data-text="allocate returns the starting page id of a contiguous list of pages of a given size.
-If a contiguous block cannot be found then 0 is returned.
-">
-          <div class="comment-context">
-            function — allocate
-          </div>
-          <div class="comment-text">allocate returns the starting page id of a contiguous list of pages of a given size.
-If a contiguous block cannot be found then 0 is returned.
-</div>
-          <div class="comment-lines">Lines 65–66</div>
-        </div>
-        
-        <div class="comment-block" data-text="free releases a page and its overflow for a given transaction id.
-If the page is already free then a panic will occur.
-">
-          <div class="comment-context">
-            function — free
-          </div>
-          <div class="comment-text">free releases a page and its overflow for a given transaction id.
-If the page is already free then a panic will occur.
-</div>
-          <div class="comment-lines">Lines 109–110</div>
-        </div>
-        
-        <div class="comment-block" data-text="release moves all page ids for a transaction id (or older) to the freelist.
-">
-          <div class="comment-context">
-            function — release
-          </div>
-          <div class="comment-text">release moves all page ids for a transaction id (or older) to the freelist.
-</div>
-          <div class="comment-lines">Lines 131–131</div>
-        </div>
-        
-        <div class="comment-block" data-text="rollback removes the pages from a given pending tx.
-">
-          <div class="comment-context">
-            function — rollback
-          </div>
-          <div class="comment-text">rollback removes the pages from a given pending tx.
-</div>
-          <div class="comment-lines">Lines 146–146</div>
-        </div>
-        
-        <div class="comment-block" data-text="freed returns whether a given page is in the free list.
-">
-          <div class="comment-context">
-            function — freed
-          </div>
-          <div class="comment-text">freed returns whether a given page is in the free list.
-</div>
-          <div class="comment-lines">Lines 157–157</div>
-        </div>
-        
-        <div class="comment-block" data-text="read initializes the freelist from a freelist page.
-">
-          <div class="comment-context">
-            function — read
-          </div>
-          <div class="comment-text">read initializes the freelist from a freelist page.
-</div>
-          <div class="comment-lines">Lines 162–162</div>
-        </div>
-        
-        <div class="comment-block" data-text="write writes the page ids onto a freelist page. All free and pending ids are
-saved to disk since in the event of a program crash, all pending ids will
-become free.
-">
-          <div class="comment-context">
-            function — write
-          </div>
-          <div class="comment-text">write writes the page ids onto a freelist page. All free and pending ids are
-saved to disk since in the event of a program crash, all pending ids will
-become free.
-</div>
-          <div class="comment-lines">Lines 188–190</div>
-        </div>
-        
-        <div class="comment-block" data-text="reload reads the freelist from a page and filters out pending items.
-">
-          <div class="comment-context">
-            function — reload
-          </div>
-          <div class="comment-text">reload reads the freelist from a page and filters out pending items.
-</div>
-          <div class="comment-lines">Lines 214–214</div>
-        </div>
-        
-        <div class="comment-block" data-text="reindex rebuilds the free cache based on available and pending free lists.
-">
-          <div class="comment-context">
-            function — reindex
-          </div>
-          <div class="comment-text">reindex rebuilds the free cache based on available and pending free lists.
-</div>
-          <div class="comment-lines">Lines 241–241</div>
-        </div>
-        
-      </div>
-    
-      <div class="context-group" data-context="type">
-        <h3>type</h3>
-
-        
-        <div class="comment-block" data-text="freelist represents a list of all pages that are available for allocation.
-It also tracks pages that have been freed but are still in use by open transactions.
-">
-          <div class="comment-context">
-            type
-          </div>
-          <div class="comment-text">freelist represents a list of all pages that are available for allocation.
-It also tracks pages that have been freed but are still in use by open transactions.
-</div>
-          <div class="comment-lines">Lines 9–10</div>
-        </div>
-        
-      </div>
-    
-      <div class="context-group" data-context="var">
-        <h3>var</h3>
-
-        
-        <div class="comment-block" data-text="Free page and all its overflow pages.
-">
-          <div class="comment-context">
-            var
-          </div>
-          <div class="comment-text">Free page and all its overflow pages.
-</div>
-          <div class="comment-lines">Lines 116–116</div>
-        </div>
-        
-        <div class="comment-block" data-text="Check each page in the freelist and build a new available freelist
-with any pages not in the pending lists.
-">
-          <div class="comment-context">
-            var
-          </div>
-          <div class="comment-text">Check each page in the freelist and build a new available freelist
-with any pages not in the pending lists.
-</div>
-          <div class="comment-lines">Lines 226–227</div>
         </div>
         
       </div>
@@ -2605,6 +2993,398 @@ our threshold for inline bucket size.
           <div class="comment-text">Use the inline page if this is an inline bucket.
 </div>
           <div class="comment-lines">Lines 659–659</div>
+        </div>
+        
+      </div>
+    
+  </div>
+  
+  <div class="file-doc" id="file_freelist.go" style="display:none;">
+    <div class="package-name">package bolt</div>
+    <div class="file-path">freelist.go</div>
+    <hr>
+
+    
+      <div class="context-group" data-context="function">
+        <h3>function</h3>
+
+        
+        <div class="comment-block" data-text="newFreelist returns an empty, initialized freelist.
+">
+          <div class="comment-context">
+            function — newFreelist
+          </div>
+          <div class="comment-text">newFreelist returns an empty, initialized freelist.
+</div>
+          <div class="comment-lines">Lines 17–17</div>
+        </div>
+        
+        <div class="comment-block" data-text="size returns the size of the page after serialization.
+">
+          <div class="comment-context">
+            function — size
+          </div>
+          <div class="comment-text">size returns the size of the page after serialization.
+</div>
+          <div class="comment-lines">Lines 25–25</div>
+        </div>
+        
+        <div class="comment-block" data-text="count returns count of pages on the freelist
+">
+          <div class="comment-context">
+            function — count
+          </div>
+          <div class="comment-text">count returns count of pages on the freelist
+</div>
+          <div class="comment-lines">Lines 35–35</div>
+        </div>
+        
+        <div class="comment-block" data-text="free_count returns count of free pages
+">
+          <div class="comment-context">
+            function — free_count
+          </div>
+          <div class="comment-text">free_count returns count of free pages
+</div>
+          <div class="comment-lines">Lines 40–40</div>
+        </div>
+        
+        <div class="comment-block" data-text="pending_count returns count of pending pages
+">
+          <div class="comment-context">
+            function — pending_count
+          </div>
+          <div class="comment-text">pending_count returns count of pending pages
+</div>
+          <div class="comment-lines">Lines 45–45</div>
+        </div>
+        
+        <div class="comment-block" data-text="copyall copies into dst a list of all free ids and all pending ids in one sorted list.
+f.count returns the minimum length required for dst.
+">
+          <div class="comment-context">
+            function — copyall
+          </div>
+          <div class="comment-text">copyall copies into dst a list of all free ids and all pending ids in one sorted list.
+f.count returns the minimum length required for dst.
+</div>
+          <div class="comment-lines">Lines 54–55</div>
+        </div>
+        
+        <div class="comment-block" data-text="allocate returns the starting page id of a contiguous list of pages of a given size.
+If a contiguous block cannot be found then 0 is returned.
+">
+          <div class="comment-context">
+            function — allocate
+          </div>
+          <div class="comment-text">allocate returns the starting page id of a contiguous list of pages of a given size.
+If a contiguous block cannot be found then 0 is returned.
+</div>
+          <div class="comment-lines">Lines 65–66</div>
+        </div>
+        
+        <div class="comment-block" data-text="free releases a page and its overflow for a given transaction id.
+If the page is already free then a panic will occur.
+">
+          <div class="comment-context">
+            function — free
+          </div>
+          <div class="comment-text">free releases a page and its overflow for a given transaction id.
+If the page is already free then a panic will occur.
+</div>
+          <div class="comment-lines">Lines 109–110</div>
+        </div>
+        
+        <div class="comment-block" data-text="release moves all page ids for a transaction id (or older) to the freelist.
+">
+          <div class="comment-context">
+            function — release
+          </div>
+          <div class="comment-text">release moves all page ids for a transaction id (or older) to the freelist.
+</div>
+          <div class="comment-lines">Lines 131–131</div>
+        </div>
+        
+        <div class="comment-block" data-text="rollback removes the pages from a given pending tx.
+">
+          <div class="comment-context">
+            function — rollback
+          </div>
+          <div class="comment-text">rollback removes the pages from a given pending tx.
+</div>
+          <div class="comment-lines">Lines 146–146</div>
+        </div>
+        
+        <div class="comment-block" data-text="freed returns whether a given page is in the free list.
+">
+          <div class="comment-context">
+            function — freed
+          </div>
+          <div class="comment-text">freed returns whether a given page is in the free list.
+</div>
+          <div class="comment-lines">Lines 157–157</div>
+        </div>
+        
+        <div class="comment-block" data-text="read initializes the freelist from a freelist page.
+">
+          <div class="comment-context">
+            function — read
+          </div>
+          <div class="comment-text">read initializes the freelist from a freelist page.
+</div>
+          <div class="comment-lines">Lines 162–162</div>
+        </div>
+        
+        <div class="comment-block" data-text="write writes the page ids onto a freelist page. All free and pending ids are
+saved to disk since in the event of a program crash, all pending ids will
+become free.
+">
+          <div class="comment-context">
+            function — write
+          </div>
+          <div class="comment-text">write writes the page ids onto a freelist page. All free and pending ids are
+saved to disk since in the event of a program crash, all pending ids will
+become free.
+</div>
+          <div class="comment-lines">Lines 188–190</div>
+        </div>
+        
+        <div class="comment-block" data-text="reload reads the freelist from a page and filters out pending items.
+">
+          <div class="comment-context">
+            function — reload
+          </div>
+          <div class="comment-text">reload reads the freelist from a page and filters out pending items.
+</div>
+          <div class="comment-lines">Lines 214–214</div>
+        </div>
+        
+        <div class="comment-block" data-text="reindex rebuilds the free cache based on available and pending free lists.
+">
+          <div class="comment-context">
+            function — reindex
+          </div>
+          <div class="comment-text">reindex rebuilds the free cache based on available and pending free lists.
+</div>
+          <div class="comment-lines">Lines 241–241</div>
+        </div>
+        
+      </div>
+    
+      <div class="context-group" data-context="type">
+        <h3>type</h3>
+
+        
+        <div class="comment-block" data-text="freelist represents a list of all pages that are available for allocation.
+It also tracks pages that have been freed but are still in use by open transactions.
+">
+          <div class="comment-context">
+            type
+          </div>
+          <div class="comment-text">freelist represents a list of all pages that are available for allocation.
+It also tracks pages that have been freed but are still in use by open transactions.
+</div>
+          <div class="comment-lines">Lines 9–10</div>
+        </div>
+        
+      </div>
+    
+      <div class="context-group" data-context="var">
+        <h3>var</h3>
+
+        
+        <div class="comment-block" data-text="Free page and all its overflow pages.
+">
+          <div class="comment-context">
+            var
+          </div>
+          <div class="comment-text">Free page and all its overflow pages.
+</div>
+          <div class="comment-lines">Lines 116–116</div>
+        </div>
+        
+        <div class="comment-block" data-text="Check each page in the freelist and build a new available freelist
+with any pages not in the pending lists.
+">
+          <div class="comment-context">
+            var
+          </div>
+          <div class="comment-text">Check each page in the freelist and build a new available freelist
+with any pages not in the pending lists.
+</div>
+          <div class="comment-lines">Lines 226–227</div>
+        </div>
+        
+      </div>
+    
+  </div>
+  
+  <div class="file-doc" id="file_page.go" style="display:none;">
+    <div class="package-name">package bolt</div>
+    <div class="file-path">page.go</div>
+    <hr>
+
+    
+      <div class="context-group" data-context="function">
+        <h3>function</h3>
+
+        
+        <div class="comment-block" data-text="typ returns a human readable page type string used for debugging.
+">
+          <div class="comment-context">
+            function — typ
+          </div>
+          <div class="comment-text">typ returns a human readable page type string used for debugging.
+</div>
+          <div class="comment-lines">Lines 38–38</div>
+        </div>
+        
+        <div class="comment-block" data-text="meta returns a pointer to the metadata section of the page.
+">
+          <div class="comment-context">
+            function — meta
+          </div>
+          <div class="comment-text">meta returns a pointer to the metadata section of the page.
+</div>
+          <div class="comment-lines">Lines 52–52</div>
+        </div>
+        
+        <div class="comment-block" data-text="leafPageElement retrieves the leaf node by index
+">
+          <div class="comment-context">
+            function — leafPageElement
+          </div>
+          <div class="comment-text">leafPageElement retrieves the leaf node by index
+</div>
+          <div class="comment-lines">Lines 57–57</div>
+        </div>
+        
+        <div class="comment-block" data-text="leafPageElements retrieves a list of leaf nodes.
+">
+          <div class="comment-context">
+            function — leafPageElements
+          </div>
+          <div class="comment-text">leafPageElements retrieves a list of leaf nodes.
+</div>
+          <div class="comment-lines">Lines 63–63</div>
+        </div>
+        
+        <div class="comment-block" data-text="branchPageElement retrieves the branch node by index
+">
+          <div class="comment-context">
+            function — branchPageElement
+          </div>
+          <div class="comment-text">branchPageElement retrieves the branch node by index
+</div>
+          <div class="comment-lines">Lines 71–71</div>
+        </div>
+        
+        <div class="comment-block" data-text="branchPageElements retrieves a list of branch nodes.
+">
+          <div class="comment-context">
+            function — branchPageElements
+          </div>
+          <div class="comment-text">branchPageElements retrieves a list of branch nodes.
+</div>
+          <div class="comment-lines">Lines 76–76</div>
+        </div>
+        
+        <div class="comment-block" data-text="dump writes n bytes of the page to STDERR as hex output.
+">
+          <div class="comment-context">
+            function — hexdump
+          </div>
+          <div class="comment-text">dump writes n bytes of the page to STDERR as hex output.
+</div>
+          <div class="comment-lines">Lines 84–84</div>
+        </div>
+        
+        <div class="comment-block" data-text="key returns a byte slice of the node key.
+">
+          <div class="comment-context">
+            function — key
+          </div>
+          <div class="comment-text">key returns a byte slice of the node key.
+</div>
+          <div class="comment-lines">Lines 103–103</div>
+        </div>
+        
+        <div class="comment-block" data-text="key returns a byte slice of the node key.
+">
+          <div class="comment-context">
+            function — key
+          </div>
+          <div class="comment-text">key returns a byte slice of the node key.
+</div>
+          <div class="comment-lines">Lines 117–117</div>
+        </div>
+        
+        <div class="comment-block" data-text="value returns a byte slice of the node value.
+">
+          <div class="comment-context">
+            function — value
+          </div>
+          <div class="comment-text">value returns a byte slice of the node value.
+</div>
+          <div class="comment-lines">Lines 123–123</div>
+        </div>
+        
+        <div class="comment-block" data-text="merge returns the sorted union of a and b.
+">
+          <div class="comment-context">
+            function — merge
+          </div>
+          <div class="comment-text">merge returns the sorted union of a and b.
+</div>
+          <div class="comment-lines">Lines 143–143</div>
+        </div>
+        
+        <div class="comment-block" data-text="mergepgids copies the sorted union of a and b into dst.
+If dst is too small, it panics.
+">
+          <div class="comment-context">
+            function — mergepgids
+          </div>
+          <div class="comment-text">mergepgids copies the sorted union of a and b into dst.
+If dst is too small, it panics.
+</div>
+          <div class="comment-lines">Lines 157–158</div>
+        </div>
+        
+      </div>
+    
+      <div class="context-group" data-context="type">
+        <h3>type</h3>
+
+        
+        <div class="comment-block" data-text="branchPageElement represents a node on a branch page.
+">
+          <div class="comment-context">
+            type
+          </div>
+          <div class="comment-text">branchPageElement represents a node on a branch page.
+</div>
+          <div class="comment-lines">Lines 96–96</div>
+        </div>
+        
+        <div class="comment-block" data-text="leafPageElement represents a node on a leaf page.
+">
+          <div class="comment-context">
+            type
+          </div>
+          <div class="comment-text">leafPageElement represents a node on a leaf page.
+</div>
+          <div class="comment-lines">Lines 109–109</div>
+        </div>
+        
+        <div class="comment-block" data-text="PageInfo represents human readable information about a page.
+">
+          <div class="comment-context">
+            type
+          </div>
+          <div class="comment-text">PageInfo represents human readable information about a page.
+</div>
+          <div class="comment-lines">Lines 129–129</div>
         </div>
         
       </div>
@@ -3491,614 +4271,6 @@ owning the discovered key/value pair k/v.
     
   </div>
   
-  <div class="file-doc" id="file_db.go" style="display:none;">
-    <div class="package-name">package bolt</div>
-    <div class="file-path">db.go</div>
-    <hr>
-
-    
-      <div class="context-group" data-context="const">
-        <h3>const</h3>
-
-        
-        <div class="comment-block" data-text="The largest step that can be taken when remapping the mmap.
-">
-          <div class="comment-context">
-            const
-          </div>
-          <div class="comment-text">The largest step that can be taken when remapping the mmap.
-</div>
-          <div class="comment-lines">Lines 17–17</div>
-        </div>
-        
-        <div class="comment-block" data-text="The data file format version.
-">
-          <div class="comment-context">
-            const
-          </div>
-          <div class="comment-text">The data file format version.
-</div>
-          <div class="comment-lines">Lines 20–20</div>
-        </div>
-        
-        <div class="comment-block" data-text="Represents a marker value to indicate that a file is a Bolt DB.
-">
-          <div class="comment-context">
-            const
-          </div>
-          <div class="comment-text">Represents a marker value to indicate that a file is a Bolt DB.
-</div>
-          <div class="comment-lines">Lines 23–23</div>
-        </div>
-        
-        <div class="comment-block" data-text="IgnoreNoSync specifies whether the NoSync field of a DB is ignored when
-syncing changes to a file.  This is required as some operating systems,
-such as OpenBSD, do not have a unified buffer cache (UBC) and writes
-must be synchronized using the msync(2) syscall.
-">
-          <div class="comment-context">
-            const
-          </div>
-          <div class="comment-text">IgnoreNoSync specifies whether the NoSync field of a DB is ignored when
-syncing changes to a file.  This is required as some operating systems,
-such as OpenBSD, do not have a unified buffer cache (UBC) and writes
-must be synchronized using the msync(2) syscall.
-</div>
-          <div class="comment-lines">Lines 26–29</div>
-        </div>
-        
-        <div class="comment-block" data-text="Default values if not set in a DB instance.
-">
-          <div class="comment-context">
-            const
-          </div>
-          <div class="comment-text">Default values if not set in a DB instance.
-</div>
-          <div class="comment-lines">Lines 32–32</div>
-        </div>
-        
-      </div>
-    
-      <div class="context-group" data-context="function">
-        <h3>function</h3>
-
-        
-        <div class="comment-block" data-text="Path returns the path to currently open database file.
-">
-          <div class="comment-context">
-            function — Path
-          </div>
-          <div class="comment-text">Path returns the path to currently open database file.
-</div>
-          <div class="comment-lines">Lines 132–132</div>
-        </div>
-        
-        <div class="comment-block" data-text="GoString returns the Go string representation of the database.
-">
-          <div class="comment-context">
-            function — GoString
-          </div>
-          <div class="comment-text">GoString returns the Go string representation of the database.
-</div>
-          <div class="comment-lines">Lines 137–137</div>
-        </div>
-        
-        <div class="comment-block" data-text="String returns the string representation of the database.
-">
-          <div class="comment-context">
-            function — String
-          </div>
-          <div class="comment-text">String returns the string representation of the database.
-</div>
-          <div class="comment-lines">Lines 142–142</div>
-        </div>
-        
-        <div class="comment-block" data-text="Open creates and opens a database at the given path.
-If the file does not exist then it will be created automatically.
-Passing in nil options will cause Bolt to open the database with the default options.
-">
-          <div class="comment-context">
-            function — Open
-          </div>
-          <div class="comment-text">Open creates and opens a database at the given path.
-If the file does not exist then it will be created automatically.
-Passing in nil options will cause Bolt to open the database with the default options.
-</div>
-          <div class="comment-lines">Lines 147–149</div>
-        </div>
-        
-        <div class="comment-block" data-text="mmap opens the underlying memory-mapped file and initializes the meta references.
-minsz is the minimum size that the new mmap can be.
-">
-          <div class="comment-context">
-            function — mmap
-          </div>
-          <div class="comment-text">mmap opens the underlying memory-mapped file and initializes the meta references.
-minsz is the minimum size that the new mmap can be.
-</div>
-          <div class="comment-lines">Lines 243–244</div>
-        </div>
-        
-        <div class="comment-block" data-text="munmap unmaps the data file from memory.
-">
-          <div class="comment-context">
-            function — munmap
-          </div>
-          <div class="comment-text">munmap unmaps the data file from memory.
-</div>
-          <div class="comment-lines">Lines 297–297</div>
-        </div>
-        
-        <div class="comment-block" data-text="mmapSize determines the appropriate size for the mmap given the current size
-of the database. The minimum size is 32KB and doubles until it reaches 1GB.
-Returns an error if the new mmap size is greater than the max allowed.
-">
-          <div class="comment-context">
-            function — mmapSize
-          </div>
-          <div class="comment-text">mmapSize determines the appropriate size for the mmap given the current size
-of the database. The minimum size is 32KB and doubles until it reaches 1GB.
-Returns an error if the new mmap size is greater than the max allowed.
-</div>
-          <div class="comment-lines">Lines 305–307</div>
-        </div>
-        
-        <div class="comment-block" data-text="init creates a new database file and initializes its meta pages.
-">
-          <div class="comment-context">
-            function — init
-          </div>
-          <div class="comment-text">init creates a new database file and initializes its meta pages.
-</div>
-          <div class="comment-lines">Lines 342–342</div>
-        </div>
-        
-        <div class="comment-block" data-text="Close releases all database resources.
-All transactions must be closed before closing the database.
-">
-          <div class="comment-context">
-            function — Close
-          </div>
-          <div class="comment-text">Close releases all database resources.
-All transactions must be closed before closing the database.
-</div>
-          <div class="comment-lines">Lines 389–390</div>
-        </div>
-        
-        <div class="comment-block" data-text="Begin starts a new transaction.
-Multiple read-only transactions can be used concurrently but only one
-write transaction can be used at a time. Starting multiple write transactions
-will cause the calls to block and be serialized until the current write
-transaction finishes.
-
-Transactions should not be dependent on one another. Opening a read
-transaction and a write transaction in the same goroutine can cause the
-writer to deadlock because the database periodically needs to re-mmap itself
-as it grows and it cannot do that while a read transaction is open.
-
-If a long running read transaction (for example, a snapshot transaction) is
-needed, you might want to set DB.InitialMmapSize to a large enough value
-to avoid potential blocking of write transaction.
-
-IMPORTANT: You must close read-only transactions after you are finished or
-else the database will not reclaim old pages.
-">
-          <div class="comment-context">
-            function — Begin
-          </div>
-          <div class="comment-text">Begin starts a new transaction.
-Multiple read-only transactions can be used concurrently but only one
-write transaction can be used at a time. Starting multiple write transactions
-will cause the calls to block and be serialized until the current write
-transaction finishes.
-
-Transactions should not be dependent on one another. Opening a read
-transaction and a write transaction in the same goroutine can cause the
-writer to deadlock because the database periodically needs to re-mmap itself
-as it grows and it cannot do that while a read transaction is open.
-
-If a long running read transaction (for example, a snapshot transaction) is
-needed, you might want to set DB.InitialMmapSize to a large enough value
-to avoid potential blocking of write transaction.
-
-IMPORTANT: You must close read-only transactions after you are finished or
-else the database will not reclaim old pages.
-</div>
-          <div class="comment-lines">Lines 442–458</div>
-        </div>
-        
-        <div class="comment-block" data-text="removeTx removes a transaction from the database.
-">
-          <div class="comment-context">
-            function — removeTx
-          </div>
-          <div class="comment-text">removeTx removes a transaction from the database.
-</div>
-          <div class="comment-lines">Lines 544–544</div>
-        </div>
-        
-        <div class="comment-block" data-text="Update executes a function within the context of a read-write managed transaction.
-If no error is returned from the function then the transaction is committed.
-If an error is returned then the entire transaction is rolled back.
-Any error that is returned from the function or returned from the commit is
-returned from the Update() method.
-
-Attempting to manually commit or rollback within the function will cause a panic.
-">
-          <div class="comment-context">
-            function — Update
-          </div>
-          <div class="comment-text">Update executes a function within the context of a read-write managed transaction.
-If no error is returned from the function then the transaction is committed.
-If an error is returned then the entire transaction is rolled back.
-Any error that is returned from the function or returned from the commit is
-returned from the Update() method.
-
-Attempting to manually commit or rollback within the function will cause a panic.
-</div>
-          <div class="comment-lines">Lines 574–580</div>
-        </div>
-        
-        <div class="comment-block" data-text="View executes a function within the context of a managed read-only transaction.
-Any error that is returned from the function is returned from the View() method.
-
-Attempting to manually rollback within the function will cause a panic.
-">
-          <div class="comment-context">
-            function — View
-          </div>
-          <div class="comment-text">View executes a function within the context of a managed read-only transaction.
-Any error that is returned from the function is returned from the View() method.
-
-Attempting to manually rollback within the function will cause a panic.
-</div>
-          <div class="comment-lines">Lines 608–611</div>
-        </div>
-        
-        <div class="comment-block" data-text="Batch calls fn as part of a batch. It behaves similar to Update,
-except:
-
-1. concurrent Batch calls can be combined into a single Bolt
-transaction.
-
-2. the function passed to Batch may be called multiple times,
-regardless of whether it returns error or not.
-
-This means that Batch function side effects must be idempotent and
-take permanent effect only after a successful return is seen in
-caller.
-
-The maximum batch size and delay can be adjusted with DB.MaxBatchSize
-and DB.MaxBatchDelay, respectively.
-
-Batch is only useful when there are multiple goroutines calling it.
-">
-          <div class="comment-context">
-            function — Batch
-          </div>
-          <div class="comment-text">Batch calls fn as part of a batch. It behaves similar to Update,
-except:
-
-1. concurrent Batch calls can be combined into a single Bolt
-transaction.
-
-2. the function passed to Batch may be called multiple times,
-regardless of whether it returns error or not.
-
-This means that Batch function side effects must be idempotent and
-take permanent effect only after a successful return is seen in
-caller.
-
-The maximum batch size and delay can be adjusted with DB.MaxBatchSize
-and DB.MaxBatchDelay, respectively.
-
-Batch is only useful when there are multiple goroutines calling it.
-</div>
-          <div class="comment-lines">Lines 643–659</div>
-        </div>
-        
-        <div class="comment-block" data-text="trigger runs the batch if it hasn't already been run.
-">
-          <div class="comment-context">
-            function — trigger
-          </div>
-          <div class="comment-text">trigger runs the batch if it hasn't already been run.
-</div>
-          <div class="comment-lines">Lines 697–697</div>
-        </div>
-        
-        <div class="comment-block" data-text="run performs the transactions in the batch and communicates results
-back to DB.Batch.
-">
-          <div class="comment-context">
-            function — run
-          </div>
-          <div class="comment-text">run performs the transactions in the batch and communicates results
-back to DB.Batch.
-</div>
-          <div class="comment-lines">Lines 702–703</div>
-        </div>
-        
-        <div class="comment-block" data-text="Sync executes fdatasync() against the database file handle.
-
-This is not necessary under normal operation, however, if you use NoSync
-then it allows you to force the database file to sync against the disk.
-">
-          <div class="comment-context">
-            function — Sync
-          </div>
-          <div class="comment-text">Sync executes fdatasync() against the database file handle.
-
-This is not necessary under normal operation, however, if you use NoSync
-then it allows you to force the database file to sync against the disk.
-</div>
-          <div class="comment-lines">Lines 771–774</div>
-        </div>
-        
-        <div class="comment-block" data-text="Stats retrieves ongoing performance stats for the database.
-This is only updated when a transaction closes.
-">
-          <div class="comment-context">
-            function — Stats
-          </div>
-          <div class="comment-text">Stats retrieves ongoing performance stats for the database.
-This is only updated when a transaction closes.
-</div>
-          <div class="comment-lines">Lines 777–778</div>
-        </div>
-        
-        <div class="comment-block" data-text="This is for internal access to the raw data bytes from the C cursor, use
-carefully, or not at all.
-">
-          <div class="comment-context">
-            function — Info
-          </div>
-          <div class="comment-text">This is for internal access to the raw data bytes from the C cursor, use
-carefully, or not at all.
-</div>
-          <div class="comment-lines">Lines 785–786</div>
-        </div>
-        
-        <div class="comment-block" data-text="page retrieves a page reference from the mmap based on the current page size.
-">
-          <div class="comment-context">
-            function — page
-          </div>
-          <div class="comment-text">page retrieves a page reference from the mmap based on the current page size.
-</div>
-          <div class="comment-lines">Lines 791–791</div>
-        </div>
-        
-        <div class="comment-block" data-text="pageInBuffer retrieves a page reference from a given byte array based on the current page size.
-">
-          <div class="comment-context">
-            function — pageInBuffer
-          </div>
-          <div class="comment-text">pageInBuffer retrieves a page reference from a given byte array based on the current page size.
-</div>
-          <div class="comment-lines">Lines 797–797</div>
-        </div>
-        
-        <div class="comment-block" data-text="meta retrieves the current meta page reference.
-">
-          <div class="comment-context">
-            function — meta
-          </div>
-          <div class="comment-text">meta retrieves the current meta page reference.
-</div>
-          <div class="comment-lines">Lines 802–802</div>
-        </div>
-        
-        <div class="comment-block" data-text="allocate returns a contiguous block of memory starting at a given page.
-">
-          <div class="comment-context">
-            function — allocate
-          </div>
-          <div class="comment-text">allocate returns a contiguous block of memory starting at a given page.
-</div>
-          <div class="comment-lines">Lines 826–826</div>
-        </div>
-        
-        <div class="comment-block" data-text="grow grows the size of the database to the given sz.
-">
-          <div class="comment-context">
-            function — grow
-          </div>
-          <div class="comment-text">grow grows the size of the database to the given sz.
-</div>
-          <div class="comment-lines">Lines 858–858</div>
-        </div>
-        
-        <div class="comment-block" data-text="Sub calculates and returns the difference between two sets of database stats.
-This is useful when obtaining stats at two different points and time and
-you need the performance counters that occurred within that time span.
-">
-          <div class="comment-context">
-            function — Sub
-          </div>
-          <div class="comment-text">Sub calculates and returns the difference between two sets of database stats.
-This is useful when obtaining stats at two different points and time and
-you need the performance counters that occurred within that time span.
-</div>
-          <div class="comment-lines">Lines 944–946</div>
-        </div>
-        
-        <div class="comment-block" data-text="validate checks the marker bytes and version of the meta page to ensure it matches this binary.
-">
-          <div class="comment-context">
-            function — validate
-          </div>
-          <div class="comment-text">validate checks the marker bytes and version of the meta page to ensure it matches this binary.
-</div>
-          <div class="comment-lines">Lines 982–982</div>
-        </div>
-        
-        <div class="comment-block" data-text="copy copies one meta object to another.
-">
-          <div class="comment-context">
-            function — copy
-          </div>
-          <div class="comment-text">copy copies one meta object to another.
-</div>
-          <div class="comment-lines">Lines 994–994</div>
-        </div>
-        
-        <div class="comment-block" data-text="write writes the meta onto a page.
-">
-          <div class="comment-context">
-            function — write
-          </div>
-          <div class="comment-text">write writes the meta onto a page.
-</div>
-          <div class="comment-lines">Lines 999–999</div>
-        </div>
-        
-        <div class="comment-block" data-text="generates the checksum for the meta.
-">
-          <div class="comment-context">
-            function — sum64
-          </div>
-          <div class="comment-text">generates the checksum for the meta.
-</div>
-          <div class="comment-lines">Lines 1017–1017</div>
-        </div>
-        
-        <div class="comment-block" data-text="_assert will panic with a given formatted message if the given condition is false.
-">
-          <div class="comment-context">
-            function — _assert
-          </div>
-          <div class="comment-text">_assert will panic with a given formatted message if the given condition is false.
-</div>
-          <div class="comment-lines">Lines 1024–1024</div>
-        </div>
-        
-      </div>
-    
-      <div class="context-group" data-context="type">
-        <h3>type</h3>
-
-        
-        <div class="comment-block" data-text="DB represents a collection of buckets persisted to a file on disk.
-All data access is performed through transactions which can be obtained through the DB.
-All the functions on DB will return a ErrDatabaseNotOpen if accessed before Open() is called.
-">
-          <div class="comment-context">
-            type
-          </div>
-          <div class="comment-text">DB represents a collection of buckets persisted to a file on disk.
-All data access is performed through transactions which can be obtained through the DB.
-All the functions on DB will return a ErrDatabaseNotOpen if accessed before Open() is called.
-</div>
-          <div class="comment-lines">Lines 42–44</div>
-        </div>
-        
-        <div class="comment-block" data-text="Options represents the options that can be set when opening a database.
-">
-          <div class="comment-context">
-            type
-          </div>
-          <div class="comment-text">Options represents the options that can be set when opening a database.
-</div>
-          <div class="comment-lines">Lines 894–894</div>
-        </div>
-        
-        <div class="comment-block" data-text="Stats represents statistics about the database.
-">
-          <div class="comment-context">
-            type
-          </div>
-          <div class="comment-text">Stats represents statistics about the database.
-</div>
-          <div class="comment-lines">Lines 929–929</div>
-        </div>
-        
-      </div>
-    
-      <div class="context-group" data-context="var">
-        <h3>var</h3>
-
-        
-        <div class="comment-block" data-text="default page size for db is set to the OS page size.
-">
-          <div class="comment-context">
-            var
-          </div>
-          <div class="comment-text">default page size for db is set to the OS page size.
-</div>
-          <div class="comment-lines">Lines 39–39</div>
-        </div>
-        
-        <div class="comment-block" data-text="Read the first meta page to determine the page size.
-">
-          <div class="comment-context">
-            var
-          </div>
-          <div class="comment-text">Read the first meta page to determine the page size.
-</div>
-          <div class="comment-lines">Lines 203–203</div>
-        </div>
-        
-        <div class="comment-block" data-text="Ensure the size is at least the minimum size.
-">
-          <div class="comment-context">
-            var
-          </div>
-          <div class="comment-text">Ensure the size is at least the minimum size.
-</div>
-          <div class="comment-lines">Lines 256–256</div>
-        </div>
-        
-        <div class="comment-block" data-text="Free any pages associated with closed read-only transactions.
-">
-          <div class="comment-context">
-            var
-          </div>
-          <div class="comment-text">Free any pages associated with closed read-only transactions.
-</div>
-          <div class="comment-lines">Lines 530–530</div>
-        </div>
-        
-        <div class="comment-block" data-text="trySolo is a special sentinel error value used for signaling that a
-transaction function should be re-run. It should never be seen by
-callers.
-">
-          <div class="comment-context">
-            var
-          </div>
-          <div class="comment-text">trySolo is a special sentinel error value used for signaling that a
-transaction function should be re-run. It should never be seen by
-callers.
-</div>
-          <div class="comment-lines">Lines 746–748</div>
-        </div>
-        
-        <div class="comment-block" data-text="Allocate a temporary buffer for the page.
-">
-          <div class="comment-context">
-            var
-          </div>
-          <div class="comment-text">Allocate a temporary buffer for the page.
-</div>
-          <div class="comment-lines">Lines 828–828</div>
-        </div>
-        
-        <div class="comment-block" data-text="DefaultOptions represent the options used if nil options are passed into Open().
-No timeout is used which will cause Bolt to wait indefinitely for a lock.
-">
-          <div class="comment-context">
-            var
-          </div>
-          <div class="comment-text">DefaultOptions represent the options used if nil options are passed into Open().
-No timeout is used which will cause Bolt to wait indefinitely for a lock.
-</div>
-          <div class="comment-lines">Lines 922–923</div>
-        </div>
-        
-      </div>
-    
-  </div>
-  
   <div class="file-doc" id="file_node.go" style="display:none;">
     <div class="package-name">package bolt</div>
     <div class="file-path">node.go</div>
@@ -4423,178 +4595,6 @@ to an element which hasn't been added to a page yet.
           <div class="comment-text">Destination node is right sibling if idx == 0, otherwise left sibling.
 </div>
           <div class="comment-lines">Lines 462–462</div>
-        </div>
-        
-      </div>
-    
-  </div>
-  
-  <div class="file-doc" id="file_page.go" style="display:none;">
-    <div class="package-name">package bolt</div>
-    <div class="file-path">page.go</div>
-    <hr>
-
-    
-      <div class="context-group" data-context="function">
-        <h3>function</h3>
-
-        
-        <div class="comment-block" data-text="typ returns a human readable page type string used for debugging.
-">
-          <div class="comment-context">
-            function — typ
-          </div>
-          <div class="comment-text">typ returns a human readable page type string used for debugging.
-</div>
-          <div class="comment-lines">Lines 38–38</div>
-        </div>
-        
-        <div class="comment-block" data-text="meta returns a pointer to the metadata section of the page.
-">
-          <div class="comment-context">
-            function — meta
-          </div>
-          <div class="comment-text">meta returns a pointer to the metadata section of the page.
-</div>
-          <div class="comment-lines">Lines 52–52</div>
-        </div>
-        
-        <div class="comment-block" data-text="leafPageElement retrieves the leaf node by index
-">
-          <div class="comment-context">
-            function — leafPageElement
-          </div>
-          <div class="comment-text">leafPageElement retrieves the leaf node by index
-</div>
-          <div class="comment-lines">Lines 57–57</div>
-        </div>
-        
-        <div class="comment-block" data-text="leafPageElements retrieves a list of leaf nodes.
-">
-          <div class="comment-context">
-            function — leafPageElements
-          </div>
-          <div class="comment-text">leafPageElements retrieves a list of leaf nodes.
-</div>
-          <div class="comment-lines">Lines 63–63</div>
-        </div>
-        
-        <div class="comment-block" data-text="branchPageElement retrieves the branch node by index
-">
-          <div class="comment-context">
-            function — branchPageElement
-          </div>
-          <div class="comment-text">branchPageElement retrieves the branch node by index
-</div>
-          <div class="comment-lines">Lines 71–71</div>
-        </div>
-        
-        <div class="comment-block" data-text="branchPageElements retrieves a list of branch nodes.
-">
-          <div class="comment-context">
-            function — branchPageElements
-          </div>
-          <div class="comment-text">branchPageElements retrieves a list of branch nodes.
-</div>
-          <div class="comment-lines">Lines 76–76</div>
-        </div>
-        
-        <div class="comment-block" data-text="dump writes n bytes of the page to STDERR as hex output.
-">
-          <div class="comment-context">
-            function — hexdump
-          </div>
-          <div class="comment-text">dump writes n bytes of the page to STDERR as hex output.
-</div>
-          <div class="comment-lines">Lines 84–84</div>
-        </div>
-        
-        <div class="comment-block" data-text="key returns a byte slice of the node key.
-">
-          <div class="comment-context">
-            function — key
-          </div>
-          <div class="comment-text">key returns a byte slice of the node key.
-</div>
-          <div class="comment-lines">Lines 103–103</div>
-        </div>
-        
-        <div class="comment-block" data-text="key returns a byte slice of the node key.
-">
-          <div class="comment-context">
-            function — key
-          </div>
-          <div class="comment-text">key returns a byte slice of the node key.
-</div>
-          <div class="comment-lines">Lines 117–117</div>
-        </div>
-        
-        <div class="comment-block" data-text="value returns a byte slice of the node value.
-">
-          <div class="comment-context">
-            function — value
-          </div>
-          <div class="comment-text">value returns a byte slice of the node value.
-</div>
-          <div class="comment-lines">Lines 123–123</div>
-        </div>
-        
-        <div class="comment-block" data-text="merge returns the sorted union of a and b.
-">
-          <div class="comment-context">
-            function — merge
-          </div>
-          <div class="comment-text">merge returns the sorted union of a and b.
-</div>
-          <div class="comment-lines">Lines 143–143</div>
-        </div>
-        
-        <div class="comment-block" data-text="mergepgids copies the sorted union of a and b into dst.
-If dst is too small, it panics.
-">
-          <div class="comment-context">
-            function — mergepgids
-          </div>
-          <div class="comment-text">mergepgids copies the sorted union of a and b into dst.
-If dst is too small, it panics.
-</div>
-          <div class="comment-lines">Lines 157–158</div>
-        </div>
-        
-      </div>
-    
-      <div class="context-group" data-context="type">
-        <h3>type</h3>
-
-        
-        <div class="comment-block" data-text="branchPageElement represents a node on a branch page.
-">
-          <div class="comment-context">
-            type
-          </div>
-          <div class="comment-text">branchPageElement represents a node on a branch page.
-</div>
-          <div class="comment-lines">Lines 96–96</div>
-        </div>
-        
-        <div class="comment-block" data-text="leafPageElement represents a node on a leaf page.
-">
-          <div class="comment-context">
-            type
-          </div>
-          <div class="comment-text">leafPageElement represents a node on a leaf page.
-</div>
-          <div class="comment-lines">Lines 109–109</div>
-        </div>
-        
-        <div class="comment-block" data-text="PageInfo represents human readable information about a page.
-">
-          <div class="comment-context">
-            type
-          </div>
-          <div class="comment-text">PageInfo represents human readable information about a page.
-</div>
-          <div class="comment-lines">Lines 129–129</div>
         </div>
         
       </div>

@@ -1,7 +1,9 @@
 package htmldocgenerator
 
 import (
+	"encoding/json"
 	"io/fs"
+	"net/http"
 	"os"
 	"path/filepath"
 	"strings"
@@ -150,22 +152,33 @@ func groupByContext(comments []gocommentextractor.CommentBlock) map[string][]goc
 	return grouped
 }
 
-// func prepareHTMLData(files []gocommentextractor.FileComments, root string) htmlData {
-// 	data := htmlData{Files: make([]htmlFile, 0, len(files))}
+func ServeHTML(w http.ResponseWriter, files []gocommentextractor.FileComments, root string) {
+	data := prepareHTMLData(files, root)
+	tmpl := template.Must(template.New("doc").Parse(htmlTemplate))
+	_ = tmpl.Execute(w, data)
+}
 
-// 	for _, fc := range files {
-// 		rel, _ := filepath.Rel(root, fc.FilePath)
-// 		id := "file_" + strings.ReplaceAll(rel, string(os.PathSeparator), "_")
+func ServeJSON(w http.ResponseWriter, files []gocommentextractor.FileComments) {
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(files)
+}
 
-// 		grouped := groupByContext(fc.Comments)
+func prepareHTMLData(files []gocommentextractor.FileComments, root string) htmlData {
+	data := htmlData{Files: make([]htmlFile, 0, len(files))}
 
-// 		data.Files = append(data.Files, htmlFile{
-// 			ID:          id,
-// 			RelPath:     rel,
-// 			Package:     fc.Package,
-// 			GroupedDocs: grouped,
-// 		})
-// 	}
+	for _, fc := range files {
+		rel, _ := filepath.Rel(root, fc.FilePath)
+		id := "file_" + strings.ReplaceAll(rel, string(os.PathSeparator), "_")
 
-// 	return data
-// }
+		grouped := groupByContext(fc.Comments)
+
+		data.Files = append(data.Files, htmlFile{
+			ID:          id,
+			RelPath:     rel,
+			Package:     fc.Package,
+			GroupedDocs: grouped,
+		})
+	}
+
+	return data
+}
